@@ -70,3 +70,25 @@
 2. Keep `.env` out of git history.
 3. Use app-password or provider SMTP keys only.
 4. Keep `SEED_ADMIN_PASSWORD` strong and private.
+
+## Temporary Admin Seeding (No CLI Needed)
+If you cannot use Render Shell or CLI, use this method:
+
+1. **Set a strong secret token in your backend environment variables:**
+   - `SEED_ADMIN_TOKEN=<your strong random token>`
+2. **Redeploy your backend** so the new token is active.
+3. **Trigger the seed via HTTP:**
+   - Send a POST request to:
+
+     ```
+     https://<your-backend-domain>/api/config/seed-admin?token=<your strong random token>
+     ```
+   - Example using `curl`:
+     ```sh
+     curl -X POST "https://<your-backend-domain>/api/config/seed-admin?token=<your strong random token>"
+     ```
+   - Or use Postman/Insomnia with a POST request to the same URL.
+4. **Check for `{ message: 'Admin seeded successfully' }` in the response.**
+5. **Remove or disable this route after seeding for security.**
+
+> This method works on any host (Render, Railway, Fly.io, etc.) and does not require shell access.

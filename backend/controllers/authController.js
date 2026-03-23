@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Generate JWT
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -10,8 +12,8 @@ const generateToken = (id) => {
 
 const cookieOptions = {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
     maxAge: 24 * 60 * 60 * 1000,
 };
 
