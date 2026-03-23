@@ -23,7 +23,11 @@ const seedData = async () => {
         throw new Error('Missing SEED_ADMIN_EMAIL or SEED_ADMIN_PASSWORD in environment');
     }
 
-    const existingAdmin = await Admin.findOne({ email: initialAdminEmail });
+    // Single-admin mode for personal portfolio:
+    // keep exactly one admin account and force credentials from env.
+    await Admin.deleteMany({ email: { $ne: initialAdminEmail } });
+
+    const existingAdmin = await Admin.findOne({ email: initialAdminEmail }).select('+password');
     if (!existingAdmin) {
         await Admin.create({
             email: initialAdminEmail,
@@ -33,7 +37,11 @@ const seedData = async () => {
         });
         console.log(`✅ Admin user created (${initialAdminEmail})`);
     } else {
-        console.log('⏩ Admin user already exists');
+        existingAdmin.password = initialAdminPassword;
+        existingAdmin.name = 'Gyanaranjan Das';
+        existingAdmin.role = 'superadmin';
+        await existingAdmin.save();
+        console.log(`✅ Admin user updated (${initialAdminEmail})`);
     }
 
     // --- Site Config ---
