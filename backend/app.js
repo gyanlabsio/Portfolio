@@ -60,6 +60,16 @@ app.use(csurf({
 // --- Static files (for local uploads fallback) ---
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Root route for platform/browser checks
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    service: 'portfolio-backend',
+    message: 'API is running',
+    health: '/api/health',
+  });
+});
+
 // --- API Routes ---
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
