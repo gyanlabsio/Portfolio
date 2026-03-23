@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from './context/AuthContext'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import 'lenis/dist/lenis.css'
 import './index.css'
 
 // Register GSAP plugins globally

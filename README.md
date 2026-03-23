@@ -59,6 +59,12 @@ npm run dev
 cd backend
 npm install
 npm run dev
+
+# Optional: seed initial data (requires env vars)
+# PowerShell example:
+$env:SEED_ADMIN_EMAIL="admin@example.com"
+$env:SEED_ADMIN_PASSWORD="change-this-strong-password"
+npm run seed
 ```
 
 ## Let's Work Together 🤝

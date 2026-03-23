@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { getMe } from '../api/admin';
+import { createContext, useState, useEffect } from 'react';
+import { getMe, logout } from '../api/admin';
 
 const AuthContext = createContext(null);
 
@@ -12,29 +12,26 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const checkAuth = async () => {
-        const token = localStorage.getItem('admin_token');
-        if (!token) {
-            setLoading(false);
-            return;
-        }
         try {
             const { data } = await getMe();
             setAdmin(data.admin);
         } catch {
-            localStorage.removeItem('admin_token');
             setAdmin(null);
         } finally {
             setLoading(false);
         }
     };
 
-    const loginAdmin = (token, adminData) => {
-        localStorage.setItem('admin_token', token);
+    const loginAdmin = (adminData) => {
         setAdmin(adminData);
     };
 
-    const logoutAdmin = () => {
-        localStorage.removeItem('admin_token');
+    const logoutAdmin = async () => {
+        try {
+            await logout();
+        } catch {
+            // Always clear client state even if server logout request fails
+        }
         setAdmin(null);
     };
 
@@ -45,8 +42,4 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) throw new Error('useAuth must be used within AuthProvider');
-    return context;
-};
+export { AuthContext };

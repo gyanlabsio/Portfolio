@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Calendar, Tag } from 'lucide-react'
+import { ArrowLeft, Calendar, Pencil, Tag } from 'lucide-react'
+import DOMPurify from 'dompurify'
 import SEO from '../components/SEO'
 import { getPost } from '../api/blog'
 
@@ -24,79 +25,80 @@ const BlogPost = () => {
         fetchPost()
     }, [slug])
 
+    const safeContent = useMemo(() => DOMPurify.sanitize(post?.content || ''), [post?.content])
+
     if (loading) {
         return (
-            <div className='min-h-screen flex items-center justify-center'>
-                <div className='w-8 h-8 border-2 border-[#FF0000] border-t-transparent rounded-full animate-spin'></div>
+            <div className='section-wrap flex min-h-[60vh] items-center justify-center pt-16'>
+                <div className='h-8 w-8 animate-spin rounded-full border-2 border-[#ef3e2f]/30 border-t-[#ef3e2f]'></div>
             </div>
         )
     }
 
     if (error || !post) {
         return (
-            <div className='min-h-screen text-white flex flex-col items-center justify-center gap-4'>
-                <p className='text-gray-400 font-manrope text-lg'>{error || 'Post not found'}</p>
-                <Link to='/blog' className='text-[#FF0000] font-reross uppercase tracking-wide hover:underline'>
-                    ← Back to Blog
+            <div className='section-wrap flex min-h-[70vh] flex-col items-center justify-center gap-4 text-center'>
+                <p className='text-lg text-[#4f5a67]'>{error || 'Post not found'}</p>
+                <Link to='/Blog' className='inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/75 px-5 py-3 text-sm font-semibold text-[#1b2838] transition hover:-translate-y-0.5 hover:border-[#ef3e2f]/45 hover:text-[#ef3e2f]'>
+                    <ArrowLeft className='h-4 w-4' />
+                    Back to Blog
                 </Link>
             </div>
         )
     }
 
     return (
-        <article className='min-h-screen text-white pt-24 pb-16 px-6 md:px-12'>
+        <article className='pb-16 pt-8 md:pt-12'>
             <SEO title={post.title} description={post.excerpt} image={post.featuredImage} />
-            <div className='max-w-3xl mx-auto'>
-
-                {/* Back Link */}
-                <Link to='/blog' className='inline-flex items-center gap-2 text-[#FF0000] font-reross uppercase text-sm tracking-wide mb-8 hover:gap-3 transition-all'>
-                    <ArrowLeft className='w-4 h-4' /> Back to Blog
+            <div className='section-wrap'>
+                <Link to='/Blog' className='inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/75 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#1d2838] transition hover:border-[#0c7fa3]/45 hover:text-[#0c7fa3]'>
+                    <ArrowLeft className='h-3.5 w-3.5' />
+                    Back to Blog
                 </Link>
 
-                {/* Title */}
-                <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold font-nevera text-white tracking-wide leading-tight mb-6'>
-                    {post.title}
-                </h1>
+                <div className='glass-card mt-5 rounded-[30px] p-6 md:p-10'>
+                    <h1 className='display-title text-3xl leading-tight text-[#182335] sm:text-5xl'>
+                        {post.title}
+                    </h1>
 
-                {/* Meta */}
-                <div className='flex flex-wrap items-center gap-4 text-sm text-gray-500 font-manrope mb-8'>
-                    <span className='flex items-center gap-1'>
-                        <Calendar className='w-4 h-4' />
-                        {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                    </span>
-                    <span>by {post.author}</span>
+                    <div className='mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold uppercase tracking-[0.09em] text-[#627282]'>
+                        <span className='inline-flex items-center gap-1.5'>
+                            <Calendar className='h-3.5 w-3.5' />
+                            {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                        </span>
+                        <span className='inline-flex items-center gap-1.5'>
+                            <Pencil className='h-3.5 w-3.5' />
+                            {post.author}
+                        </span>
+                    </div>
+
+                    {post.tags && post.tags.length > 0 && (
+                        <div className='mt-5 flex flex-wrap gap-2'>
+                            {post.tags.map((tag) => (
+                                <span key={tag} className='inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/80 px-3 py-1 text-xs font-semibold text-[#465667]'>
+                                    <Tag className='h-3 w-3' />
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {post.featuredImage && (
+                        <div className='mt-8 overflow-hidden rounded-3xl border border-black/10'>
+                            <img src={post.featuredImage} alt={post.title} className='max-h-[440px] w-full object-cover' />
+                        </div>
+                    )}
+
+                    <div
+                        className='prose prose-lg mt-10 max-w-none text-[#2e3a49]
+              prose-headings:font-nevera prose-headings:text-[#182335]
+              prose-p:leading-relaxed prose-a:text-[#0c7fa3]
+              prose-strong:text-[#182335] prose-code:rounded prose-code:bg-[#0f172a0d]
+              prose-code:px-1 prose-pre:border prose-pre:border-black/10 prose-pre:bg-[#0f172a]
+              prose-blockquote:border-l-[#ef3e2f] prose-blockquote:text-[#465667]'
+                        dangerouslySetInnerHTML={{ __html: safeContent }}
+                    />
                 </div>
-
-                {/* Tags */}
-                {post.tags && post.tags.length > 0 && (
-                    <div className='flex flex-wrap gap-2 mb-10'>
-                        {post.tags.map((tag) => (
-                            <span key={tag} className='text-xs font-manrope text-[#FF0000] bg-[#FF0000]/10 px-3 py-1 rounded-full border border-[#FF0000]/20 flex items-center gap-1'>
-                                <Tag className='w-3 h-3' /> {tag}
-                            </span>
-                        ))}
-                    </div>
-                )}
-
-                {/* Featured Image */}
-                {post.featuredImage && (
-                    <div className='relative rounded-2xl overflow-hidden mb-10 border border-white/10'>
-                        <img src={post.featuredImage} alt={post.title} className='w-full h-auto object-cover grayscale brightness-75' />
-                        <div className='absolute inset-0 bg-[#FF0000] mix-blend-multiply opacity-60 pointer-events-none'></div>
-                    </div>
-                )}
-
-                {/* Content */}
-                <div
-                    className='prose prose-invert prose-lg max-w-none font-manrope
-            prose-headings:font-nevera prose-headings:text-white prose-headings:tracking-wide
-            prose-p:text-gray-300 prose-p:leading-relaxed
-            prose-a:text-[#FF0000] prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-white
-            prose-code:text-[#FF0000] prose-code:bg-[#FF0000]/10 prose-code:px-1 prose-code:rounded
-            prose-pre:bg-[#111] prose-pre:border prose-pre:border-white/10'
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                />
             </div>
         </article>
     )

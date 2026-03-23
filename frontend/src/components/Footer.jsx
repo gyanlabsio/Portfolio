@@ -1,49 +1,55 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { Github, Linkedin, Mail, Instagram } from 'lucide-react'
+import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const Footer = () => {
   return (
-    <footer className='text-white px-6 md:px-12 pb-8 pt-12'>
-      <div className='max-w-7xl mx-auto space-y-8'>
+    <footer className='py-16'>
+      <div className='section-wrap'>
+        <div className='glass-card enter-fade rounded-[28px] p-6 md:p-10'>
+          <div className='grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end'>
+            <div className='space-y-4'>
+              <p className='text-xs uppercase tracking-[0.22em] text-[#4f5a67]'>Available for selected projects</p>
+              <h2 className='display-title text-4xl leading-tight text-[#1a2533] md:text-6xl'>
+                Build Something
+                <br />
+                Remarkable.
+              </h2>
+              <a
+                href='mailto:gyanlabs.io@gmail.com'
+                className='focus-ring button-pop inline-flex items-center gap-2 rounded-full bg-[#ef3e2f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#dd2f21]'
+              >
+                Start Conversation
+                <ArrowUpRight className='h-4 w-4' />
+              </a>
+            </div>
 
-        {/* Footer Nav Links */}
-        <div className='flex flex-wrap items-center gap-6 font-reross uppercase text-sm tracking-wide'>
-          <Link to='/' className='text-[#FF0000] border border-[#FF0000]/40 rounded-full px-4 py-1 hover:bg-[#FF0000]/10 transition-colors'>Home</Link>
-          <Link to='/Bio' className='text-white/70 hover:text-white transition-colors'>Bio</Link>
-          <Link to='/Projects' className='text-white/70 hover:text-white transition-colors'>Projects</Link>
-          <Link to='/Blog' className='text-white/70 hover:text-white transition-colors'>Blog</Link>
+            <div className='space-y-5'>
+              <nav className='stagger-children grid grid-cols-2 gap-2 text-sm font-semibold text-[#2d3948]'>
+                <Link to='/' className='focus-ring surface-interactive rounded-xl bg-white/70 px-3 py-2 hover:bg-white'>Home</Link>
+                <Link to='/Bio' className='focus-ring surface-interactive rounded-xl bg-white/70 px-3 py-2 hover:bg-white'>Bio</Link>
+                <Link to='/Projects' className='focus-ring surface-interactive rounded-xl bg-white/70 px-3 py-2 hover:bg-white'>Projects</Link>
+                <Link to='/Blog' className='focus-ring surface-interactive rounded-xl bg-white/70 px-3 py-2 hover:bg-white'>Blog</Link>
+              </nav>
+
+              <div className='flex items-center gap-2'>
+                <a href='https://github.com/gyanaranjan-das' target='_blank' rel='noopener noreferrer' className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white/80 text-[#1f2a38] hover:text-[#0c7fa3]'>
+                  <Github className='h-4 w-4' />
+                </a>
+                <a href='https://www.linkedin.com/in/gyanaranjan-das/' target='_blank' rel='noopener noreferrer' className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white/80 text-[#1f2a38] hover:text-[#0c7fa3]'>
+                  <Linkedin className='h-4 w-4' />
+                </a>
+                <a href='mailto:gyanlabs.io@gmail.com' target='_blank' rel='noopener noreferrer' className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white/80 text-[#1f2a38] hover:text-[#0c7fa3]'>
+                  <Mail className='h-4 w-4' />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className='mt-8 border-t border-black/10 pt-4 text-xs text-[#5a6675] md:flex md:items-center md:justify-between'>
+            <p>© 2026 Gyanaranjan Das</p>
+            <p>Designed and engineered at GyanLabs.io</p>
+          </div>
         </div>
-
-        {/* Social Icons */}
-        <div className='flex gap-4'>
-          <a href="https://github.com/gyanaranjan-das" target="_blank" rel="noopener noreferrer"
-            className='w-10 h-10 rounded-full border border-[#FF0000]/40 flex items-center justify-center text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors'>
-            <Github className='w-4 h-4' />
-          </a>
-          <a href="https://www.linkedin.com/in/gyanaranjan-das/" target="_blank" rel="noopener noreferrer"
-            className='w-10 h-10 rounded-full border border-[#FF0000]/40 flex items-center justify-center text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors'>
-            <Linkedin className='w-4 h-4' />
-          </a>
-          <a href="mailto:gyanlabs.io@gmail.com" target="_blank" rel="noopener noreferrer"
-            className='w-10 h-10 rounded-full border border-[#FF0000]/40 flex items-center justify-center text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors'>
-            <Mail className='w-4 h-4' />
-          </a>
-          <a href="https://www.instagram.com/gyanlabs.io/" target="_blank" rel="noopener noreferrer"
-            className='w-10 h-10 rounded-full border border-[#FF0000]/40 flex items-center justify-center text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors'>
-            <Instagram className='w-4 h-4' />
-          </a>
-        </div>
-
-        {/* Divider */}
-        <div className='border-t border-white/10'></div>
-
-        {/* Copyright Bar */}
-        <div className='flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-manrope text-center md:text-left'>
-          <p>&copy; 2026 GYANARANJAN DAS</p>
-          <p>Website by <span className='text-gray-400'>GyanLabs.io</span></p>
-        </div>
-
       </div>
     </footer>
   )

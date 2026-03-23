@@ -10,21 +10,28 @@ const Project = require('./models/Project');
 const BlogPost = require('./models/BlogPost');
 const SiteConfig = require('./models/SiteConfig');
 
+const initialAdminEmail = process.env.SEED_ADMIN_EMAIL;
+const initialAdminPassword = process.env.SEED_ADMIN_PASSWORD;
+
 const seedData = async () => {
     await connectDB();
 
     console.log('Seeding database...');
 
     // --- Admin User ---
-    const existingAdmin = await Admin.findOne({ email: 'admin@gyanlabs.io' });
+    if (!initialAdminEmail || !initialAdminPassword) {
+        throw new Error('Missing SEED_ADMIN_EMAIL or SEED_ADMIN_PASSWORD in environment');
+    }
+
+    const existingAdmin = await Admin.findOne({ email: initialAdminEmail });
     if (!existingAdmin) {
         await Admin.create({
-            email: 'admin@gyanlabs.io',
-            password: 'admin123', // Change this after first login!
+            email: initialAdminEmail,
+            password: initialAdminPassword,
             name: 'Gyanaranjan Das',
             role: 'superadmin',
         });
-        console.log('✅ Admin user created (admin@gyanlabs.io / admin123)');
+        console.log(`✅ Admin user created (${initialAdminEmail})`);
     } else {
         console.log('⏩ Admin user already exists');
     }

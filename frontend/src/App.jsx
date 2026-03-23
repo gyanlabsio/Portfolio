@@ -36,20 +36,20 @@ const App = () => {
 
   return (
     <SmoothScroll>
-      <div>
-        {/* Hide public Navbar/Footer on admin pages */}
+      <div className='page-shell'>
+        {!isAdminRoute && <div className='grain-overlay' />}
+
         {!isAdminRoute && <Navbar />}
 
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Public routes */}
             <Route path='/' element={<Home />} />
             <Route path='/Bio' element={<Bio />} />
             <Route path='/Projects' element={<Projects />} />
             <Route path='/Blog' element={<Blog />} />
             <Route path='/blog/:slug' element={<BlogPost />} />
+            <Route path='/Contact' element={<Contact />} />
 
-            {/* Admin routes */}
             <Route path='/admin/login' element={<Login />} />
             <Route
               path='/admin'
@@ -66,17 +66,11 @@ const App = () => {
               <Route path='config' element={<SiteConfigAdmin />} />
             </Route>
 
-            {/* 404 Catch-all */}
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Suspense>
 
-        {!isAdminRoute && (
-          <>
-            <Contact key={location.pathname} />
-            <Footer />
-          </>
-        )}
+        {!isAdminRoute && <Footer />}
       </div>
     </SmoothScroll>
   )

@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Mail, MessageSquareText, PhoneCall } from 'lucide-react'
+import SEO from '../components/SEO'
 import { submitContact } from '../api/contact'
 
 const Contact = () => {
@@ -29,119 +28,109 @@ const Contact = () => {
     }
   }
 
-  // GSAP Animations
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.contact-section',
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Contact Header Reveal Animation
-    tl.from('.contact-header-char', {
-      y: 100,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.03,
-      ease: 'power4.out',
-      clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)'
-    })
-
-    // Subtitle fade in
-    tl.from('.contact-subtitle', {
-      y: 20,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power3.out'
-    }, "-=0.4")
-
-    // Form elements staggered fade up
-    tl.from('.contact-form-element', {
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out'
-    }, "-=0.2")
-
-  }, [])
-
   return (
-    <>
-      {/* Contact Form Section */}
-      <section className="text-white py-20 px-6 md:px-12 contact-section">
-        <div className="max-w-7xl mx-auto">
-          <h2 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-nevera text-[#FF0000] tracking-tighter leading-none mb-4 overflow-hidden py-2'>
-            {"GET IN TOUCH".split("").map((char, index) => (
-              <span
-                key={index}
-                className={`inline-block contact-header-char ${char === " " ? "w-2 md:w-5" : ""}`}
-                style={{ clipPath: 'polygon(0 100%, 100% 100%, 100% 0, 0 0)' }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </h2>
-          <p className="font-manrope text-gray-400 text-lg mb-10 max-w-2xl contact-subtitle">
-            Have a project in mind, want to collaborate, or just want to say hi? Drop me a message.
-          </p>
+    <main className='pb-16 pt-8 md:pt-12'>
+      <SEO title='Contact' description='Start a conversation for collaborations, projects, or product ideas.' />
 
-          <form onSubmit={handleContactSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
-            <input
-              type="text"
-              name="name"
-              value={contactData.name}
-              onChange={handleContactChange}
-              placeholder="Your Name"
-              required
-              className="bg-[#111] text-white px-6 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-[#FF0000]/60 font-manrope placeholder:text-gray-500 transition-colors contact-form-element"
-            />
-            <input
-              type="email"
-              name="email"
-              value={contactData.email}
-              onChange={handleContactChange}
-              placeholder="Your Email"
-              required
-              className="bg-[#111] text-white px-6 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-[#FF0000]/60 font-manrope placeholder:text-gray-500 transition-colors contact-form-element"
-            />
-            <input
-              type="text"
-              name="subject"
-              value={contactData.subject}
-              onChange={handleContactChange}
-              placeholder="Subject"
-              className="bg-[#111] text-white px-6 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-[#FF0000]/60 font-manrope placeholder:text-gray-500 transition-colors md:col-span-2 contact-form-element"
-            />
-            <textarea
-              name="message"
-              value={contactData.message}
-              onChange={handleContactChange}
-              placeholder="Your Message"
-              required
-              rows={5}
-              className="bg-[#111] text-white px-6 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-[#FF0000]/60 font-manrope placeholder:text-gray-500 transition-colors md:col-span-2 resize-none contact-form-element"
-            />
-            <div className="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 contact-form-element">
-              <button
-                type="submit"
-                disabled={contactLoading}
-                className="bg-[#FF0000] hover:bg-[#B30000] disabled:opacity-50 transition-colors px-10 py-4 rounded-full text-white font-bold tracking-wide font-reross uppercase whitespace-nowrap"
-              >
-                {contactLoading ? 'Sending...' : 'Send Message'}
-              </button>
-              {contactStatus && (
-                <p className={`font-manrope text-sm ${contactStatus.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
-                  {contactStatus.message}
-                </p>
-              )}
+      <section className='section-wrap enter-fade'>
+        <div className='grid gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
+          <article className='glass-card rounded-[30px] p-6 md:p-8'>
+            <h1 className='display-title text-4xl text-[#182335] sm:text-5xl'>Get In Touch</h1>
+            <p className='mt-3 max-w-md text-[#4b5766]'>
+              Have an idea, collaboration, or build request? Send a note and I will get back soon.
+            </p>
+
+            <div className='mt-8 space-y-3'>
+              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
+                <Mail className='mt-0.5 h-5 w-5 text-[#0c7fa3]' />
+                <div>
+                  <p className='text-sm font-semibold text-[#1c2939]'>Email</p>
+                  <p className='text-sm text-[#5a6776]'>Best for project briefs and partnerships.</p>
+                </div>
+              </div>
+              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
+                <MessageSquareText className='mt-0.5 h-5 w-5 text-[#ef3e2f]' />
+                <div>
+                  <p className='text-sm font-semibold text-[#1c2939]'>Quick Response</p>
+                  <p className='text-sm text-[#5a6776]'>Clear goals get faster timelines and scoped estimates.</p>
+                </div>
+              </div>
+              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
+                <PhoneCall className='mt-0.5 h-5 w-5 text-[#f3a712]' />
+                <div>
+                  <p className='text-sm font-semibold text-[#1c2939]'>Consultation</p>
+                  <p className='text-sm text-[#5a6776]'>Include your preferred timezone and communication mode.</p>
+                </div>
+              </div>
             </div>
-          </form>
+          </article>
+
+          <article className='glass-card rounded-[30px] p-6 md:p-8'>
+            <form onSubmit={handleContactSubmit} className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+              <label htmlFor='contact-name' className='sr-only'>Your Name</label>
+              <input
+                id='contact-name'
+                type='text'
+                name='name'
+                value={contactData.name}
+                onChange={handleContactChange}
+                placeholder='Your Name'
+                autoComplete="name"
+                required
+                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-1'
+              />
+              <label htmlFor='contact-email' className='sr-only'>Your Email</label>
+              <input
+                id='contact-email'
+                type='email'
+                name='email'
+                value={contactData.email}
+                onChange={handleContactChange}
+                placeholder='Your Email'
+                autoComplete="email"
+                required
+                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-1'
+              />
+              <label htmlFor='contact-subject' className='sr-only'>Subject</label>
+              <input
+                id='contact-subject'
+                type='text'
+                name='subject'
+                value={contactData.subject}
+                onChange={handleContactChange}
+                placeholder='Subject'
+                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-2'
+              />
+              <label htmlFor='contact-message' className='sr-only'>Your Message</label>
+              <textarea
+                id='contact-message'
+                name='message'
+                value={contactData.message}
+                onChange={handleContactChange}
+                placeholder='Your Message'
+                required
+                rows={5}
+                className='resize-none rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-2'
+              />
+              <div className='md:col-span-2 flex flex-col items-start gap-3 sm:flex-row sm:items-center'>
+                <button
+                  type='submit'
+                  disabled={contactLoading}
+                  className='inline-flex items-center rounded-full bg-[#ef3e2f] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#db2f21] disabled:opacity-60'
+                >
+                  {contactLoading ? 'Sending...' : 'Send Message'}
+                </button>
+                {contactStatus && (
+                  <p className={`text-sm ${contactStatus.type === 'success' ? 'text-emerald-600' : 'text-red-600'}`}>
+                    {contactStatus.message}
+                  </p>
+                )}
+              </div>
+            </form>
+          </article>
         </div>
       </section>
-    </>
+    </main>
   )
 }
 

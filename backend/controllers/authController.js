@@ -4,8 +4,21 @@ const Admin = require('../models/Admin');
 // Generate JWT
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE || '7d',
+        expiresIn: process.env.JWT_EXPIRE || '24h',
     });
+};
+
+const cookieOptions = {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000,
+};
+
+// @desc    Get CSRF token
+// @route   GET /api/auth/csrf-token
+exports.getCsrfToken = async (req, res) => {
+    res.json({ success: true, csrfToken: req.csrfToken() });
 };
 
 // @desc    Login admin
@@ -30,9 +43,10 @@ exports.login = async (req, res, next) => {
 
         const token = generateToken(admin._id);
 
+        res.cookie('admin_token', token, cookieOptions);
+
         res.json({
             success: true,
-            token,
             admin: { id: admin._id, email: admin.email, name: admin.name, role: admin.role },
         });
     } catch (error) {
@@ -47,4 +61,11 @@ exports.getMe = async (req, res) => {
         success: true,
         admin: { id: req.admin._id, email: req.admin.email, name: req.admin.name, role: req.admin.role },
     });
+};
+
+// @desc    Logout admin
+// @route   POST /api/auth/logout
+exports.logout = async (req, res) => {
+    res.clearCookie('admin_token', cookieOptions);
+    res.json({ success: true, message: 'Logged out successfully' });
 };

@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Compass, Lightbulb, Rocket } from 'lucide-react'
+import SEO from '../components/SEO'
 import { getSiteConfig } from '../api/admin'
-import bioImage from '../assets/ChatGPT Image Mar 2, 2026, 10_00_15 PM.png'
 import bioProfileImage from '../assets/ChatGPT Image Mar 2, 2026, 09_49_15 PM.png'
 
 const Bio = () => {
@@ -24,130 +23,79 @@ const Bio = () => {
     fetchConfig()
   }, [])
 
-  // GSAP Animations
-  useGSAP(() => {
-    // Animate the initial bio heading
-    gsap.from('.bio-heading', {
-      y: 100,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power4.out',
-      delay: 0.2
-    })
+  const bioParagraphs = useMemo(() => {
+    if (config?.bioText) {
+      return config.bioText
+        .split('\n')
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean)
+    }
 
-    // Animate the background image parallax slightly
-    gsap.to('.bio-hero-img', {
-      y: '20%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.bio-hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
-    })
-
-    // Scroll trigger for the bio content split section
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.bio-content-section',
-        start: 'top 75%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Image slides in
-    tl.from('.bio-portrait', {
-      x: -50,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    })
-
-    // Paragraphs stagger in
-    tl.from('.bio-text-content > p', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out'
-    }, "-=0.6")
-
-  }, [])
+    return [
+      'I am a full-stack developer focused on building expressive, reliable web experiences that feel as good as they perform.',
+      'My approach sits between product thinking, engineering discipline, and visual storytelling. I care deeply about details because details shape trust.',
+      'I enjoy turning rough ideas into polished systems, from API contracts and admin workflows to the final interaction rhythm on the frontend.',
+      'This space is where I share what I build, what I learn, and what I am exploring next.'
+    ]
+  }, [config?.bioText])
 
   return (
-    <div className="w-full">
-      {/* First screen: Centered Biography heading with background image */}
-      <section className="relative flex items-center justify-center min-h-screen w-full px-4 overflow-hidden bio-hero-section">
-        <img
-          src={bioImage}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-top opacity-50 pointer-events-none grayscale brightness-90 bio-hero-img"
-        />
-        <div className="absolute inset-0 bg-[#FF0000] mix-blend-multiply opacity-70 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black pointer-events-none"></div>
-        <h1 className="relative z-10 font-nevera text-4xl sm:text-5xl md:text-6xl font-bold tracking-widest text-white text-center bio-heading">BIOGRAPHY</h1>
-      </section>
+    <main className='pb-16 pt-8 md:pt-12'>
+      <SEO title='Bio' description='The story, philosophy, and craft behind the portfolio work.' />
 
-      {/* Second screen: Bio content with image and scrollable text */}
-      <section className="w-full min-h-screen flex flex-col lg:flex-row max-w-7xl mx-auto py-12 lg:py-24 bio-content-section overflow-hidden">
-        {/* Left: Image Section */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 order-1 bio-portrait">
-          <div className="relative w-full max-w-md aspect-[3/4] rounded-2xl shadow-2xl border border-white/10 overflow-hidden group">
-
-            {/* Base Red Image */}
-            <img
-              src={bioProfileImage}
-              alt="Profile"
-              className="w-full h-full object-cover grayscale brightness-75 z-10 relative"
-            />
-            <div className="absolute inset-0 bg-[#FF0000] mix-blend-multiply opacity-90 pointer-events-none z-20"></div>
-
-            {/* Full Color Image Reveal - Clipped to bottom right by default, expands to full on hover */}
-            <div className='absolute inset-0 z-30 transition-all duration-700 ease-in-out [clip-path:polygon(100%_100%,100%_100%,100%_100%,100%_100%)] group-hover:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]'>
-              <img
-                src={bioProfileImage}
-                alt="Profile Original"
-                className="w-full h-full object-cover"
-              />
+      <section className='section-wrap enter-fade'>
+        <div className='grid gap-8 lg:grid-cols-[0.95fr_1.05fr]'>
+          <article className='glass-card rounded-[30px] p-4 md:p-6'>
+            <div className='relative overflow-hidden rounded-[24px] border border-black/10'>
+              <img src={config?.aboutImage || bioProfileImage} alt='Portrait' className='h-full w-full object-cover' />
+              <div className='absolute inset-0 bg-gradient-to-t from-[#131b2dcc] to-transparent' />
+              <div className='absolute bottom-0 left-0 right-0 p-5 text-white'>
+                <p className='text-xs uppercase tracking-[0.16em] text-white/75'>Based in India</p>
+                <p className='display-title text-3xl'>Builder of Digital Worlds</p>
+              </div>
             </div>
+          </article>
 
-          </div>
-        </div>
-        {/* Right: Bio Text Section (scrolls if needed) */}
-        <div className="w-full lg:w-1/2 px-6 sm:px-12 py-10 flex flex-col justify-center order-2 lg:overflow-y-auto lg:max-h-[80vh]">
-          {loading ? (
-            <div className="flex justify-center items-center w-full">
-              <div className="w-8 h-8 rounded-full border-2 border-[#FF0000]/20 border-t-[#FF0000] animate-spin"></div>
-            </div>
-          ) : (
-            <div className="text-white text-base md:text-lg leading-relaxed space-y-6 bio-text-content">
-              {config?.bioText ? (
-                config.bioText.split('\n').filter(p => p.trim() !== '').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))
+          <article className='glass-card rounded-[30px] p-6 md:p-8'>
+            <h1 className='display-title text-4xl text-[#182335] sm:text-5xl'>Biography</h1>
+            <p className='mt-3 max-w-xl text-sm uppercase tracking-[0.14em] text-[#526172]'>
+              Thoughtful engineering. Character-rich interfaces. Relentless iteration.
+            </p>
+
+            <div className='mt-7 space-y-4 text-base leading-relaxed text-[#405063]'>
+              {loading ? (
+                <p className='ink-soft'>Loading biography...</p>
               ) : (
-                <>
-                  <p>
-                    Hi, I’m Gyani—a web developer and designer who’s always been fascinated by how things work on the internet. My journey started with curiosity and a lot of late nights tinkering with code, and it’s turned into a genuine passion for building things that people actually enjoy using.
-                  </p>
-                  <p>
-                    I love the challenge of turning ideas into real, interactive experiences. Whether I’m working on a new design, learning a fresh framework, or just experimenting with something weird and fun, I’m happiest when I’m creating. My projects are a mix of creativity, problem-solving, and a bit of stubbornness to get things just right.
-                  </p>
-                  <p>
-                    I believe in clean code, thoughtful design, and always pushing myself to learn more. Outside of coding, you’ll probably find me listening to music, exploring new places, or just hanging out with friends.
-                  </p>
-                  <p>
-                    This site is a collection of what I’ve built, what I’m learning, and what I’m excited about next. Thanks for stopping by!
-                  </p>
-                </>
+                bioParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
               )}
             </div>
-          )}
+
+            <div className='mt-8 grid gap-3 sm:grid-cols-3'>
+              <div className='rounded-2xl border border-black/10 bg-white/75 p-3'>
+                <Compass className='h-5 w-5 text-[#0c7fa3]' />
+                <p className='mt-2 text-sm font-semibold text-[#1d2838]'>Product Direction</p>
+              </div>
+              <div className='rounded-2xl border border-black/10 bg-white/75 p-3'>
+                <Lightbulb className='h-5 w-5 text-[#ef3e2f]' />
+                <p className='mt-2 text-sm font-semibold text-[#1d2838]'>Design Thinking</p>
+              </div>
+              <div className='rounded-2xl border border-black/10 bg-white/75 p-3'>
+                <Rocket className='h-5 w-5 text-[#f3a712]' />
+                <p className='mt-2 text-sm font-semibold text-[#1d2838]'>Fast Execution</p>
+              </div>
+            </div>
+
+            <div className='mt-8'>
+              <Link to='/Projects' className='inline-flex items-center gap-2 rounded-full bg-[#182335] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#101827]'>
+                View Selected Work
+                <ArrowUpRight className='h-4 w-4' />
+              </Link>
+            </div>
+          </article>
         </div>
       </section>
-    </div>
-  );
-};
+    </main>
+  )
+}
 
-export default Bio;
+export default Bio

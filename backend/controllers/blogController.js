@@ -5,8 +5,24 @@ const BlogPost = require('../models/BlogPost');
 exports.getPosts = async (req, res, next) => {
     try {
         const filter = req.query.all === 'true' ? {} : { published: true };
-        const posts = await BlogPost.find(filter).sort({ createdAt: -1 });
-        res.json({ success: true, count: posts.length, data: posts });
+
+        const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+        const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 50);
+        const skip = (page - 1) * limit;
+
+        const [posts, total] = await Promise.all([
+            BlogPost.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            BlogPost.countDocuments(filter),
+        ]);
+
+        res.json({
+            success: true,
+            count: posts.length,
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            data: posts,
+        });
     } catch (error) {
         next(error);
     }
