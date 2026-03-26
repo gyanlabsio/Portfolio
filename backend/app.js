@@ -48,14 +48,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // --- CSRF Protection ---
-app.use(csurf({
-  cookie: {
-    key: '_csrf',
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  },
-}));
+
+// --- CSRF Protection (exclude /api/config/seed-admin) ---
+app.use((req, res, next) => {
+  // Exclude only the POST /api/config/seed-admin route
+  if (req.method === 'POST' && req.path === '/api/config/seed-admin') {
+    return next();
+  }
+  return csurf({
+    cookie: {
+      key: '_csrf',
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    },
+  })(req, res, next);
+});
 
 // --- Static files (for local uploads fallback) ---
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
