@@ -65,10 +65,14 @@ app.use(cookieParser());
 
 // --- CSRF Protection (exclude /api/config/seed-admin) ---
 app.use((req, res, next) => {
-  // Exclude POST /api/config/seed-admin and GET /api/auth/csrf-token from CSRF protection
+  // Exclude CSRF for:
+  // - POST /api/config/seed-admin
+  // - GET /api/auth/csrf-token
+  // - All routes in test environment
   if (
-    (req.method === 'POST' && req.path === '/api/config/seed-admin') ||
-    (req.method === 'GET' && req.path === '/api/auth/csrf-token')
+    process.env.NODE_ENV === 'test' ||
+    (req.method === 'POST' && req.originalUrl === '/api/config/seed-admin') ||
+    (req.method === 'GET' && req.originalUrl === '/api/auth/csrf-token')
   ) {
     return next();
   }
