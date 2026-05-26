@@ -31,6 +31,7 @@ app.use(helmet({
 }));
 const allowedOrigins = [
   process.env.CLIENT_URL || 'https://gyanaranjandas.me',
+'https://www.gyanaranjandas.me',
   'http://localhost:5173',
   'http://localhost:5174',
 ];
@@ -64,8 +65,11 @@ app.use(cookieParser());
 
 // --- CSRF Protection (exclude /api/config/seed-admin) ---
 app.use((req, res, next) => {
-  // Exclude only the POST /api/config/seed-admin route
-  if (req.method === 'POST' && req.path === '/api/config/seed-admin') {
+  // Exclude POST /api/config/seed-admin and GET /api/auth/csrf-token from CSRF protection
+  if (
+    (req.method === 'POST' && req.path === '/api/config/seed-admin') ||
+    (req.method === 'GET' && req.path === '/api/auth/csrf-token')
+  ) {
     return next();
   }
   return csurf({
