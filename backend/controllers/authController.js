@@ -20,7 +20,14 @@ const cookieOptions = {
 // @desc    Get CSRF token
 // @route   GET /api/auth/csrf-token
 exports.getCsrfToken = async (req, res) => {
-    res.json({ success: true, csrfToken: req.csrfToken() });
+    // In test mode or if csurf middleware is not present, return a dummy token
+    let csrfToken;
+    if (typeof req.csrfToken === 'function') {
+        csrfToken = req.csrfToken();
+    } else {
+        csrfToken = 'test-csrf-token';
+    }
+    res.json({ success: true, csrfToken });
 };
 
 // @desc    Login admin
