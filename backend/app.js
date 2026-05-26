@@ -80,7 +80,7 @@ app.use((req, res, next) => {
     cookie: {
       key: '_csrf',
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
     },
   })(req, res, next);
