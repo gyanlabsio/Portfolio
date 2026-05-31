@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Code2, ExternalLink, Github, Layers3, Sparkles } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getProjects } from '../api/projects'
+import SplitText from '../components/effects/SplitText'
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
@@ -36,7 +37,9 @@ const Projects = () => {
                 <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
                 Case Studies
               </div>
-              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>Projects</h1>
+              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>
+                <SplitText text='Projects' delay={0.2} />
+              </h1>
             </div>
 
             <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>

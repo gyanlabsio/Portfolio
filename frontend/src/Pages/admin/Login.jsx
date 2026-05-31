@@ -27,15 +27,15 @@ const Login = () => {
     }
 
     return (
-        <div className='min-h-screen bg-[#f3f0e7] px-6 py-10'>
+        <div className='min-h-screen bg-[var(--bg)] px-6 py-10'>
             <div className='pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(12,127,163,0.16),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(239,62,47,0.18),transparent_30%)]' />
 
             <div className='mx-auto flex min-h-[80vh] w-full max-w-md items-center'>
                 <div className='glass-card enter-fade w-full rounded-[30px] p-7 md:p-8'>
-                    <h1 className='text-center font-nevera text-4xl tracking-[0.14em] text-[#ef3e2f]'>
+                    <h1 className='text-center font-nevera text-4xl tracking-[0.14em] text-[var(--accent)]'>
                         CMS LOGIN
                     </h1>
-                    <p className='mb-8 text-center text-sm text-[#5a6776]'>Portfolio Admin Panel</p>
+                    <p className='mb-8 text-center text-sm text-[var(--ink-soft)]'>Portfolio Admin Panel</p>
 
                     <form onSubmit={handleSubmit} className='space-y-4'>
                         {error && (
@@ -52,7 +52,7 @@ const Login = () => {
                             placeholder='Email'
                             autoComplete='email'
                             required
-                            className='focus-ring w-full rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#748295] focus:border-[#0c7fa3]/55 focus:outline-none'
+                            className='focus-ring w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/55 focus:outline-none'
                         />
                         <label htmlFor='admin-password' className='sr-only'>Password</label>
                         <input
@@ -63,12 +63,12 @@ const Login = () => {
                             placeholder='Password'
                             autoComplete='current-password'
                             required
-                            className='focus-ring w-full rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#748295] focus:border-[#0c7fa3]/55 focus:outline-none'
+                            className='focus-ring w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/55 focus:outline-none'
                         />
                         <button
                             type='submit'
                             disabled={loading}
-                            className='focus-ring button-pop w-full rounded-full bg-[#ef3e2f] py-3 text-sm font-bold uppercase tracking-[0.12em] text-white hover:bg-[#d92f22] disabled:opacity-50'
+                            className='focus-ring button-pop w-full rounded-full bg-[var(--accent)] py-3 text-sm font-bold uppercase tracking-[0.12em] text-white hover:brightness-110 disabled:opacity-50'
                         >
                             {loading ? 'Logging in...' : 'Login'}
                         </button>

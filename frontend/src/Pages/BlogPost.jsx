@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Calendar, Pencil, Tag } from 'lucide-react'
+import { ArrowLeft, BookOpenCheck, Calendar, Pencil, Tag } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import SEO from '../components/SEO'
 import { getPost } from '../api/blog'
@@ -70,6 +70,11 @@ const BlogPost = () => {
                             <Pencil className='h-3.5 w-3.5' />
                             {post.author}
                         </span>
+                        {post.isCaseStudy && (
+                            <span className='inline-flex items-center gap-1.5 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2.5 py-1 text-[10px] font-bold text-[var(--accent-2)]'>
+                                <BookOpenCheck className='h-3.5 w-3.5' /> Case Study
+                            </span>
+                        )}
                     </div>
 
                     {post.tags && post.tags.length > 0 && (

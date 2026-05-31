@@ -1,26 +1,41 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Calendar, Code2, NotebookTabs, Tag } from 'lucide-react'
+import { ArrowRight, BookOpenCheck, Calendar, Code2, NotebookTabs, Tag } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getPosts } from '../api/blog'
+import SplitText from '../components/effects/SplitText'
+import BlurText from '../components/effects/BlurText'
+
+const FILTERS = [
+  { key: '', label: 'All' },
+  { key: 'article', label: 'Articles' },
+  { key: 'casestudy', label: 'Case Studies' },
+]
 
 const Blog = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [activeFilter, setActiveFilter] = useState('')
+
+  const fetchPosts = useCallback(async (type) => {
+    setLoading(true)
+    try {
+      const { data } = await getPosts(false, type)
+      setPosts(data.data || [])
+    } catch (err) {
+      console.error('Failed to load blog posts', err)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const { data } = await getPosts()
-        setPosts(data.data || [])
-      } catch (err) {
-        console.error('Failed to load blog posts', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPosts()
-  }, [])
+    fetchPosts(activeFilter)
+  }, [activeFilter, fetchPosts])
+
+  const handleFilterChange = (key) => {
+    if (key !== activeFilter) setActiveFilter(key)
+  }
 
   return (
     <main className='pb-16 pt-8 md:pt-12'>
@@ -35,12 +50,14 @@ const Blog = () => {
             <div>
               <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-soft)]'>
                 <NotebookTabs className='h-3.5 w-3.5 text-[var(--accent-2)]' />
-                Writing & Ideas
+                Writing &amp; Ideas
               </div>
-              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>Blog</h1>
-              <p className='mt-2 max-w-2xl text-sm uppercase tracking-[0.11em] text-[var(--ink-soft)]'>
-                Notes on architecture, interfaces, and building things that ship.
-              </p>
+              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>
+                <SplitText text='Blog' delay={0.2} />
+              </h1>
+              <div className='mt-2 max-w-2xl text-sm uppercase tracking-[0.11em] text-[var(--ink-soft)]'>
+                <BlurText text='Notes on architecture, interfaces, and building things that ship.' delay={0.8} />
+              </div>
             </div>
             <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>
               <p className='font-semibold text-[var(--ink)]'>{posts.length || 0} posts</p>
@@ -50,7 +67,27 @@ const Blog = () => {
         </div>
       </section>
 
-      <section className='section-wrap mt-8'>
+      {/* ── Filter Tabs ── */}
+      <section className='section-wrap mt-6'>
+        <div className='flex items-center gap-2 overflow-x-auto'>
+          {FILTERS.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => handleFilterChange(f.key)}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 ${
+                activeFilter === f.key
+                  ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]'
+                  : 'border-[var(--line)] bg-[var(--surface)] text-[var(--ink-soft)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
+              }`}
+            >
+              {f.key === 'casestudy' && <BookOpenCheck className='h-3.5 w-3.5' />}
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className='section-wrap mt-6'>
         {loading && (
           <div className='glass-card rounded-3xl p-10 text-center'>
             <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
@@ -61,9 +98,15 @@ const Blog = () => {
         {!loading && posts.length === 0 && (
           <div className='glass-card rounded-3xl p-10 text-center'>
             <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
-            <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>Coming Soon</h3>
+            <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>
+              {activeFilter === 'casestudy' ? 'No Case Studies Yet' : activeFilter === 'article' ? 'No Articles Yet' : 'Coming Soon'}
+            </h3>
             <p className='mx-auto mt-3 max-w-lg text-[var(--ink-soft)]'>
-              Fresh writing is in progress. Check back for deep dives and field notes.
+              {activeFilter === 'casestudy'
+                ? 'Case studies are on the way. Check back soon for deep dives on real-world projects.'
+                : activeFilter === 'article'
+                  ? 'Articles are in progress. Check back for technical writing and field notes.'
+                  : 'Fresh writing is in progress. Check back for deep dives and field notes.'}
             </p>
           </div>
         )}
@@ -84,6 +127,11 @@ const Blog = () => {
                       className='h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]'
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-[#10182899] to-transparent' />
+                    {post.isCaseStudy && (
+                      <span className='absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-[#0c7fa3]/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm'>
+                        <BookOpenCheck className='h-3 w-3' /> Case Study
+                      </span>
+                    )}
                   </div>
                 )}
 
@@ -91,6 +139,11 @@ const Blog = () => {
                   <div className='flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
                     <Calendar className='w-3.5 h-3.5' />
                     {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {post.isCaseStudy && !post.featuredImage && (
+                      <span className='ml-auto inline-flex items-center gap-1 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--accent-2)]'>
+                        <BookOpenCheck className='h-3 w-3' /> Case Study
+                      </span>
+                    )}
                   </div>
 
                   <h3 className='display-title text-2xl leading-snug text-[var(--ink)] group-hover:text-[var(--accent-2)]'>

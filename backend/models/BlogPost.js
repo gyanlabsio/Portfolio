@@ -33,6 +33,10 @@ const blogPostSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    isCaseStudy: {
+        type: Boolean,
+        default: false,
+    },
     author: {
         type: String,
         default: 'Gyanaranjan Das',

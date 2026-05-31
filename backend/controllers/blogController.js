@@ -6,6 +6,12 @@ exports.getPosts = async (req, res, next) => {
     try {
         const filter = req.query.all === 'true' ? {} : { published: true };
 
+        if (req.query.type === 'casestudy') {
+            filter.isCaseStudy = true;
+        } else if (req.query.type === 'article') {
+            filter.isCaseStudy = { $ne: true };
+        }
+
         const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
         const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 50);
         const skip = (page - 1) * limit;

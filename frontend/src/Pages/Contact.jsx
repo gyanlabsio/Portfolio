@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Mail, MessageSquareText, PhoneCall } from 'lucide-react'
 import SEO from '../components/SEO'
 import { submitContact } from '../api/contact'
+import SplitText from '../components/effects/SplitText'
+import BlurText from '../components/effects/BlurText'
 
 const Contact = () => {
   // Contact form state
@@ -35,10 +37,12 @@ const Contact = () => {
       <section className='section-wrap enter-fade'>
         <div className='grid gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
           <article className='glass-card rounded-[30px] p-6 md:p-8'>
-            <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>Get In Touch</h1>
-            <p className='mt-3 max-w-md text-[var(--ink-soft)]'>
-              Have an idea, collaboration, or build request? Send a note and I will get back soon.
-            </p>
+            <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>
+              <SplitText text='Get In Touch' delay={0.2} />
+            </h1>
+            <div className='mt-3 max-w-md text-[var(--ink-soft)]'>
+              <BlurText text='Have an idea, collaboration, or build request? Send a note and I will get back soon.' delay={0.8} />
+            </div>
 
             <div className='mt-8 space-y-3'>
               <div className='flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4'>

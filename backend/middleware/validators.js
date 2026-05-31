@@ -65,6 +65,9 @@ const blogValidators = {
     body('published')
       .optional()
       .isBoolean().withMessage('Published must be a boolean'),
+    body('isCaseStudy')
+      .optional()
+      .isBoolean().withMessage('isCaseStudy must be a boolean'),
   ],
   id: [objectIdRule('id')],
 };
