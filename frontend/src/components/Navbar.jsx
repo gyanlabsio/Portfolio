@@ -12,8 +12,8 @@ const NAV_ITEMS = [
 ]
 
 const SOCIALS = [
-  { href: 'https://github.com/gyanaranjan-das', icon: Github, label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/gyanaranjan-das/', icon: Linkedin, label: 'LinkedIn' },
+  { href: 'https://github.com/gyanlabsio', icon: Github, label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/gyanlabs/', icon: Linkedin, label: 'LinkedIn' },
   { href: 'mailto:gyanlabs.io@gmail.com', icon: Mail, label: 'Email' },
 ]
 
