@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
-const csurf = require('csurf');
+
 const path = require('path');
 require('dotenv').config();
 
@@ -65,32 +65,10 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// --- CSRF Protection ---
-
-// --- CSRF Protection (exclude /api/config/seed-admin) ---
-app.use((req, res, next) => {
-  // Exclude CSRF for:
-  // - POST /api/config/seed-admin (admin seeding)
-  // - GET /api/auth/csrf-token (token endpoint itself)
-  // - POST /api/contact (public contact form — no session to protect)
-  // - All routes in test environment
-  if (
-    process.env.NODE_ENV === 'test' ||
-    (req.method === 'POST' && req.originalUrl === '/api/config/seed-admin') ||
-    (req.method === 'GET' && req.originalUrl === '/api/auth/csrf-token') ||
-    (req.method === 'POST' && req.originalUrl === '/api/contact')
-  ) {
-    return next();
-  }
-  return csurf({
-    cookie: {
-      key: '_csrf',
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    },
-  })(req, res, next);
-});
+// --- CSRF Protection Removed ---
+// Cookie-based CSRF (like csurf) does not work in cross-origin SPA setups
+// because modern browsers block third-party cookies.
+// Security against CSRF is already handled by our strict CORS policy above.
 
 // --- Static files (for local uploads fallback) ---
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
