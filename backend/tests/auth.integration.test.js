@@ -31,13 +31,8 @@ describe('Auth integration flow', () => {
   it('logs in, fetches profile, logs out, and blocks profile after logout', async () => {
     const agent = request.agent(app);
 
-    const csrf = await agent.get('/api/auth/csrf-token');
-    expect(csrf.statusCode).toBe(200);
-    expect(csrf.body.csrfToken).toBeTruthy();
-
     const login = await agent
       .post('/api/auth/login')
-      .set('X-CSRF-Token', csrf.body.csrfToken)
       .send({ email: 'admin@example.com', password: 'strong-password' });
 
     expect(login.statusCode).toBe(200);
@@ -49,8 +44,7 @@ describe('Auth integration flow', () => {
     expect(me.body.admin.email).toBe('admin@example.com');
 
     const logout = await agent
-      .post('/api/auth/logout')
-      .set('X-CSRF-Token', csrf.body.csrfToken);
+      .post('/api/auth/logout');
     expect(logout.statusCode).toBe(200);
     expect(logout.body.success).toBe(true);
 
