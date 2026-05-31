@@ -35,31 +35,31 @@ const Contact = () => {
       <section className='section-wrap enter-fade'>
         <div className='grid gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
           <article className='glass-card rounded-[30px] p-6 md:p-8'>
-            <h1 className='display-title text-4xl text-[#182335] sm:text-5xl'>Get In Touch</h1>
-            <p className='mt-3 max-w-md text-[#4b5766]'>
+            <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>Get In Touch</h1>
+            <p className='mt-3 max-w-md text-[var(--ink-soft)]'>
               Have an idea, collaboration, or build request? Send a note and I will get back soon.
             </p>
 
             <div className='mt-8 space-y-3'>
-              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
-                <Mail className='mt-0.5 h-5 w-5 text-[#0c7fa3]' />
+              <div className='flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4'>
+                <Mail className='mt-0.5 h-5 w-5 text-[var(--accent-2)]' />
                 <div>
-                  <p className='text-sm font-semibold text-[#1c2939]'>Email</p>
-                  <p className='text-sm text-[#5a6776]'>Best for project briefs and partnerships.</p>
+                  <p className='text-sm font-semibold text-[var(--ink)]'>Email</p>
+                  <p className='text-sm text-[var(--ink-soft)]'>Best for project briefs and partnerships.</p>
                 </div>
               </div>
-              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
-                <MessageSquareText className='mt-0.5 h-5 w-5 text-[#ef3e2f]' />
+              <div className='flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4'>
+                <MessageSquareText className='mt-0.5 h-5 w-5 text-[var(--accent)]' />
                 <div>
-                  <p className='text-sm font-semibold text-[#1c2939]'>Quick Response</p>
-                  <p className='text-sm text-[#5a6776]'>Clear goals get faster timelines and scoped estimates.</p>
+                  <p className='text-sm font-semibold text-[var(--ink)]'>Quick Response</p>
+                  <p className='text-sm text-[var(--ink-soft)]'>Clear goals get faster timelines and scoped estimates.</p>
                 </div>
               </div>
-              <div className='flex items-start gap-3 rounded-2xl border border-black/10 bg-white/75 p-4'>
-                <PhoneCall className='mt-0.5 h-5 w-5 text-[#f3a712]' />
+              <div className='flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4'>
+                <PhoneCall className='mt-0.5 h-5 w-5 text-[var(--accent-3)]' />
                 <div>
-                  <p className='text-sm font-semibold text-[#1c2939]'>Consultation</p>
-                  <p className='text-sm text-[#5a6776]'>Include your preferred timezone and communication mode.</p>
+                  <p className='text-sm font-semibold text-[var(--ink)]'>Consultation</p>
+                  <p className='text-sm text-[var(--ink-soft)]'>Include your preferred timezone and communication mode.</p>
                 </div>
               </div>
             </div>
@@ -77,7 +77,7 @@ const Contact = () => {
                 placeholder='Your Name'
                 autoComplete="name"
                 required
-                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-1'
+                className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none md:col-span-1'
               />
               <label htmlFor='contact-email' className='sr-only'>Your Email</label>
               <input
@@ -89,7 +89,7 @@ const Contact = () => {
                 placeholder='Your Email'
                 autoComplete="email"
                 required
-                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-1'
+                className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none md:col-span-1'
               />
               <label htmlFor='contact-subject' className='sr-only'>Subject</label>
               <input
@@ -99,7 +99,7 @@ const Contact = () => {
                 value={contactData.subject}
                 onChange={handleContactChange}
                 placeholder='Subject'
-                className='rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-2'
+                className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none md:col-span-2'
               />
               <label htmlFor='contact-message' className='sr-only'>Your Message</label>
               <textarea
@@ -110,13 +110,13 @@ const Contact = () => {
                 placeholder='Your Message'
                 required
                 rows={5}
-                className='resize-none rounded-2xl border border-black/10 bg-white/85 px-4 py-3 text-[#1f2937] placeholder:text-[#788494] focus:border-[#0c7fa3]/50 focus:outline-none md:col-span-2'
+                className='resize-none rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none md:col-span-2'
               />
               <div className='md:col-span-2 flex flex-col items-start gap-3 sm:flex-row sm:items-center'>
                 <button
                   type='submit'
                   disabled={contactLoading}
-                  className='inline-flex items-center rounded-full bg-[#ef3e2f] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#db2f21] disabled:opacity-60'
+                  className='inline-flex items-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-110 disabled:opacity-60'
                 >
                   {contactLoading ? 'Sending...' : 'Send Message'}
                 </button>

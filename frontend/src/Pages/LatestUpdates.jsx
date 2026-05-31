@@ -52,7 +52,7 @@ const LatestUpdates = () => {
   }, [])
 
   return (
-    <section className='min-h-screen text-white flex items-center justify-center py-24 updates-section overflow-hidden'>
+    <section className='min-h-screen text-[var(--ink)] flex items-center justify-center py-24 updates-section overflow-hidden'>
       <div className='max-w-6xl w-full flex flex-col lg:flex-row gap-12 lg:gap-16 px-6 md:px-10 items-center lg:items-start'>
 
         {/* Left Side - Image with Red Vibe tint (on top on mobile) */}
@@ -64,7 +64,7 @@ const LatestUpdates = () => {
               alt="Latest update preview"
               className='absolute inset-0 w-full h-full object-cover grayscale brightness-75 mx-auto block z-10'
             />
-            <div className='absolute inset-0 bg-[#FF0000] mix-blend-multiply opacity-90 pointer-events-none z-20'></div>
+            <div className='absolute inset-0 bg-[var(--accent)] mix-blend-multiply opacity-90 pointer-events-none z-20'></div>
 
             {/* Full Color Image Reveal - Clipped to bottom right by default, expands to full on hover */}
             <div className='absolute inset-0 z-30 transition-all duration-700 ease-in-out [clip-path:polygon(100%_100%,100%_100%,100%_100%,100%_100%)] group-hover:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]'>
@@ -79,7 +79,7 @@ const LatestUpdates = () => {
 
         {/* Right Side - Content (below image on mobile) */}
         <div className='flex-[1.2] w-full flex flex-col justify-center gap-8 lg:gap-10 updates-content'>
-          <h2 className='text-4xl md:text-5xl font-bold font-nevera regular text-[#ff0000] tracking-wider uppercase text-center lg:text-left overflow-hidden py-1'>
+          <h2 className='text-4xl md:text-5xl font-bold font-nevera regular text-[var(--accent)] tracking-wider uppercase text-center lg:text-left overflow-hidden py-1'>
             {"LATEST UPDATES".split("").map((char, index) => (
               <span
                 key={index}
@@ -94,41 +94,41 @@ const LatestUpdates = () => {
           <div className='flex flex-col gap-5'>
 
             {/* Card 1 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[#111] border border-white/5 hover:border-[#FF0000]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[#FF0000]/20 flex items-center justify-center shrink-0 border border-[#FF0000]/30'>
-                <Rocket className='w-5 h-5 text-[#FF0000]' />
+            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+                <Rocket className='w-5 h-5 text-[var(--accent)]' />
               </div>
-              <p className='font-manrope regular text-sm md:text-base text-gray-300'>
-                Just launched my latest <span className='text-white font-semibold'>full-stack project</span>.
+              <p className='font-manrope regular text-sm md:text-base text-[var(--ink-soft)]'>
+                Just launched my latest <span className='text-[var(--ink)] font-semibold'>full-stack project</span>.
               </p>
             </div>
 
             {/* Card 2 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[#111] border border-white/5 hover:border-[#FF0000]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[#FF0000]/20 flex items-center justify-center shrink-0 border border-[#FF0000]/30'>
-                <MonitorSmartphone className='w-5 h-5 text-[#FF0000]' />
+            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+                <MonitorSmartphone className='w-5 h-5 text-[var(--accent)]' />
               </div>
-              <p className='font-manrope text-sm md:text-base text-gray-300'>
+              <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>
                 Known for building responsive, high-performance web applications.
               </p>
             </div>
 
             {/* Card 3 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[#111] border border-white/5 hover:border-[#FF0000]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[#FF0000]/20 flex items-center justify-center shrink-0 border border-[#FF0000]/30'>
-                <Layers className='w-5 h-5 text-[#FF0000]' />
+            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+                <Layers className='w-5 h-5 text-[var(--accent)]' />
               </div>
-              <p className='font-manrope text-sm md:text-base text-gray-300'>
+              <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>
                 Specializes in React, Tailwind CSS, and frontend architecture.
               </p>
             </div>
 
             {/* Card 4 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[#111] border border-white/5 hover:border-[#FF0000]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[#FF0000]/20 flex items-center justify-center shrink-0 border border-[#FF0000]/30'>
-                <Code className='w-5 h-5 text-[#FF0000]' />
+            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+                <Code className='w-5 h-5 text-[var(--accent)]' />
               </div>
-              <p className='font-manrope text-sm md:text-base text-gray-300'>
+              <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>
                 Always exploring new tech—currently diving into Next.js & AI.
               </p>
             </div>
@@ -137,9 +137,9 @@ const LatestUpdates = () => {
 
           <div className='pt-2'>
             <Link to='/Projects'
-              className='text-white relative text-lg tracking-wide group pb-1 font-reross font-normal inline-block'>
+              className='text-[var(--ink)] relative text-lg tracking-wide group pb-1 font-reross font-normal inline-block'>
               View All
-              <span className='absolute left-0 bottom-0 w-full h-[2px] bg-[#FF0000] transition-all duration-500 group-hover:w-0'></span>
+              <span className='absolute left-0 bottom-0 w-full h-[2px] bg-[var(--accent)] transition-all duration-500 group-hover:w-0'></span>
             </Link>
           </div>
         </div>

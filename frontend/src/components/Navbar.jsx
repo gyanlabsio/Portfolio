@@ -33,11 +33,11 @@ const Navbar = () => {
       <div className='section-wrap'>
         <div className='glass-card surface-interactive rounded-2xl px-4 py-3 md:px-6 md:py-4'>
           <div className='flex items-center justify-between gap-4'>
-            <Link to='/' onClick={() => setOpen(false)} className='display-title focus-ring rounded-lg px-1 py-0.5 text-xl tracking-[0.08em] text-[#1f2a38] md:text-2xl'>
+            <Link to='/' onClick={() => setOpen(false)} className='display-title focus-ring rounded-lg px-1 py-0.5 text-xl tracking-[0.08em] text-[var(--ink)] md:text-2xl'>
               Gyanaranjan.
             </Link>
 
-            <nav className='hidden lg:flex items-center gap-2 rounded-full border border-black/10 bg-white/60 p-1'>
+            <nav className='hidden lg:flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] p-1'>
               {NAV_ITEMS.map((item) => {
                 const active = location.pathname === item.to
                 return (
@@ -45,7 +45,7 @@ const Navbar = () => {
                     key={item.to}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className={`focus-ring rounded-full px-4 py-2 text-sm font-semibold transition-all ${active ? 'bg-[#ef3e2f] text-white shadow-sm' : 'text-[#2a3442] hover:bg-black/5'}`}
+                    className={`focus-ring rounded-full px-4 py-2 text-sm font-semibold transition-all ${active ? 'bg-[var(--accent)] text-white shadow-sm' : 'text-[var(--ink)] hover:bg-[var(--line)]'}`}
                   >
                     {item.label}
                   </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
 
             <div className='hidden lg:flex items-center gap-2'>
               <ThemeToggle />
-              <div className="w-[1px] h-6 bg-black/10 mx-1"></div>
+              <div className="w-[1px] h-6 bg-[var(--line)] mx-1"></div>
               {SOCIALS.map((social) => (
                 <a
                   key={social.label}
@@ -63,7 +63,7 @@ const Navbar = () => {
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label={social.label}
-                  className='focus-ring button-pop grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white/70 text-[var(--ink)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
+                  className='focus-ring button-pop grid h-9 w-9 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
                 >
                   <social.icon className='h-4 w-4' />
                 </a>
@@ -73,7 +73,7 @@ const Navbar = () => {
             <button
               type='button'
               onClick={() => setOpen((prev) => !prev)}
-              className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-xl border border-black/10 bg-white/70 text-[#1e2735] lg:hidden'
+              className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] lg:hidden'
               aria-label='Toggle menu'
             >
               {open ? <X className='h-5 w-5' /> : <Menu className='h-5 w-5' />}
@@ -83,12 +83,12 @@ const Navbar = () => {
       </div>
 
       {open && (
-        <div className='fixed inset-0 z-40 bg-[#121720]/35 backdrop-blur-sm lg:hidden' onClick={() => setOpen(false)}>
+        <div className='fixed inset-0 z-40 bg-[var(--ink)]/35 backdrop-blur-sm lg:hidden' onClick={() => setOpen(false)}>
           <aside
-            className='ml-auto flex h-full w-[84vw] max-w-sm flex-col gap-6 border-l border-black/10 bg-[#f7f5ef] p-6 enter-fade'
+            className='ml-auto flex h-full w-[84vw] max-w-sm flex-col gap-6 border-l border-[var(--line)] bg-[var(--bg)] p-6 enter-fade'
             onClick={(event) => event.stopPropagation()}
           >
-            <p className='display-title text-2xl text-[#1f2a38]'>Explore</p>
+            <p className='display-title text-2xl text-[var(--ink)]'>Explore</p>
 
             <div className='stagger-children flex flex-col gap-2'>
               {NAV_ITEMS.map((item) => {
@@ -98,7 +98,7 @@ const Navbar = () => {
                     key={item.to}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className={`focus-ring button-pop rounded-xl border px-4 py-3 text-base font-semibold ${active ? 'border-[#ef3e2f]/40 bg-[#ef3e2f] text-white' : 'border-black/10 bg-white/70 text-[#1e2735]'}`}
+                    className={`focus-ring button-pop rounded-xl border px-4 py-3 text-base font-semibold ${active ? 'border-[var(--accent)]/40 bg-[var(--accent)] text-white' : 'border-[var(--line)] bg-[var(--surface)] text-[var(--ink)]'}`}
                   >
                     {item.label}
                   </Link>
@@ -114,7 +114,7 @@ const Navbar = () => {
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label={social.label}
-                  className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white text-[#1e2735]'
+                  className='focus-ring button-pop grid h-10 w-10 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)]'
                 >
                   <social.icon className='h-4 w-4' />
                 </a>

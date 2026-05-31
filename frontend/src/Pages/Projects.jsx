@@ -26,21 +26,21 @@ const Projects = () => {
       <SEO title='Projects' description='Featured projects built with modern web technologies and product intent.' />
 
       <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-white/90 via-[#f1ede4]/90 to-[#ebe5d8]/90 p-6 shadow-[0_24px_80px_rgba(18,23,32,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full bg-[#0c7fa3]/20 blur-3xl' />
-          <div className='pointer-events-none absolute -right-14 bottom-0 h-44 w-44 rounded-full bg-[#ef3e2f]/20 blur-3xl' />
+        <div className='relative overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
+          <div className='pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full bg-[var(--accent-2)]/20 blur-3xl' />
+          <div className='pointer-events-none absolute -right-14 bottom-0 h-44 w-44 rounded-full bg-[var(--accent)]/20 blur-3xl' />
 
           <div className='relative flex flex-wrap items-center justify-between gap-4'>
             <div>
-              <div className='inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#516173]'>
-                <Sparkles className='h-3.5 w-3.5 text-[#ef3e2f]' />
+              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-soft)]'>
+                <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
                 Case Studies
               </div>
-              <h1 className='display-title mt-3 text-4xl text-[#162133] sm:text-6xl'>Projects</h1>
+              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>Projects</h1>
             </div>
 
-            <div className='rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm text-[#435063]'>
-              <p className='font-semibold text-[#182234]'>{projects.length || 0} builds</p>
+            <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>
+              <p className='font-semibold text-[var(--ink)]'>{projects.length || 0} builds</p>
               <p>crafted and shipped</p>
             </div>
           </div>
@@ -50,16 +50,16 @@ const Projects = () => {
       <section className='section-wrap mt-8'>
         {loading && (
           <div className='glass-card rounded-3xl p-10 text-center'>
-            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#ef3e2f]/30 border-t-[#ef3e2f]' />
+            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
             <p className='mt-3 ink-soft'>Loading projects...</p>
           </div>
         )}
 
         {!loading && projects.length === 0 && (
           <div className='glass-card rounded-3xl p-10 text-center'>
-            <Code2 className='mx-auto h-12 w-12 text-[#ef3e2f]' />
-            <h3 className='display-title mt-4 text-3xl text-[#1a2535]'>Coming Soon</h3>
-            <p className='mx-auto mt-3 max-w-lg text-[#4b5766]'>
+            <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
+            <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>Coming Soon</h3>
+            <p className='mx-auto mt-3 max-w-lg text-[var(--ink-soft)]'>
               New projects are being prepared right now. This gallery will update as soon as fresh builds are ready.
             </p>
           </div>
@@ -73,7 +73,7 @@ const Projects = () => {
                 className='glass-card group enter-fade rounded-3xl p-4 md:p-5'
               >
                 {project.featuredImage && (
-                  <div className='relative overflow-hidden rounded-2xl border border-black/10'>
+                  <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
                     <img
                       src={project.featuredImage}
                       alt={project.title}
@@ -84,11 +84,11 @@ const Projects = () => {
                 )}
 
                 <div className='mt-4 space-y-4'>
-                  <h3 className='display-title text-2xl text-[#192334] group-hover:text-[#ef3e2f]'>
+                  <h3 className='display-title text-2xl text-[var(--ink)] group-hover:text-[var(--accent)]'>
                     {project.title}
                   </h3>
 
-                  <p className='line-clamp-3 text-sm leading-relaxed text-[#4f5a67]'>
+                  <p className='line-clamp-3 text-sm leading-relaxed text-[var(--ink-soft)]'>
                     {project.shortDescription || project.description}
                   </p>
 
@@ -97,9 +97,9 @@ const Projects = () => {
                       {project.techStack.slice(0, 4).map((tech) => (
                         <span
                           key={tech}
-                          className='inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/80 px-3 py-1 text-xs font-semibold text-[#334155]'
+                          className='inline-flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold text-[var(--ink)]'
                         >
-                          <Layers3 className='h-3 w-3 text-[#0c7fa3]' />
+                          <Layers3 className='h-3 w-3 text-[var(--accent-2)]' />
                           {tech}
                         </span>
                       ))}
@@ -112,7 +112,7 @@ const Projects = () => {
                         href={project.githubUrl}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 bg-white/75 text-[#334155] transition hover:-translate-y-0.5 hover:border-[#0c7fa3]/45 hover:text-[#0c7fa3]'
+                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
                         aria-label={`Open ${project.title} on GitHub`}
                       >
                         <Github className='w-4 h-4' />
@@ -123,7 +123,7 @@ const Projects = () => {
                         href={project.liveUrl}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 bg-white/75 text-[#334155] transition hover:-translate-y-0.5 hover:border-[#ef3e2f]/45 hover:text-[#ef3e2f]'
+                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)]'
                         aria-label={`Open live demo of ${project.title}`}
                       >
                         <ExternalLink className='w-4 h-4' />

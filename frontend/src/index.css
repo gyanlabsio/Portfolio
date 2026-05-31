@@ -14,6 +14,18 @@
   --font-manrope: 'Manrope', sans-serif;
   --font-wix: 'Wix Madefor Text', sans-serif;
   --font-reross: 'reross-quadratic', sans-serif;
+  
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-ring: var(--ring);
 }
 
 :root {
@@ -23,21 +35,25 @@
   --ink-soft: #4f5a67;
   --line: rgba(18, 23, 32, 0.15);
   --card: rgba(255, 255, 255, 0.78);
+  --surface: rgba(255, 255, 255, 0.7);
   --accent: #ef3e2f;
   --accent-2: #0c7fa3;
+  --accent-3: #f3a712;
   --ring: rgba(12, 127, 163, 0.35);
 }
 
 .dark {
-  --bg: #0f1115;
-  --bg-alt: #0a0b0e;
-  --ink: #f6f5f1;
-  --ink-soft: #9ba3af;
+  --bg: #0a0d14;
+  --bg-alt: #05060a;
+  --ink: #f8f9fa;
+  --ink-soft: #8b949e;
   --line: rgba(255, 255, 255, 0.1);
-  --card: rgba(20, 25, 35, 0.7);
-  --accent: #ef3e2f;
-  --accent-2: #0c7fa3;
-  --ring: rgba(12, 127, 163, 0.5);
+  --card: rgba(22, 27, 34, 0.6);
+  --surface: rgba(22, 27, 34, 0.5);
+  --accent: #ff5a43;
+  --accent-2: #22d3ee;
+  --accent-3: #f3a712;
+  --ring: rgba(34, 211, 238, 0.4);
 }
 
 @layer base {

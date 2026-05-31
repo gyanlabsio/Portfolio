@@ -44,50 +44,50 @@ const Home = () => {
       <SEO title='Home' description='Full-stack portfolio with immersive interfaces, product thinking, and robust engineering.' />
 
       <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[34px] border border-white/60 bg-gradient-to-br from-white/90 via-[#f2eee5]/90 to-[#ebe6db]/90 p-6 shadow-[0_24px_80px_rgba(18,23,32,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[#ef3e2f]/20 blur-3xl' />
-          <div className='pointer-events-none absolute -left-10 bottom-0 h-44 w-44 rounded-full bg-[#0c7fa3]/20 blur-3xl' />
+        <div className='relative overflow-hidden rounded-[34px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
+          <div className='pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[var(--accent)]/20 blur-3xl' />
+          <div className='pointer-events-none absolute -left-10 bottom-0 h-44 w-44 rounded-full bg-[var(--accent-2)]/20 blur-3xl' />
 
           <div className='relative grid gap-10 lg:grid-cols-[1.35fr_0.9fr]'>
             <div className='space-y-6'>
-              <div className='inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#415064]'>
-                <Sparkles className='h-3.5 w-3.5 text-[#ef3e2f]' />
+              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--ink-soft)]'>
+                <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
                 Design + Engineering
               </div>
 
-              <h1 className='display-title text-4xl text-[#142032] sm:text-6xl md:text-7xl'>
+              <h1 className='display-title text-4xl text-[var(--ink)] sm:text-6xl md:text-7xl'>
                 <SplitText text={heroTitle} delay={0.2} />
               </h1>
 
-              <p className='max-w-xl text-base leading-relaxed text-[#405063] md:text-lg'>
+              <p className='max-w-xl text-base leading-relaxed text-[var(--ink-soft)] md:text-lg'>
                 <BlurText text={heroSubtitle} delay={0.8} />
               </p>
 
               <div className='stagger-children flex flex-wrap gap-3'>
-                <Link to='/Projects' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full bg-[#ef3e2f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#dd2f21]'>
+                <Link to='/Projects' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white hover:brightness-110'>
                   Explore Projects
                   <ArrowUpRight className='h-4 w-4' />
                 </Link>
-                <Link to='/Contact' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/75 px-5 py-3 text-sm font-semibold text-[#1d2838] hover:border-[#0c7fa3]/45 hover:text-[#0c7fa3]'>
+                <Link to='/Contact' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--ink)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'>
                   Start a Conversation
                 </Link>
               </div>
             </div>
 
             <aside className='glass-card float-y surface-interactive rounded-3xl p-5 md:p-6'>
-              <p className='text-xs uppercase tracking-[0.2em] text-[#5a6776]'>
+              <p className='text-xs uppercase tracking-[0.2em] text-[var(--ink-soft)]'>
                 <ShinyText text="Now Building" speed={3} />
               </p>
-              <p className='mt-3 text-lg font-semibold text-[#172132]'>
+              <p className='mt-3 text-lg font-semibold text-[var(--ink)]'>
                 Scalable web experiences with narrative UI, robust APIs, and polished admin tooling.
               </p>
               <div className='mt-6 grid grid-cols-2 gap-3 text-sm'>
-                <div className='rounded-2xl border border-black/10 bg-white/70 p-3'>
-                  <p className='text-2xl font-bold text-[#ef3e2f]'>{featuredProjects.length || '--'}</p>
+                <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
+                  <p className='text-2xl font-bold text-[var(--accent)]'>{featuredProjects.length || '--'}</p>
                   <p className='ink-soft'>featured builds</p>
                 </div>
-                <div className='rounded-2xl border border-black/10 bg-white/70 p-3'>
-                  <p className='text-2xl font-bold text-[#0c7fa3]'>{latestPosts.length || '--'}</p>
+                <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
+                  <p className='text-2xl font-bold text-[var(--accent-2)]'>{latestPosts.length || '--'}</p>
                   <p className='ink-soft'>latest insights</p>
                 </div>
               </div>
@@ -99,8 +99,8 @@ const Home = () => {
       <section className='section-wrap mt-10 grid gap-6 lg:grid-cols-2'>
         <article className='glass-card surface-interactive rounded-3xl p-6 md:p-8'>
           <div className='mb-4 flex items-center justify-between'>
-            <h2 className='display-title text-3xl text-[#1b2636] md:text-4xl'>Featured Work</h2>
-            <Link to='/Projects' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[#0c7fa3] hover:text-[#075c76]'>See all</Link>
+            <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Featured Work</h2>
+            <Link to='/Projects' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>See all</Link>
           </div>
 
           {loading ? (
@@ -110,9 +110,9 @@ const Home = () => {
           ) : (
             <div className='space-y-3'>
               {featuredProjects.slice(0, 3).map((project) => (
-                <Link key={project._id} to='/Projects' className='group surface-interactive focus-ring block rounded-2xl border border-black/10 bg-white/70 p-4 hover:border-[#ef3e2f]/35'>
-                  <p className='text-base font-semibold text-[#192336] group-hover:text-[#ef3e2f]'>{project.title}</p>
-                  <p className='mt-1 text-sm leading-relaxed text-[#4f5a67]'>{project.shortDescription || project.description}</p>
+                <Link key={project._id} to='/Projects' className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]'>
+                  <p className='text-base font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]'>{project.title}</p>
+                  <p className='mt-1 text-sm leading-relaxed text-[var(--ink-soft)]'>{project.shortDescription || project.description}</p>
                 </Link>
               ))}
             </div>
@@ -121,8 +121,8 @@ const Home = () => {
 
         <article className='glass-card surface-interactive rounded-3xl p-6 md:p-8'>
           <div className='mb-4 flex items-center justify-between'>
-            <h2 className='display-title text-3xl text-[#1b2636] md:text-4xl'>Latest Writing</h2>
-            <Link to='/Blog' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[#0c7fa3] hover:text-[#075c76]'>Read all</Link>
+            <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Latest Writing</h2>
+            <Link to='/Blog' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>Read all</Link>
           </div>
 
           {loading ? (
@@ -132,10 +132,10 @@ const Home = () => {
           ) : (
             <div className='space-y-3'>
               {latestPosts.map((post) => (
-                <Link key={post._id} to={`/blog/${post.slug}`} className='group surface-interactive focus-ring block rounded-2xl border border-black/10 bg-white/70 p-4 hover:border-[#0c7fa3]/35'>
-                  <p className='text-base font-semibold text-[#192336] group-hover:text-[#0c7fa3]'>{post.title}</p>
-                  <p className='mt-1 line-clamp-2 text-sm text-[#4f5a67]'>{post.excerpt}</p>
-                  <p className='mt-2 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.1em] text-[#6a7685]'>
+                <Link key={post._id} to={`/blog/${post.slug}`} className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-2)]'>
+                  <p className='text-base font-semibold text-[var(--ink)] group-hover:text-[var(--accent-2)]'>{post.title}</p>
+                  <p className='mt-1 line-clamp-2 text-sm text-[var(--ink-soft)]'>{post.excerpt}</p>
+                  <p className='mt-2 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink-soft)]'>
                     <Clock3 className='h-3 w-3' />
                     {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </p>

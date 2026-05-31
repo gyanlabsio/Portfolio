@@ -27,23 +27,23 @@ const Blog = () => {
       <SEO title='Blog' description='Thoughts on web development, design systems, and product architecture.' />
 
       <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-white/90 via-[#f0ede3]/90 to-[#ece7dc]/90 p-6 shadow-[0_24px_80px_rgba(18,23,32,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -left-12 top-0 h-44 w-44 rounded-full bg-[#f3a712]/16 blur-3xl' />
-          <div className='pointer-events-none absolute -right-12 bottom-0 h-44 w-44 rounded-full bg-[#0c7fa3]/18 blur-3xl' />
+        <div className='relative overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
+          <div className='pointer-events-none absolute -left-12 top-0 h-44 w-44 rounded-full bg-[var(--accent-3)]/16 blur-3xl' />
+          <div className='pointer-events-none absolute -right-12 bottom-0 h-44 w-44 rounded-full bg-[var(--accent-2)]/18 blur-3xl' />
 
           <div className='relative flex flex-wrap items-center justify-between gap-4'>
             <div>
-              <div className='inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#516173]'>
-                <NotebookTabs className='h-3.5 w-3.5 text-[#0c7fa3]' />
+              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-soft)]'>
+                <NotebookTabs className='h-3.5 w-3.5 text-[var(--accent-2)]' />
                 Writing & Ideas
               </div>
-              <h1 className='display-title mt-3 text-4xl text-[#162133] sm:text-6xl'>Blog</h1>
-              <p className='mt-2 max-w-2xl text-sm uppercase tracking-[0.11em] text-[#5a6979]'>
+              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>Blog</h1>
+              <p className='mt-2 max-w-2xl text-sm uppercase tracking-[0.11em] text-[var(--ink-soft)]'>
                 Notes on architecture, interfaces, and building things that ship.
               </p>
             </div>
-            <div className='rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm text-[#435063]'>
-              <p className='font-semibold text-[#182234]'>{posts.length || 0} posts</p>
+            <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>
+              <p className='font-semibold text-[var(--ink)]'>{posts.length || 0} posts</p>
               <p>currently published</p>
             </div>
           </div>
@@ -53,16 +53,16 @@ const Blog = () => {
       <section className='section-wrap mt-8'>
         {loading && (
           <div className='glass-card rounded-3xl p-10 text-center'>
-            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#ef3e2f]/30 border-t-[#ef3e2f]' />
+            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
             <p className='mt-3 ink-soft'>Loading posts...</p>
           </div>
         )}
 
         {!loading && posts.length === 0 && (
           <div className='glass-card rounded-3xl p-10 text-center'>
-            <Code2 className='mx-auto h-12 w-12 text-[#ef3e2f]' />
-            <h3 className='display-title mt-4 text-3xl text-[#1a2535]'>Coming Soon</h3>
-            <p className='mx-auto mt-3 max-w-lg text-[#4b5766]'>
+            <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
+            <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>Coming Soon</h3>
+            <p className='mx-auto mt-3 max-w-lg text-[var(--ink-soft)]'>
               Fresh writing is in progress. Check back for deep dives and field notes.
             </p>
           </div>
@@ -77,7 +77,7 @@ const Blog = () => {
                 className='glass-card group enter-fade block rounded-3xl p-4 md:p-5'
               >
                 {post.featuredImage && (
-                  <div className='relative overflow-hidden rounded-2xl border border-black/10'>
+                  <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
                     <img
                       src={post.featuredImage}
                       alt={post.title}
@@ -88,16 +88,16 @@ const Blog = () => {
                 )}
 
                 <div className='mt-4 space-y-3'>
-                  <div className='flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#647486]'>
+                  <div className='flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
                     <Calendar className='w-3.5 h-3.5' />
                     {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </div>
 
-                  <h3 className='display-title text-2xl leading-snug text-[#192334] group-hover:text-[#0c7fa3]'>
+                  <h3 className='display-title text-2xl leading-snug text-[var(--ink)] group-hover:text-[var(--accent-2)]'>
                     {post.title}
                   </h3>
 
-                  <p className='line-clamp-3 text-sm leading-relaxed text-[#4f5a67]'>
+                  <p className='line-clamp-3 text-sm leading-relaxed text-[var(--ink-soft)]'>
                     {post.excerpt}
                   </p>
 
@@ -106,7 +106,7 @@ const Blog = () => {
                       {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className='inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/80 px-2.5 py-1 text-xs font-semibold text-[#475569]'
+                          className='inline-flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1 text-xs font-semibold text-[var(--ink)]'
                         >
                           <Tag className='w-2.5 h-2.5' /> {tag}
                         </span>
@@ -114,7 +114,7 @@ const Blog = () => {
                     </div>
                   )}
 
-                  <div className='flex items-center gap-1 pt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#ef3e2f] transition-all duration-300 group-hover:gap-2'>
+                  <div className='flex items-center gap-1 pt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] transition-all duration-300 group-hover:gap-2'>
                     Read More <ArrowRight className='h-3.5 w-3.5' />
                   </div>
                 </div>
