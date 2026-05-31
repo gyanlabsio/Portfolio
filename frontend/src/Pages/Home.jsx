@@ -5,6 +5,9 @@ import SEO from '../components/SEO'
 import { getSiteConfig } from '../api/admin'
 import { getFeaturedProjects } from '../api/projects'
 import { getPosts } from '../api/blog'
+import SplitText from '../components/effects/SplitText'
+import BlurText from '../components/effects/BlurText'
+import ShinyText from '../components/effects/ShinyText'
 
 const Home = () => {
   const [config, setConfig] = useState(null)
@@ -53,10 +56,12 @@ const Home = () => {
               </div>
 
               <h1 className='display-title text-4xl text-[#142032] sm:text-6xl md:text-7xl'>
-                {heroTitle}
+                <SplitText text={heroTitle} delay={0.2} />
               </h1>
 
-              <p className='max-w-xl text-base leading-relaxed text-[#405063] md:text-lg'>{heroSubtitle}</p>
+              <p className='max-w-xl text-base leading-relaxed text-[#405063] md:text-lg'>
+                <BlurText text={heroSubtitle} delay={0.8} />
+              </p>
 
               <div className='stagger-children flex flex-wrap gap-3'>
                 <Link to='/Projects' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full bg-[#ef3e2f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#dd2f21]'>
@@ -70,7 +75,9 @@ const Home = () => {
             </div>
 
             <aside className='glass-card float-y surface-interactive rounded-3xl p-5 md:p-6'>
-              <p className='text-xs uppercase tracking-[0.2em] text-[#5a6776]'>Now Building</p>
+              <p className='text-xs uppercase tracking-[0.2em] text-[#5a6776]'>
+                <ShinyText text="Now Building" speed={3} />
+              </p>
               <p className='mt-3 text-lg font-semibold text-[#172132]'>
                 Scalable web experiences with narrative UI, robust APIs, and polished admin tooling.
               </p>

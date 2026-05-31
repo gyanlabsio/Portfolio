@@ -1,6 +1,7 @@
 import { Github, Linkedin, Mail, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import ThemeToggle from './ThemeToggle'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
@@ -53,6 +54,8 @@ const Navbar = () => {
             </nav>
 
             <div className='hidden lg:flex items-center gap-2'>
+              <ThemeToggle />
+              <div className="w-[1px] h-6 bg-black/10 mx-1"></div>
               {SOCIALS.map((social) => (
                 <a
                   key={social.label}
@@ -60,7 +63,7 @@ const Navbar = () => {
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label={social.label}
-                  className='focus-ring button-pop grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white/70 text-[#1e2735] hover:border-[#0c7fa3] hover:text-[#0c7fa3]'
+                  className='focus-ring button-pop grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white/70 text-[var(--ink)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
                 >
                   <social.icon className='h-4 w-4' />
                 </a>

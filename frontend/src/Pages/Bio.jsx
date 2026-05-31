@@ -4,6 +4,8 @@ import { ArrowUpRight, Compass, Lightbulb, Rocket } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSiteConfig } from '../api/admin'
 import bioProfileImage from '../assets/ChatGPT Image Mar 2, 2026, 09_49_15 PM.png'
+import SplitText from '../components/effects/SplitText'
+import BlurText from '../components/effects/BlurText'
 
 const Bio = () => {
   const [config, setConfig] = useState(null)
@@ -57,9 +59,11 @@ const Bio = () => {
           </article>
 
           <article className='glass-card rounded-[30px] p-6 md:p-8'>
-            <h1 className='display-title text-4xl text-[#182335] sm:text-5xl'>Biography</h1>
+            <h1 className='display-title text-4xl text-[#182335] sm:text-5xl'>
+              <SplitText text="Biography" delay={0.2} />
+            </h1>
             <p className='mt-3 max-w-xl text-sm uppercase tracking-[0.14em] text-[#526172]'>
-              Thoughtful engineering. Character-rich interfaces. Relentless iteration.
+              <BlurText text="Thoughtful engineering. Character-rich interfaces. Relentless iteration." delay={0.6} />
             </p>
 
             <div className='mt-7 space-y-4 text-base leading-relaxed text-[#405063]'>
