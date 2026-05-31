@@ -30,11 +30,15 @@ app.use(helmet({
   } : false,
 }));
 const allowedOrigins = [
-  process.env.CLIENT_URL || 'https://gyanaranjandas.me',
-'https://www.gyanaranjandas.me',
+  'https://gyanaranjandas.me',
+  'https://www.gyanaranjandas.me',
   'http://localhost:5173',
   'http://localhost:5174',
 ];
+// Also include CLIENT_URL if set and not already listed
+if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl, etc.)
