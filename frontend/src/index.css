@@ -28,6 +28,18 @@
   --ring: rgba(12, 127, 163, 0.35);
 }
 
+.dark {
+  --bg: #0f1115;
+  --bg-alt: #0a0b0e;
+  --ink: #f6f5f1;
+  --ink-soft: #9ba3af;
+  --line: rgba(255, 255, 255, 0.1);
+  --card: rgba(20, 25, 35, 0.7);
+  --accent: #ef3e2f;
+  --accent-2: #0c7fa3;
+  --ring: rgba(12, 127, 163, 0.5);
+}
+
 @layer base {
   * {
     border-color: var(--line);
