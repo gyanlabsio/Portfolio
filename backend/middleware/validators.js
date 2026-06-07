@@ -89,7 +89,7 @@ const contentValidators = {
       .isURL().withMessage('Cover image must be a valid URL'),
     body('status')
       .optional()
-      .isIn(['DRAFT', 'PUBLISHED', 'ARCHIVED']).withMessage('Invalid status'),
+      .isIn(['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED']).withMessage('Invalid status'),
     body('tags')
       .optional()
       .isArray().withMessage('Tags must be an array'),
@@ -108,6 +108,20 @@ const contentValidators = {
     body('publishedAt')
       .optional({ values: 'falsy' })
       .isISO8601().toDate().withMessage('Must be a valid date'),
+    body('category')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 50 }).withMessage('Category cannot exceed 50 characters'),
+    body('featured')
+      .optional()
+      .isBoolean().withMessage('Featured must be a boolean'),
+    body('canonicalUrl')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isURL().withMessage('Canonical URL must be a valid URL'),
+    body('readingTime')
+      .optional()
+      .isNumeric().withMessage('Reading time must be a number'),
   ],
   update: [
     body('title')
@@ -132,7 +146,7 @@ const contentValidators = {
       .isURL().withMessage('Cover image must be a valid URL'),
     body('status')
       .optional()
-      .isIn(['DRAFT', 'PUBLISHED', 'ARCHIVED']).withMessage('Invalid status'),
+      .isIn(['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED']).withMessage('Invalid status'),
     body('tags')
       .optional()
       .isArray().withMessage('Tags must be an array'),
@@ -151,6 +165,20 @@ const contentValidators = {
     body('publishedAt')
       .optional({ values: 'falsy' })
       .isISO8601().toDate().withMessage('Must be a valid date'),
+    body('category')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 50 }).withMessage('Category cannot exceed 50 characters'),
+    body('featured')
+      .optional()
+      .isBoolean().withMessage('Featured must be a boolean'),
+    body('canonicalUrl')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isURL().withMessage('Canonical URL must be a valid URL'),
+    body('readingTime')
+      .optional()
+      .isNumeric().withMessage('Reading time must be a number'),
   ],
   id: [objectIdRule('id')],
 };
