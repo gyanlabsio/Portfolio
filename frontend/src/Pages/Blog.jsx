@@ -9,8 +9,10 @@ import Loader from '../components/Loader'
 
 const FILTERS = [
   { key: '', label: 'All' },
+  { key: 'blog', label: 'Blogs' },
   { key: 'article', label: 'Articles' },
-  { key: 'casestudy', label: 'Case Studies' },
+  { key: 'case_study', label: 'Case Studies' },
+  { key: 'note', label: 'Notes' },
 ]
 
 const Blog = () => {
@@ -81,7 +83,7 @@ const Blog = () => {
                   : 'border-[var(--line)] bg-[var(--surface)] text-[var(--ink-soft)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
               }`}
             >
-              {f.key === 'casestudy' && <BookOpenCheck className='h-3.5 w-3.5' />}
+              {f.key === 'case_study' && <BookOpenCheck className='h-3.5 w-3.5' />}
               {f.label}
             </button>
           ))}
@@ -99,14 +101,16 @@ const Blog = () => {
           <div className='glass-card rounded-3xl p-10 text-center'>
             <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
             <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>
-              {activeFilter === 'casestudy' ? 'No Case Studies Yet' : activeFilter === 'article' ? 'No Articles Yet' : 'Coming Soon'}
+              {activeFilter === 'case_study' ? 'No Case Studies Yet' : activeFilter === 'article' ? 'No Articles Yet' : activeFilter === 'blog' ? 'No Blogs Yet' : 'Coming Soon'}
             </h3>
             <p className='mx-auto mt-3 max-w-lg text-[var(--ink-soft)]'>
-              {activeFilter === 'casestudy'
+              {activeFilter === 'case_study'
                 ? 'Case studies are on the way. Check back soon for deep dives on real-world projects.'
                 : activeFilter === 'article'
                   ? 'Articles are in progress. Check back for technical writing and field notes.'
-                  : 'Fresh writing is in progress. Check back for deep dives and field notes.'}
+                  : activeFilter === 'blog'
+                    ? 'Blogs are in progress. Check back soon.'
+                    : 'Fresh writing is in progress. Check back for deep dives and field notes.'}
             </p>
           </div>
         )}
