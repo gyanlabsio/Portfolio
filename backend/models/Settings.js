@@ -20,6 +20,14 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    aboutImage: {
+        type: String,
+        trim: true,
+    },
+    bioText: {
+        type: String,
+        trim: true,
+    },
     logoUrl: {
         type: String,
         trim: true,

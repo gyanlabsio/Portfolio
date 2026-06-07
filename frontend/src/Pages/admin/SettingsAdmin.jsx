@@ -17,6 +17,7 @@ const SettingsAdmin = () => {
                 // Default fallback if strictly necessary
                 setSettings({
                     siteTitle: '', tagline: '', heroBadge: 'Design + Engineering', description: '', email: '', phone: '',
+                    aboutImage: '', bioText: '',
                     logoUrl: '', faviconUrl: '', resumeUrl: '',
                     availabilityStatus: 'AVAILABLE',
                     socialLinks: { github: '', linkedin: '', twitter: '', instagram: '' },
@@ -119,6 +120,21 @@ const SettingsAdmin = () => {
                                 <option value="BUSY">BUSY (Limited capacity)</option>
                                 <option value="UNAVAILABLE">UNAVAILABLE (Not taking clients)</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Biography */}
+                <div className='glass-card rounded-2xl p-6'>
+                    <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><User className='h-5 w-5 text-[var(--accent)]' /> Biography</h2>
+                    <div className='space-y-4'>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Image URL</label>
+                            <input type='url' value={settings.aboutImage || ''} onChange={e => handleChange('aboutImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                        </div>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Supports multi-line)</label>
+                            <textarea rows="6" value={settings.bioText || ''} onChange={e => handleChange('bioText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' placeholder="I am a full-stack developer..." />
                         </div>
                     </div>
                 </div>
