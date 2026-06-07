@@ -138,22 +138,22 @@ const ServicesAdmin = () => {
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Title</label>
-                                <input required type='text' value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input required type='text' value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
                             
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description</label>
-                                <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Icon URL (Optional)</label>
-                                <input type='url' value={formData.iconUrl} onChange={e => setFormData({ ...formData, iconUrl: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input type='url' value={formData.iconUrl} onChange={e => setFormData({ ...formData, iconUrl: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Status</label>
-                                <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                                <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                     <option value="ACTIVE">ACTIVE</option>
                                     <option value="DRAFT">DRAFT</option>
                                 </select>

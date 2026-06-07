@@ -198,38 +198,38 @@ const TestimonialsAdmin = () => {
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Name</label>
-                                <input required type='text' value={formData.clientName} onChange={e => setFormData({ ...formData, clientName: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input required type='text' value={formData.clientName} onChange={e => setFormData({ ...formData, clientName: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
                             
                             <div className='grid grid-cols-2 gap-4'>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Role</label>
-                                    <input type='text' value={formData.clientRole} onChange={e => setFormData({ ...formData, clientRole: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='text' value={formData.clientRole} onChange={e => setFormData({ ...formData, clientRole: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Company</label>
-                                    <input type='text' value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='text' value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Testimonial Content</label>
-                                <textarea required rows='4' value={formData.testimonial} onChange={e => setFormData({ ...formData, testimonial: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' />
+                                <textarea required rows='4' value={formData.testimonial} onChange={e => setFormData({ ...formData, testimonial: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Avatar URL</label>
-                                <input type='url' value={formData.avatar} onChange={e => setFormData({ ...formData, avatar: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input type='url' value={formData.avatar} onChange={e => setFormData({ ...formData, avatar: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div className='grid grid-cols-2 gap-4'>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Rating (1-5)</label>
-                                    <input type='number' min='1' max='5' value={formData.rating} onChange={e => setFormData({ ...formData, rating: Number(e.target.value) })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='number' min='1' max='5' value={formData.rating} onChange={e => setFormData({ ...formData, rating: Number(e.target.value) })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Status</label>
-                                    <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                                    <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                         <option value="PENDING">PENDING</option>
                                         <option value="APPROVED">APPROVED</option>
                                     </select>
@@ -237,7 +237,7 @@ const TestimonialsAdmin = () => {
                             </div>
 
                             <label className='flex items-center gap-2 cursor-pointer mt-2'>
-                                <input type="checkbox" checked={formData.featured} onChange={e => setFormData({ ...formData, featured: e.target.checked })} className='rounded text-[var(--accent)] focus:ring-[var(--accent)] bg-[var(--bg)] border-[var(--line)]' />
+                                <input type="checkbox" checked={formData.featured} onChange={e => setFormData({ ...formData, featured: e.target.checked })} className='rounded text-[var(--accent)] focus:ring-[var(--accent-2)] bg-[var(--bg)] border-[var(--line)]' />
                                 <span className='text-sm font-semibold text-[var(--ink)]'>Feature on Homepage</span>
                             </label>
 

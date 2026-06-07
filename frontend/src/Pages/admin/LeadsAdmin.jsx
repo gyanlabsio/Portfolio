@@ -124,7 +124,7 @@ const LeadsAdmin = () => {
                                     <select 
                                         value={selected.status} 
                                         onChange={(e) => handleStatusChange(selected._id, e.target.value)}
-                                        className={`rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-sm font-semibold focus:border-[var(--accent)] focus:outline-none ${getStatusColor(selected.status)}`}
+                                        className={`rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-sm font-semibold focus:border-[var(--accent-2)] focus:outline-none ${getStatusColor(selected.status)}`}
                                     >
                                         <option value="NEW">NEW</option>
                                         <option value="CONTACTED">CONTACTED</option>

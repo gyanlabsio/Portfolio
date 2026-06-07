@@ -151,7 +151,7 @@ const AnalyticsAdmin = () => {
                                 <select 
                                     value={filterType} 
                                     onChange={(e) => setFilterType(e.target.value)}
-                                    className='rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--accent)]'
+                                    className='rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--accent-2)]'
                                 >
                                     <option value="">All Types</option>
                                     <option value="PAGE_VIEW">Page Views</option>

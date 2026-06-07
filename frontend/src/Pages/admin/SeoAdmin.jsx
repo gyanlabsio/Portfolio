@@ -126,7 +126,7 @@ const SeoAdmin = () => {
                                 value={searchSlug} 
                                 onChange={e => setSearchSlug(e.target.value)} 
                                 placeholder="e.g. global, projects, blog-post-1" 
-                                className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' 
+                                className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' 
                             />
                             <button type="submit" className='rounded-xl bg-[var(--surface)] px-4 py-2 text-[var(--ink)] border border-[var(--line)] hover:bg-[var(--bg-alt)]'>Go</button>
                         </form>
@@ -177,20 +177,20 @@ const SeoAdmin = () => {
                                 {currentSlug === 'global' && (
                                     <div>
                                         <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Site Name (Global Only)</label>
-                                        <input type='text' value={seoData.siteName || ''} onChange={e => handleChange('siteName', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                        <input type='text' value={seoData.siteName || ''} onChange={e => handleChange('siteName', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                     </div>
                                 )}
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>SEO Title (&lt;title&gt;)</label>
-                                    <input type='text' value={seoData.seoTitle || ''} onChange={e => handleChange('seoTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='text' value={seoData.seoTitle || ''} onChange={e => handleChange('seoTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>SEO Description (meta name="description")</label>
-                                    <textarea rows="2" value={seoData.seoDescription || ''} onChange={e => handleChange('seoDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' />
+                                    <textarea rows="2" value={seoData.seoDescription || ''} onChange={e => handleChange('seoDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Canonical URL</label>
-                                    <input type='url' value={seoData.canonicalUrl || ''} onChange={e => handleChange('canonicalUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                                    <input type='url' value={seoData.canonicalUrl || ''} onChange={e => handleChange('canonicalUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                                 </div>
                             </div>
 
@@ -199,15 +199,15 @@ const SeoAdmin = () => {
                                 <h3 className='font-semibold text-[var(--ink)] text-sm uppercase tracking-wider'>Open Graph (Facebook / LinkedIn)</h3>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>OG Title</label>
-                                    <input type='text' value={seoData.ogTitle || ''} onChange={e => handleChange('ogTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='text' value={seoData.ogTitle || ''} onChange={e => handleChange('ogTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>OG Description</label>
-                                    <textarea rows="2" value={seoData.ogDescription || ''} onChange={e => handleChange('ogDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' />
+                                    <textarea rows="2" value={seoData.ogDescription || ''} onChange={e => handleChange('ogDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>OG Image URL</label>
-                                    <input type='url' value={seoData.ogImage || ''} onChange={e => handleChange('ogImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                                    <input type='url' value={seoData.ogImage || ''} onChange={e => handleChange('ogImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                                 </div>
                             </div>
 
@@ -216,18 +216,18 @@ const SeoAdmin = () => {
                                 <h3 className='font-semibold text-[var(--ink)] text-sm uppercase tracking-wider'>Twitter</h3>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Twitter Card Type</label>
-                                    <select value={seoData.twitterCard || 'summary_large_image'} onChange={e => handleChange('twitterCard', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                                    <select value={seoData.twitterCard || 'summary_large_image'} onChange={e => handleChange('twitterCard', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                         <option value="summary_large_image">summary_large_image</option>
                                         <option value="summary">summary</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Twitter Title</label>
-                                    <input type='text' value={seoData.twitterTitle || ''} onChange={e => handleChange('twitterTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                    <input type='text' value={seoData.twitterTitle || ''} onChange={e => handleChange('twitterTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Twitter Description</label>
-                                    <textarea rows="2" value={seoData.twitterDescription || ''} onChange={e => handleChange('twitterDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' />
+                                    <textarea rows="2" value={seoData.twitterDescription || ''} onChange={e => handleChange('twitterDescription', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' />
                                 </div>
                             </div>
 

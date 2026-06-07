@@ -118,33 +118,33 @@ const SettingsAdmin = () => {
                     <div className='space-y-4'>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Site Title</label>
-                            <input type='text' required value={settings.siteTitle || ''} onChange={e => handleChange('siteTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                            <input type='text' required value={settings.siteTitle || ''} onChange={e => handleChange('siteTitle', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Tagline</label>
-                            <input type='text' value={settings.tagline || ''} onChange={e => handleChange('tagline', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                            <input type='text' value={settings.tagline || ''} onChange={e => handleChange('tagline', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Hero Badge Text</label>
-                            <input type='text' value={settings.heroBadge || ''} onChange={e => handleChange('heroBadge', e.target.value)} placeholder="Design + Engineering" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                            <input type='text' value={settings.heroBadge || ''} onChange={e => handleChange('heroBadge', e.target.value)} placeholder="Design + Engineering" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description</label>
-                            <textarea rows="3" value={settings.description || ''} onChange={e => handleChange('description', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' />
+                            <textarea rows="3" value={settings.description || ''} onChange={e => handleChange('description', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' />
                         </div>
                         <div className='grid grid-cols-2 gap-4'>
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Contact Email</label>
-                                <input type='email' required value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input type='email' required value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Phone</label>
-                                <input type='text' value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' />
+                                <input type='text' value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Availability Status</label>
-                            <select value={settings.availabilityStatus || 'AVAILABLE'} onChange={e => handleChange('availabilityStatus', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                            <select value={settings.availabilityStatus || 'AVAILABLE'} onChange={e => handleChange('availabilityStatus', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                 <option value="AVAILABLE">AVAILABLE (Open to work)</option>
                                 <option value="BUSY">BUSY (Limited capacity)</option>
                                 <option value="UNAVAILABLE">UNAVAILABLE (Not taking clients)</option>
@@ -159,11 +159,11 @@ const SettingsAdmin = () => {
                     <div className='space-y-4'>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Image URL</label>
-                            <input type='url' value={settings.aboutImage || ''} onChange={e => handleChange('aboutImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                            <input type='url' value={settings.aboutImage || ''} onChange={e => handleChange('aboutImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Supports multi-line)</label>
-                            <textarea rows="6" value={settings.bioText || ''} onChange={e => handleChange('bioText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' placeholder="I am a full-stack developer..." />
+                            <textarea rows="6" value={settings.bioText || ''} onChange={e => handleChange('bioText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="I am a full-stack developer..." />
                         </div>
                         
                         <div className='pt-4 border-t border-[var(--line)] mt-4'>
@@ -175,10 +175,10 @@ const SettingsAdmin = () => {
                                 {(settings.bioSkills || []).map((skill, index) => (
                                     <div key={index} className='flex gap-3 items-start'>
                                         <div className='flex-1'>
-                                            <input type='text' value={skill.title} onChange={e => handleSkillChange(index, 'title', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="Skill Title" />
+                                            <input type='text' value={skill.title} onChange={e => handleSkillChange(index, 'title', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Skill Title" />
                                         </div>
                                         <div className='w-32'>
-                                            <select value={skill.icon} onChange={e => handleSkillChange(index, 'icon', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                                            <select value={skill.icon} onChange={e => handleSkillChange(index, 'icon', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                                 {AVAILABLE_ICONS.map(icon => <option key={icon} value={icon}>{icon}</option>)}
                                             </select>
                                         </div>
@@ -198,15 +198,15 @@ const SettingsAdmin = () => {
                     <div className='space-y-4'>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Logo URL</label>
-                            <input type='url' value={settings.logoUrl || ''} onChange={e => handleChange('logoUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                            <input type='url' value={settings.logoUrl || ''} onChange={e => handleChange('logoUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Favicon URL</label>
-                            <input type='url' value={settings.faviconUrl || ''} onChange={e => handleChange('faviconUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                            <input type='url' value={settings.faviconUrl || ''} onChange={e => handleChange('faviconUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                         </div>
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Resume URL (PDF link)</label>
-                            <input type='url' value={settings.resumeUrl || ''} onChange={e => handleChange('resumeUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="https://" />
+                            <input type='url' value={settings.resumeUrl || ''} onChange={e => handleChange('resumeUrl', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                         </div>
                     </div>
                 </div>
@@ -218,7 +218,7 @@ const SettingsAdmin = () => {
                         {['github', 'linkedin', 'twitter', 'instagram'].map(platform => (
                             <div key={platform}>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>{platform}</label>
-                                <input type='url' value={settings.socialLinks?.[platform] || ''} onChange={e => handleNestedChange('socialLinks', platform, e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder={`https://${platform}.com/...`} />
+                                <input type='url' value={settings.socialLinks?.[platform] || ''} onChange={e => handleNestedChange('socialLinks', platform, e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder={`https://${platform}.com/...`} />
                             </div>
                         ))}
                     </div>
@@ -236,7 +236,7 @@ const SettingsAdmin = () => {
                                     type="checkbox" 
                                     checked={settings.homepageSections?.[section] || false} 
                                     onChange={e => handleNestedChange('homepageSections', section, e.target.checked)} 
-                                    className='h-5 w-5 rounded text-[var(--accent)] focus:ring-[var(--accent)] bg-[var(--bg)] border-[var(--line)]' 
+                                    className='h-5 w-5 rounded text-[var(--accent)] focus:ring-[var(--accent-2)] bg-[var(--bg)] border-[var(--line)]' 
                                 />
                             </label>
                         ))}
