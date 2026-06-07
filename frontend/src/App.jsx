@@ -26,7 +26,12 @@ const Dashboard = lazy(() => import("./Pages/admin/Dashboard"));
 const ProjectsAdmin = lazy(() => import("./Pages/admin/ProjectsAdmin"));
 const BlogAdmin = lazy(() => import("./Pages/admin/BlogAdmin"));
 const ContactsAdmin = lazy(() => import("./Pages/admin/ContactsAdmin"));
-const SiteConfigAdmin = lazy(() => import("./Pages/admin/SiteConfigAdmin"));
+const ServicesAdmin = lazy(() => import("./Pages/admin/ServicesAdmin"));
+const LeadsAdmin = lazy(() => import("./Pages/admin/LeadsAdmin"));
+const TestimonialsAdmin = lazy(() => import("./Pages/admin/TestimonialsAdmin"));
+const AnalyticsAdmin = lazy(() => import("./Pages/admin/AnalyticsAdmin"));
+const SettingsAdmin = lazy(() => import("./Pages/admin/SettingsAdmin"));
+const SeoAdmin = lazy(() => import("./Pages/admin/SeoAdmin"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -70,9 +75,14 @@ const App = () => {
           >
             <Route index element={<Dashboard />} />
             <Route path="projects" element={<ProjectsAdmin />} />
+            <Route path="services" element={<ServicesAdmin />} />
             <Route path="blog" element={<BlogAdmin />} />
+            <Route path="leads" element={<LeadsAdmin />} />
             <Route path="contacts" element={<ContactsAdmin />} />
-            <Route path="config" element={<SiteConfigAdmin />} />
+            <Route path="testimonials" element={<TestimonialsAdmin />} />
+            <Route path="analytics" element={<AnalyticsAdmin />} />
+            <Route path="settings" element={<SettingsAdmin />} />
+            <Route path="seo" element={<SeoAdmin />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
