@@ -12,6 +12,12 @@ const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const { contentValidators } = require('../middleware/validators');
 
+// Admin routes
+router.get('/admin/all', protect, authorize('admin'), (req, res, next) => {
+    req.query.all = 'true';
+    getContent(req, res, next);
+});
+
 // Public routes
 router.get('/', getContent);
 router.get('/type/:type', getContentByType);
