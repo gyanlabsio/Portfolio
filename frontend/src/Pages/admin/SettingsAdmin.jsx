@@ -8,6 +8,7 @@ const SettingsAdmin = () => {
     const [settings, setSettings] = useState(null)
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
+    const [editorTab, setEditorTab] = useState('bio')
 
     const fetchAll = async () => {
         try {
@@ -171,12 +172,23 @@ const SettingsAdmin = () => {
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Subheading</label>
                             <input type='text' value={settings.bioSubheading || ''} onChange={e => handleChange('bioSubheading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Thoughtful engineering..." />
                         </div>
-                        <div>
-                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Rich Text)</label>
-                            <div className='rounded-xl border border-[var(--line)] bg-[var(--bg)] overflow-hidden'>
-                                <ReactQuill theme="snow" value={settings.bioText || ''} onChange={val => handleChange('bioText', val)} className="bg-[var(--bg)] text-[var(--ink)] [&_.ql-toolbar]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-[var(--line)] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[150px]" />
-                            </div>
+                        <div className='flex items-center gap-2 mb-2'>
+                            <button type="button" onClick={() => setEditorTab('bio')} className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${editorTab === 'bio' ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface)] text-[var(--ink-soft)] hover:bg-[var(--bg-alt)]'}`}>Biography (Word)</button>
+                            <button type="button" onClick={() => setEditorTab('readme')} className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${editorTab === 'readme' ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface)] text-[var(--ink-soft)] hover:bg-[var(--bg-alt)]'}`}>Readme (Markdown)</button>
                         </div>
+                        {editorTab === 'bio' ? (
+                            <div>
+                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Rich Text)</label>
+                                <div className='rounded-xl border border-[var(--line)] bg-[var(--bg)] overflow-hidden'>
+                                    <ReactQuill theme="snow" value={settings.bioText || ''} onChange={val => handleChange('bioText', val)} className="bg-[var(--bg)] text-[var(--ink)] [&_.ql-toolbar]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-[var(--line)] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[150px]" />
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Readme Content (Markdown format)</label>
+                                <textarea rows="10" value={settings.readmeContent || ''} onChange={e => handleChange('readmeContent', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3 text-sm font-mono text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-y' placeholder="# README&#10;&#10;Write your markdown here..." />
+                            </div>
+                        )}
                         
                         <div className='pt-4 border-t border-[var(--line)] mt-4'>
                             <div className='flex items-center justify-between mb-3'>
@@ -233,19 +245,6 @@ const SettingsAdmin = () => {
                                 <input type='url' value={settings.socialLinks?.[platform] || ''} onChange={e => handleNestedChange('socialLinks', platform, e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder={`https://${platform}.com/...`} />
                             </div>
                         ))}
-                    </div>
-                </div>
-
-                {/* Readme Section */}
-                <div className='glass-card rounded-2xl p-6'>
-                    <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><FileText className='h-5 w-5 text-[var(--accent)]' /> Readme File</h2>
-                    <div className='space-y-4'>
-                        <div>
-                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Readme Content (Rich Text)</label>
-                            <div className='rounded-xl border border-[var(--line)] bg-[var(--bg)] overflow-hidden'>
-                                <ReactQuill theme="snow" value={settings.readmeContent || ''} onChange={val => handleChange('readmeContent', val)} className="bg-[var(--bg)] text-[var(--ink)] [&_.ql-toolbar]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-[var(--line)] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[250px]" />
-                            </div>
-                        </div>
                     </div>
                 </div>
 

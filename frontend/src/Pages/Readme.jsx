@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
-import DOMPurify from 'dompurify'
+import ReactMarkdown from 'react-markdown'
 import SplitText from '../components/effects/SplitText'
 
 const Readme = () => {
@@ -45,7 +45,7 @@ const Readme = () => {
             {loading ? (
               <p className='ink-soft'>Loading readme...</p>
             ) : config?.readmeContent ? (
-              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(config.readmeContent) }} />
+              <ReactMarkdown>{config.readmeContent}</ReactMarkdown>
             ) : (
               <p>No Readme content available.</p>
             )}
