@@ -73,7 +73,7 @@ const Bio = () => {
 
       <section className='section-wrap enter-fade'>
         <div className='grid gap-8 lg:grid-cols-[0.95fr_1.05fr]'>
-          <article className='glass-card rounded-[30px] p-4 md:p-6'>
+          <article className='glass-card rounded-[30px] p-4 md:p-6 min-w-0'>
             <div className='relative overflow-hidden rounded-[24px] border border-[var(--line)] h-full bg-[var(--surface)]'>
               {displayImage && <img src={displayImage} alt='Portrait' className='h-full w-full object-cover' />}
               <div className='absolute inset-0 bg-gradient-to-t from-[#131b2dcc] to-transparent' />
@@ -84,7 +84,7 @@ const Bio = () => {
             </div>
           </article>
 
-          <article className='glass-card rounded-[30px] p-6 md:p-8'>
+          <article className='glass-card rounded-[30px] p-6 md:p-8 min-w-0'>
             <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>
               <SplitText text={bioHeadingText} delay={0.2} />
             </h1>
@@ -92,12 +92,12 @@ const Bio = () => {
               <BlurText text={bioSubheadingText} delay={0.6} />
             </p>
 
-            <div className='mt-7 space-y-4 text-base leading-relaxed text-[var(--ink-soft)] [&_p]:mb-4 [&_a]:text-[var(--accent)] [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[var(--ink)] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[var(--ink)] [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[var(--ink)]'>
+            <div className='mt-7 space-y-4 text-base leading-relaxed text-[var(--ink-soft)] break-words [&_p]:mb-4 [&_a]:text-[var(--accent)] [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[var(--ink)] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[var(--ink)] [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[var(--ink)]'>
               {loading ? (
                 <p className='ink-soft'>Loading biography...</p>
               ) : (
                 config?.bioText && config.bioText.includes('<') ? (
-                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(config.bioText) }} />
+                  <div className="break-words whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(config.bioText) }} />
                 ) : (
                   bioParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
                 )
