@@ -76,7 +76,7 @@ const contentSchema = new mongoose.Schema({
 
 // Auto-generate slug from title before saving
 contentSchema.pre('validate', function () {
-    if (this.title && (!this.slug || this.isModified('title'))) {
+    if (this.title && !this.slug) {
         this.slug = slugify(this.title, { lower: true, strict: true });
     }
     // Auto-generate excerpt from content if not provided
