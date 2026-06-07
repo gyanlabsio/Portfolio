@@ -132,13 +132,21 @@ const Blog = () => {
                         <BookOpenCheck className='h-3 w-3' /> Case Study
                       </span>
                     )}
+                    {post.featured && (
+                      <span className={`absolute ${post.type === 'CASE_STUDY' ? 'left-3 top-10' : 'left-3 top-3'} inline-flex items-center gap-1 rounded-full border border-yellow-500/30 bg-yellow-500/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm`}>
+                        Featured
+                      </span>
+                    )}
                   </div>
                 )}
 
                 <div className='mt-4 space-y-3'>
-                  <div className='flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
-                    <Calendar className='w-3.5 h-3.5' />
-                    {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  <div className='flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
+                    <span className='inline-flex items-center gap-1'>
+                      <Calendar className='w-3.5 h-3.5' />
+                      {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                    {post.readingTime && <span>&bull; ~{post.readingTime} min read</span>}
                     {post.type === 'CASE_STUDY' && !post.coverImage && (
                       <span className='ml-auto inline-flex items-center gap-1 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--accent-2)]'>
                         <BookOpenCheck className='h-3 w-3' /> Case Study

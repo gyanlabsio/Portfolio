@@ -36,7 +36,7 @@ const contentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['DRAFT', 'PUBLISHED', 'ARCHIVED'],
+        enum: ['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED'],
         default: 'DRAFT',
     },
     tags: [{
@@ -50,6 +50,22 @@ const contentSchema = new mongoose.Schema({
     seoDescription: {
         type: String,
         maxlength: [160, 'SEO Description cannot exceed 160 characters'],
+    },
+    category: {
+        type: String,
+        trim: true,
+    },
+    featured: {
+        type: Boolean,
+        default: false,
+    },
+    canonicalUrl: {
+        type: String,
+        trim: true,
+    },
+    readingTime: {
+        type: Number,
+        default: 1,
     },
     publishedAt: {
         type: Date,
@@ -66,6 +82,11 @@ contentSchema.pre('validate', function () {
     // Auto-generate excerpt from content if not provided
     if (this.content && !this.excerpt) {
         this.excerpt = this.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...';
+    }
+    // Auto-calculate reading time
+    if (this.content && this.isModified('content')) {
+        const wordCount = this.content.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+        this.readingTime = Math.ceil(wordCount / 200) || 1;
     }
 });
 

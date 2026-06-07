@@ -50,7 +50,7 @@ const BlogPost = () => {
 
     return (
         <article className='pb-16 pt-8 md:pt-12'>
-            <SEO title={post.title} description={post.excerpt} image={post.coverImage} />
+            <SEO title={post.seoTitle || post.title} description={post.seoDescription || post.excerpt} image={post.coverImage} url={post.canonicalUrl} />
             <div className='section-wrap'>
                 <Link to='/Blog' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'>
                     <ArrowLeft className='h-3.5 w-3.5' />
@@ -67,6 +67,16 @@ const BlogPost = () => {
                             <Calendar className='h-3.5 w-3.5' />
                             {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                         </span>
+                        {post.readingTime && (
+                            <span className='inline-flex items-center gap-1.5'>
+                                &bull; ~{post.readingTime} min read
+                            </span>
+                        )}
+                        {post.category && (
+                            <span className='inline-flex items-center gap-1.5'>
+                                &bull; {post.category}
+                            </span>
+                        )}
                         <span className='inline-flex items-center gap-1.5'>
                             <Pencil className='h-3.5 w-3.5' />
                             {post.author || 'Admin'}
