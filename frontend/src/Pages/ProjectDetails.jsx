@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink, Github, Layers3 } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import SEO from '../components/SEO'
 import { getProject } from '../api/projects'
+import Loader from '../components/Loader'
 
 const ProjectDetails = () => {
     const { slug } = useParams()
@@ -28,11 +29,7 @@ const ProjectDetails = () => {
     const safeDescription = useMemo(() => DOMPurify.sanitize(project?.description || ''), [project?.description])
 
     if (loading) {
-        return (
-            <div className='section-wrap flex min-h-[60vh] items-center justify-center pt-16'>
-                <div className='h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
-            </div>
-        )
+        return <div className="min-h-screen pt-32 pb-16 section-wrap flex items-center justify-center"><Loader text="Loading project details..." /></div>
     }
 
     if (error || !project) {

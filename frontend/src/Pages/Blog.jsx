@@ -5,6 +5,7 @@ import SEO from '../components/SEO'
 import { getPosts } from '../api/blog'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
+import Loader from '../components/Loader'
 
 const FILTERS = [
   { key: '', label: 'All' },
@@ -89,9 +90,8 @@ const Blog = () => {
 
       <section className='section-wrap mt-6'>
         {loading && (
-          <div className='glass-card rounded-3xl p-10 text-center'>
-            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
-            <p className='mt-3 ink-soft'>Loading posts...</p>
+          <div className='flex items-center justify-center py-20'>
+            <Loader text="Loading posts..." />
           </div>
         )}
 

@@ -5,6 +5,7 @@ import SEO from '../components/SEO'
 import { getTestimonials, submitTestimonial } from '../api/testimonial'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
+import Loader from '../components/Loader'
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([])
@@ -68,9 +69,7 @@ const Testimonials = () => {
           {/* Testimonials List */}
           <div className='space-y-6'>
             {loading ? (
-              <div className='glass-card rounded-2xl py-14 text-center'>
-                <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
-              </div>
+              <Loader text="Loading testimonials..." />
             ) : testimonials.length === 0 ? (
               <div className='glass-card rounded-[30px] p-8 text-center'>
                 <MessageSquareText className='mx-auto h-8 w-8 text-[var(--accent-2)]' />

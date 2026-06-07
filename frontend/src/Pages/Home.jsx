@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Clock3, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
 import { getServices } from '../api/service'
@@ -10,6 +10,7 @@ import { getPosts } from '../api/blog'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import ShinyText from '../components/effects/ShinyText'
+import Loader from '../components/Loader'
 
 const Home = () => {
   const [config, setConfig] = useState(null)
@@ -126,10 +127,8 @@ const Home = () => {
             </div>
 
             {loading ? (
-              <p className='ink-soft'>Loading highlighted projects...</p>
-            ) : featuredProjects.length === 0 ? (
-              <p className='ink-soft'>New case studies are in progress. Check back shortly.</p>
-            ) : (
+              <Loader text="Loading highlighted projects..." />
+            ) : featuredProjects.length > 0 ? (
               <div className='space-y-3'>
                 {featuredProjects.slice(0, 3).map((project) => (
                   <Link key={project._id} to='/Projects' className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]'>
@@ -138,6 +137,8 @@ const Home = () => {
                   </Link>
                 ))}
               </div>
+            ) : (
+              <p className='ink-soft'>New case studies are in progress. Check back shortly.</p>
             )}
           </article>
         )}
@@ -150,10 +151,8 @@ const Home = () => {
             </div>
 
             {loading ? (
-              <p className='ink-soft'>Loading latest posts...</p>
-            ) : latestPosts.length === 0 ? (
-              <p className='ink-soft'>Thought pieces are coming soon.</p>
-            ) : (
+              <Loader text="Loading latest posts..." />
+            ) : latestPosts.length > 0 ? (
               <div className='space-y-3'>
                 {latestPosts.map((post) => (
                   <Link key={post._id} to={`/blog/${post.slug}`} className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-2)]'>

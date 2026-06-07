@@ -4,6 +4,7 @@ import { ArrowLeft, BookOpenCheck, Calendar, Pencil, Tag } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import SEO from '../components/SEO'
 import { getPost } from '../api/blog'
+import Loader from '../components/Loader'
 
 const BlogPost = () => {
     const { slug } = useParams()
@@ -30,7 +31,7 @@ const BlogPost = () => {
     if (loading) {
         return (
             <div className='section-wrap flex min-h-[60vh] items-center justify-center pt-16'>
-                <div className='h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
+                <Loader text="Loading post details..." />
             </div>
         )
     }

@@ -17,6 +17,7 @@ import bioProfileImage from '../assets/download.png'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import DOMPurify from 'dompurify'
+import Loader from '../components/Loader'
 
 const Bio = () => {
   const [config, setConfig] = useState(null)
@@ -94,7 +95,7 @@ const Bio = () => {
 
             <div className='mt-7 space-y-4 text-base leading-relaxed text-[var(--ink-soft)] break-words [&_p]:mb-4 [&_a]:text-[var(--accent)] [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[var(--ink)] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[var(--ink)] [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[var(--ink)]'>
               {loading ? (
-                <p className='ink-soft'>Loading biography...</p>
+                <Loader text="Loading biography..." />
               ) : (
                 config?.bioText && config.bioText.includes('<') ? (
                   <div className="break-words whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(config.bioText) }} />

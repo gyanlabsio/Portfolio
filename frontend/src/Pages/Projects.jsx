@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import { getProjects } from '../api/projects'
 import SplitText from '../components/effects/SplitText'
+import Loader from '../components/Loader'
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
@@ -53,9 +54,8 @@ const Projects = () => {
 
       <section className='section-wrap mt-8'>
         {loading && (
-          <div className='glass-card rounded-3xl p-10 text-center'>
-            <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
-            <p className='mt-3 ink-soft'>Loading projects...</p>
+          <div className='flex items-center justify-center py-20'>
+            <Loader text="Loading projects..." />
           </div>
         )}
 
