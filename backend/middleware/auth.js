@@ -24,6 +24,20 @@ const protect = async (req, res, next) => {
     }
 };
 
+const optionalProtect = async (req, res, next) => {
+    let token = req.cookies?.admin_token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            req.admin = await Admin.findById(decoded.id);
+        } catch (error) {}
+    }
+    next();
+};
+
 const authorize = (...roles) => (req, res, next) => {
     const userRole = req.admin.role || 'admin';
     // superadmin should have access to all admin routes
@@ -36,4 +50,4 @@ const authorize = (...roles) => (req, res, next) => {
     next();
 };
 
-module.exports = { protect, authorize };
+module.exports = { protect, optionalProtect, authorize };

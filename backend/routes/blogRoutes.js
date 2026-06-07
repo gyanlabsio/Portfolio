@@ -8,7 +8,7 @@ const {
     updateContent,
     deleteContent,
 } = require('../controllers/contentController');
-const { protect, authorize } = require('../middleware/auth');
+const { protect, optionalProtect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const { contentValidators } = require('../middleware/validators');
 
@@ -19,9 +19,9 @@ router.get('/admin/all', protect, authorize('admin'), (req, res, next) => {
 });
 
 // Public routes
-router.get('/', getContent);
-router.get('/type/:type', getContentByType);
-router.get('/:slug', getContentBySlug);
+router.get('/', optionalProtect, getContent);
+router.get('/type/:type', optionalProtect, getContentByType);
+router.get('/:slug', optionalProtect, getContentBySlug);
 
 // Admin routes
 router.post('/', protect, authorize('admin'), contentValidators.create, validate, createContent);

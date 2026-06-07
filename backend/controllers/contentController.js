@@ -76,6 +76,12 @@ exports.getContentBySlug = async (req, res, next) => {
 // @route   POST /api/blog
 exports.createContent = async (req, res, next) => {
     try {
+        if (req.body.slug) {
+            const existing = await Content.findOne({ slug: req.body.slug });
+            if (existing) {
+                req.body.slug = `${req.body.slug}-${Math.random().toString(36).substring(2, 7)}`;
+            }
+        }
         const content = await Content.create(req.body);
         res.status(201).json({ success: true, data: content });
     } catch (error) {
@@ -87,6 +93,12 @@ exports.createContent = async (req, res, next) => {
 // @route   PATCH /api/blog/:id
 exports.updateContent = async (req, res, next) => {
     try {
+        if (req.body.slug) {
+            const existing = await Content.findOne({ slug: req.body.slug, _id: { $ne: req.params.id } });
+            if (existing) {
+                req.body.slug = `${req.body.slug}-${Math.random().toString(36).substring(2, 7)}`;
+            }
+        }
         const content = await Content.findByIdAndUpdate(req.params.id, req.body, {
             returnDocument: 'after',
             runValidators: true,
