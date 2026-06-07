@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Save, Settings, Layout, Link as LinkIcon, User, FileText } from 'lucide-react'
 import { getSettings, updateSettings } from '../../api/settings'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+import ReactQuill from 'react-quill-new'
+import 'react-quill-new/dist/quill.snow.css'
 
 const SettingsAdmin = () => {
     const [settings, setSettings] = useState(null)
