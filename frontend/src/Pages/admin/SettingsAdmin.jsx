@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Save, Settings, Layout, Link as LinkIcon, User } from 'lucide-react'
+import { Save, Settings, Layout, Link as LinkIcon, User, FileText } from 'lucide-react'
 import { getSettings, updateSettings } from '../../api/settings'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 
 const SettingsAdmin = () => {
     const [settings, setSettings] = useState(null)
@@ -17,7 +19,7 @@ const SettingsAdmin = () => {
                 // Default fallback if strictly necessary
                 setSettings({
                     siteTitle: '', tagline: '', heroBadge: 'Design + Engineering', description: '', email: '', phone: '',
-                    aboutImage: '', bioText: '',
+                    aboutImage: '', bioHeading: 'Biography', bioSubheading: 'Thoughtful engineering. Character-rich interfaces. Relentless iteration.', bioText: '', readmeContent: '',
                     bioSkills: [
                         { title: 'Product Direction', icon: 'Compass' },
                         { title: 'Design Thinking', icon: 'Lightbulb' },
@@ -162,8 +164,18 @@ const SettingsAdmin = () => {
                             <input type='url' value={settings.aboutImage || ''} onChange={e => handleChange('aboutImage', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
                         </div>
                         <div>
-                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Supports multi-line)</label>
-                            <textarea rows="6" value={settings.bioText || ''} onChange={e => handleChange('bioText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="I am a full-stack developer..." />
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Heading</label>
+                            <input type='text' value={settings.bioHeading || ''} onChange={e => handleChange('bioHeading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Biography" />
+                        </div>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Subheading</label>
+                            <input type='text' value={settings.bioSubheading || ''} onChange={e => handleChange('bioSubheading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Thoughtful engineering..." />
+                        </div>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Rich Text)</label>
+                            <div className='rounded-xl border border-[var(--line)] bg-[var(--bg)] overflow-hidden'>
+                                <ReactQuill theme="snow" value={settings.bioText || ''} onChange={val => handleChange('bioText', val)} className="bg-[var(--bg)] text-[var(--ink)] [&_.ql-toolbar]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-[var(--line)] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[150px]" />
+                            </div>
                         </div>
                         
                         <div className='pt-4 border-t border-[var(--line)] mt-4'>
@@ -221,6 +233,19 @@ const SettingsAdmin = () => {
                                 <input type='url' value={settings.socialLinks?.[platform] || ''} onChange={e => handleNestedChange('socialLinks', platform, e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder={`https://${platform}.com/...`} />
                             </div>
                         ))}
+                    </div>
+                </div>
+
+                {/* Readme Section */}
+                <div className='glass-card rounded-2xl p-6'>
+                    <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><FileText className='h-5 w-5 text-[var(--accent)]' /> Readme File</h2>
+                    <div className='space-y-4'>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Readme Content (Rich Text)</label>
+                            <div className='rounded-xl border border-[var(--line)] bg-[var(--bg)] overflow-hidden'>
+                                <ReactQuill theme="snow" value={settings.readmeContent || ''} onChange={val => handleChange('readmeContent', val)} className="bg-[var(--bg)] text-[var(--ink)] [&_.ql-toolbar]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-[var(--line)] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[250px]" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

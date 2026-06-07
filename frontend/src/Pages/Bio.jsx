@@ -16,6 +16,7 @@ import { getSettings } from '../api/settings'
 import bioProfileImage from '../assets/download.png'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
+import DOMPurify from 'dompurify'
 
 const Bio = () => {
   const [config, setConfig] = useState(null)
@@ -62,6 +63,10 @@ const Bio = () => {
     ]
   }, [config?.bioSkills])
 
+  const displayImage = loading ? null : (config?.aboutImage || bioProfileImage);
+  const bioHeadingText = config?.bioHeading || "Biography";
+  const bioSubheadingText = config?.bioSubheading || "Thoughtful engineering. Character-rich interfaces. Relentless iteration.";
+
   return (
     <main className='pb-16 pt-8 md:pt-12'>
       <SEO title='Bio' description='The story, philosophy, and craft behind the portfolio work.' />
@@ -69,8 +74,8 @@ const Bio = () => {
       <section className='section-wrap enter-fade'>
         <div className='grid gap-8 lg:grid-cols-[0.95fr_1.05fr]'>
           <article className='glass-card rounded-[30px] p-4 md:p-6'>
-            <div className='relative overflow-hidden rounded-[24px] border border-[var(--line)]'>
-              <img src={config?.aboutImage || bioProfileImage} alt='Portrait' className='h-full w-full object-cover' />
+            <div className='relative overflow-hidden rounded-[24px] border border-[var(--line)] h-full bg-[var(--surface)]'>
+              {displayImage && <img src={displayImage} alt='Portrait' className='h-full w-full object-cover' />}
               <div className='absolute inset-0 bg-gradient-to-t from-[#131b2dcc] to-transparent' />
               <div className='absolute bottom-0 left-0 right-0 p-5 text-white'>
                 <p className='text-xs uppercase tracking-[0.16em] text-white/75'>Based in India</p>
@@ -81,17 +86,21 @@ const Bio = () => {
 
           <article className='glass-card rounded-[30px] p-6 md:p-8'>
             <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>
-              <SplitText text="Biography" delay={0.2} />
+              <SplitText text={bioHeadingText} delay={0.2} />
             </h1>
             <p className='mt-3 max-w-xl text-sm uppercase tracking-[0.14em] text-[var(--ink-soft)]'>
-              <BlurText text="Thoughtful engineering. Character-rich interfaces. Relentless iteration." delay={0.6} />
+              <BlurText text={bioSubheadingText} delay={0.6} />
             </p>
 
-            <div className='mt-7 space-y-4 text-base leading-relaxed text-[var(--ink-soft)]'>
+            <div className='mt-7 space-y-4 text-base leading-relaxed text-[var(--ink-soft)] [&_p]:mb-4 [&_a]:text-[var(--accent)] [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[var(--ink)] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[var(--ink)] [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[var(--ink)]'>
               {loading ? (
                 <p className='ink-soft'>Loading biography...</p>
               ) : (
-                bioParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
+                config?.bioText && config.bioText.includes('<') ? (
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(config.bioText) }} />
+                ) : (
+                  bioParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
+                )
               )}
             </div>
 
@@ -110,11 +119,17 @@ const Bio = () => {
               })}
             </div>
 
-            <div className='mt-8'>
+            <div className='mt-8 flex flex-wrap gap-4'>
               <Link to='/Projects' className='inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-[var(--bg)] transition hover:-translate-y-0.5 hover:brightness-110'>
                 View Selected Work
                 <ArrowUpRight className='h-4 w-4' />
               </Link>
+              {config?.readmeContent && (
+                <Link to='/readme' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--ink)] transition hover:-translate-y-0.5 hover:bg-[var(--bg-alt)]'>
+                  Read Readme
+                  <ArrowUpRight className='h-4 w-4' />
+                </Link>
+              )}
             </div>
           </article>
         </div>

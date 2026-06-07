@@ -28,6 +28,20 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    bioHeading: {
+        type: String,
+        trim: true,
+        default: 'Biography',
+    },
+    bioSubheading: {
+        type: String,
+        trim: true,
+        default: 'Thoughtful engineering. Character-rich interfaces. Relentless iteration.',
+    },
+    readmeContent: {
+        type: String,
+        trim: true,
+    },
     bioSkills: {
         type: [
             {
