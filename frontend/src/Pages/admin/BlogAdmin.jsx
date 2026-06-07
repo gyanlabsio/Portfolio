@@ -213,7 +213,7 @@ const BlogAdmin = () => {
                                     <div className='space-y-4'>
                                         <div>
                                             <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Status</label>
-                                            <select name='status' value={form.status} onChange={handleChange} className={`${inputClass} bg-transparent py-2`}>
+                                            <select name='status' value={form.status} onChange={handleChange} className={`${inputClass} py-2 [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}>
                                                 <option value='DRAFT'>Draft</option>
                                                 <option value='REVIEW'>Ready for Review</option>
                                                 <option value='PUBLISHED'>Published</option>
@@ -223,7 +223,7 @@ const BlogAdmin = () => {
 
                                         <div>
                                             <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Post Type</label>
-                                            <select name='type' value={form.type} onChange={handleChange} className={`${inputClass} bg-transparent py-2`}>
+                                            <select name='type' value={form.type} onChange={handleChange} className={`${inputClass} py-2 [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}>
                                                 <option value='ARTICLE'>Article</option>
                                                 <option value='BLOG'>Blog</option>
                                                 <option value='CASE_STUDY'>Case Study</option>
@@ -233,7 +233,7 @@ const BlogAdmin = () => {
 
                                         <div>
                                             <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Category</label>
-                                            <select name='category' value={form.category} onChange={handleChange} className={`${inputClass} bg-transparent py-2`}>
+                                            <select name='category' value={form.category} onChange={handleChange} className={`${inputClass} py-2 [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}>
                                                 <option value=''>Select Category</option>
                                                 <option value='engineering'>Engineering</option>
                                                 <option value='design'>Design</option>
