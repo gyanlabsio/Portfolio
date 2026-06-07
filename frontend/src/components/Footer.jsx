@@ -1,7 +1,22 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { getSettings } from '../api/settings'
 
 const Footer = () => {
+  const [config, setConfig] = useState(null)
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const { data } = await getSettings()
+        setConfig(data.data)
+      } catch (err) {
+        console.error('Failed to load site config in Footer', err)
+      }
+    }
+    fetchConfig()
+  }, [])
   const handleScrollToTop = () => {
     if (window.lenis) {
       window.lenis.scrollTo(0, { duration: 1.5 })
@@ -10,17 +25,18 @@ const Footer = () => {
     }
   }
 
+  const footerHeading = config?.footerHeading || 'Build Something\nRemarkable.'
+  const footerSubheading = config?.footerSubheading || 'Available for selected projects'
+
   return (
     <footer className='py-16'>
       <div className='section-wrap'>
         <div className='glass-card enter-fade rounded-[28px] p-6 md:p-10'>
           <div className='grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end'>
             <div className='space-y-4'>
-              <p className='text-xs uppercase tracking-[0.22em] text-[var(--ink-soft)]'>Available for selected projects</p>
-              <h2 className='display-title text-4xl leading-tight text-[var(--ink)] md:text-6xl'>
-                Build Something
-                <br />
-                Remarkable.
+              <p className='text-xs uppercase tracking-[0.22em] text-[var(--ink-soft)]'>{footerSubheading}</p>
+              <h2 className='display-title text-4xl leading-tight text-[var(--ink)] md:text-6xl whitespace-pre-line'>
+                {footerHeading}
               </h2>
               <a
                 href='mailto:gyanlabs.io@gmail.com'

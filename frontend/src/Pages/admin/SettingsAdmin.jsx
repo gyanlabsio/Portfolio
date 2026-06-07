@@ -21,6 +21,7 @@ const SettingsAdmin = () => {
                 setSettings({
                     siteTitle: '', tagline: '', heroBadge: 'Design + Engineering', description: '', email: '', phone: '',
                     aboutImage: '', bioHeading: 'Biography', bioSubheading: 'Thoughtful engineering. Character-rich interfaces. Relentless iteration.', bioText: '', readmeContent: '',
+                    footerHeading: 'Build Something\nRemarkable.', footerSubheading: 'Available for selected projects',
                     bioSkills: [
                         { title: 'Product Direction', icon: 'Compass' },
                         { title: 'Design Thinking', icon: 'Lightbulb' },
@@ -264,6 +265,20 @@ const SettingsAdmin = () => {
                                 />
                             </label>
                         ))}
+                    </div>
+                </div>
+                {/* Footer Settings */}
+                <div className='glass-card rounded-2xl p-6'>
+                    <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><Layout className='h-5 w-5 text-[var(--accent)]' /> Footer Settings</h2>
+                    <div className='space-y-4'>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Footer Heading</label>
+                            <textarea rows="2" value={settings.footerHeading || ''} onChange={e => handleChange('footerHeading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="Build Something&#10;Remarkable." />
+                        </div>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Footer Subheading</label>
+                            <input type='text' value={settings.footerSubheading || ''} onChange={e => handleChange('footerSubheading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Available for selected projects" />
+                        </div>
                     </div>
                 </div>
             </form>

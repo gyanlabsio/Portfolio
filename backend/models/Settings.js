@@ -42,6 +42,16 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    footerHeading: {
+        type: String,
+        trim: true,
+        default: 'Build Something\nRemarkable.',
+    },
+    footerSubheading: {
+        type: String,
+        trim: true,
+        default: 'Available for selected projects',
+    },
     bioSkills: {
         type: [
             {
