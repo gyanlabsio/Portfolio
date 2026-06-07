@@ -52,7 +52,7 @@ exports.createProject = async (req, res, next) => {
 exports.updateProject = async (req, res, next) => {
     try {
         const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+            returnDocument: 'after',
             runValidators: true,
         });
         if (!project) {

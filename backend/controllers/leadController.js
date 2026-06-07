@@ -68,7 +68,7 @@ exports.createLead = async (req, res, next) => {
 exports.updateLead = async (req, res, next) => {
     try {
         const lead = await Lead.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+            returnDocument: 'after',
             runValidators: true,
         });
         if (!lead) {

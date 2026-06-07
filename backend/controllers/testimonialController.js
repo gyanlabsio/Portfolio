@@ -82,7 +82,7 @@ exports.createTestimonial = async (req, res, next) => {
 exports.updateTestimonial = async (req, res, next) => {
     try {
         const testimonial = await Testimonial.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+            returnDocument: 'after',
             runValidators: true,
         });
         if (!testimonial) {
@@ -102,7 +102,7 @@ exports.updateTestimonialStatus = async (req, res, next) => {
         const testimonial = await Testimonial.findByIdAndUpdate(
             req.params.id, 
             { status }, 
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         );
         if (!testimonial) {
             return res.status(404).json({ success: false, message: 'Testimonial not found' });

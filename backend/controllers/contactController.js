@@ -84,7 +84,7 @@ exports.updateStatus = async (req, res, next) => {
         const contact = await Contact.findByIdAndUpdate(
             req.params.id,
             { status },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         );
         if (!contact) {
             return res.status(404).json({ success: false, message: 'Contact not found' });
@@ -102,7 +102,7 @@ exports.markAsRead = async (req, res, next) => {
         const contact = await Contact.findByIdAndUpdate(
             req.params.id,
             { isRead: true },
-            { new: true }
+            { returnDocument: 'after' }
         );
         if (!contact) {
             return res.status(404).json({ success: false, message: 'Contact not found' });

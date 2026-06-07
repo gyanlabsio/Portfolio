@@ -64,7 +64,7 @@ const updateSeo = async (req, res, next) => {
         const seo = await Seo.findOneAndUpdate(
             { pageSlug }, 
             req.body, 
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         );
 
         if (!seo) {

@@ -46,7 +46,7 @@ exports.createService = async (req, res, next) => {
 exports.updateService = async (req, res, next) => {
     try {
         const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+            returnDocument: 'after',
             runValidators: true,
         });
         if (!service) {

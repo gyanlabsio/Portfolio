@@ -88,7 +88,7 @@ exports.createContent = async (req, res, next) => {
 exports.updateContent = async (req, res, next) => {
     try {
         const content = await Content.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+            returnDocument: 'after',
             runValidators: true,
         });
         if (!content) {
