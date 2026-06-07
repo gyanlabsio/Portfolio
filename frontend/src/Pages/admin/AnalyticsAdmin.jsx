@@ -34,6 +34,7 @@ const AnalyticsAdmin = () => {
         }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { fetchAll() }, [filterType])
 
     const getModuleIcon = (moduleName) => {

@@ -23,6 +23,7 @@ const LeadsAdmin = () => {
         }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { fetchAll() }, [])
 
     const handleStatusChange = async (id, status) => {

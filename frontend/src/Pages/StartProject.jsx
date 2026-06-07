@@ -78,6 +78,7 @@ const StartProject = () => {
 
       setStatus('success')
     } catch (error) {
+      console.error(error);
       setStatus('error')
     } finally {
       setIsSubmitting(false)
