@@ -165,6 +165,8 @@ const Home = () => {
                   </Link>
                 ))}
               </div>
+            ) : (
+              <p className='ink-soft'>Thought pieces are coming soon.</p>
             )}
           </article>
         )}
