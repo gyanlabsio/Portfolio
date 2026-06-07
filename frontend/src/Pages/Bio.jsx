@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight, Compass, Lightbulb, Rocket } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
-import bioProfileImage from '../assets/ChatGPT Image Mar 2, 2026, 09_49_15 PM.png'
+import bioProfileImage from '../assets/download.png'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 
