@@ -2,6 +2,14 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const Footer = () => {
+  const handleScrollToTop = () => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { duration: 1.5 })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <footer className='py-16'>
       <div className='section-wrap'>
@@ -25,10 +33,10 @@ const Footer = () => {
 
             <div className='space-y-5'>
               <nav className='stagger-children grid grid-cols-2 gap-2 text-sm font-semibold text-[var(--ink)]'>
-                <Link to='/' className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Home</Link>
-                <Link to='/Bio' className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Bio</Link>
-                <Link to='/Projects' className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Projects</Link>
-                <Link to='/Blog' className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Blog</Link>
+                <Link to='/' onClick={handleScrollToTop} className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Home</Link>
+                <Link to='/Bio' onClick={handleScrollToTop} className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Bio</Link>
+                <Link to='/Projects' onClick={handleScrollToTop} className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Projects</Link>
+                <Link to='/Blog' onClick={handleScrollToTop} className='focus-ring surface-interactive rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--line)]'>Blog</Link>
               </nav>
 
               <div className='flex items-center gap-2'>

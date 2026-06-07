@@ -7,7 +7,10 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const Admin = require('./models/Admin');
 const Project = require('./models/Project');
-const BlogPost = require('./models/BlogPost');
+const Content = require('./models/Content');
+const Testimonial = require('./models/Testimonial');
+const Service = require('./models/Service');
+const Lead = require('./models/Lead');
 const SiteConfig = require('./models/SiteConfig');
 
 const initialAdminEmail = process.env.SEED_ADMIN_EMAIL;
@@ -32,14 +35,12 @@ const seedData = async () => {
         await Admin.create({
             email: initialAdminEmail,
             password: initialAdminPassword,
-            name: 'Gyanaranjan Das',
-            role: 'superadmin',
+            role: 'admin',
         });
         console.log(`✅ Admin user created (${initialAdminEmail})`);
     } else {
         existingAdmin.password = initialAdminPassword;
-        existingAdmin.name = 'Gyanaranjan Das';
-        existingAdmin.role = 'superadmin';
+        existingAdmin.role = 'admin';
         await existingAdmin.save();
         console.log(`✅ Admin user updated (${initialAdminEmail})`);
     }
@@ -70,32 +71,29 @@ const seedData = async () => {
             {
                 title: 'E-Commerce App',
                 description: 'A full-stack e-commerce application with product management, shopping cart, secure checkout, and user authentication. Built with React, Node.js, Express, and MongoDB.',
-                shortDescription: 'Full-stack e-commerce with cart, checkout, and auth',
                 techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe'],
-                featuredImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop',
-                githubUrl: 'https://github.com/gyanaranjan-das',
+                coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop',
+                githubLink: 'https://github.com/gyanaranjan-das',
+                category: 'E_COMMERCE',
                 featured: true,
-                order: 1,
             },
             {
                 title: 'SaaS Dashboard',
                 description: 'A modern data analytics dashboard with real-time charts, user management, and responsive design. Features dark mode, interactive filters, and export capabilities.',
-                shortDescription: 'Analytics dashboard with real-time charts and dark mode',
                 techStack: ['React', 'Tailwind CSS', 'Chart.js', 'Node.js'],
-                featuredImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
-                liveUrl: 'https://example.com',
+                coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+                liveLink: 'https://example.com',
+                category: 'DASHBOARD',
                 featured: true,
-                order: 2,
             },
             {
                 title: 'Portfolio V1',
                 description: 'The first version of my personal portfolio website, featuring a dramatic dark theme with neon red accents, custom typography, and responsive design.',
-                shortDescription: 'Personal portfolio with dark theme and custom typography',
                 techStack: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-                featuredImage: '',
-                liveUrl: 'https://example.com',
+                coverImage: '',
+                liveLink: 'https://example.com',
+                category: 'PORTFOLIO',
                 featured: true,
-                order: 3,
             },
         ]);
         console.log('✅ Sample projects created');
@@ -103,28 +101,115 @@ const seedData = async () => {
         console.log('⏩ Projects already exist');
     }
 
-    // --- Sample Blog Posts ---
-    const postCount = await BlogPost.countDocuments();
-    if (postCount === 0) {
-        await BlogPost.insertMany([
+    // --- Sample Content ---
+    const contentCount = await Content.countDocuments();
+    if (contentCount === 0) {
+        await Content.insertMany([
             {
-                title: 'Getting Started with the MERN Stack',
-                content: '<h2>Why MERN?</h2><p>The MERN stack (MongoDB, Express, React, Node.js) is one of the most popular full-stack JavaScript frameworks. It lets you build everything — from the database to the frontend — using a single language: JavaScript.</p><h2>Setting Up</h2><p>First, make sure you have Node.js installed. Then create your project structure with separate frontend and backend directories...</p>',
-                excerpt: 'A beginner-friendly guide to building full-stack apps with MongoDB, Express, React, and Node.js.',
-                tags: ['MERN', 'Tutorial', 'JavaScript'],
-                published: true,
+                title: 'Building a Scalable Microservices Architecture',
+                content: 'In this article, we explore the challenges and solutions of building a scalable microservices architecture using Node.js and Docker. We will cover service discovery, API gateways, and inter-service communication.\n\n### Why Microservices?\nMicroservices allow teams to work independently...',
+                type: 'ARTICLE',
+                status: 'PUBLISHED',
+                tags: ['Architecture', 'Node.js', 'Docker', 'Microservices'],
+                coverImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop',
             },
             {
-                title: 'Designing Dark-Themed UIs That Pop',
-                content: '<h2>The Art of Dark Design</h2><p>Dark themes aren\'t just inverted colors. They require careful consideration of contrast ratios, accent colors, and layered surfaces to create depth and visual hierarchy...</p>',
-                excerpt: 'Learn how to create stunning dark-themed interfaces with vibrant accent colors and proper contrast ratios.',
-                tags: ['Design', 'UI/UX', 'CSS'],
-                published: true,
+                title: 'Case Study: 500% Increase in Conversion Rate',
+                content: '## Problem\nOur client was struggling with a low conversion rate on their e-commerce platform.\n\n## Solution\nWe redesigned the checkout flow, implemented one-click purchasing, and optimized performance.\n\n## Architecture\nReact frontend, Node.js backend, Redis caching.\n\n## Results\nConversion rate increased from 1.2% to 6.1% within 3 months.',
+                type: 'CASE_STUDY',
+                status: 'PUBLISHED',
+                tags: ['E-commerce', 'React', 'Optimization', 'Case Study'],
+                coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
             },
         ]);
-        console.log('✅ Sample blog posts created');
+        console.log('✅ Sample content created');
     } else {
-        console.log('⏩ Blog posts already exist');
+        console.log('⏩ Content already exists');
+    }
+
+    // --- Sample Testimonials ---
+    const testimonialCount = await Testimonial.countDocuments();
+    if (testimonialCount === 0) {
+        await Testimonial.insertMany([
+            {
+                clientName: 'Jane Doe',
+                clientRole: 'CEO',
+                company: 'Tech Solutions Inc.',
+                testimonial: 'Working with this developer was an absolute pleasure. They delivered our SaaS dashboard ahead of schedule and the code quality was exceptional.',
+                rating: 5,
+                featured: true,
+                status: 'APPROVED',
+                source: 'UPWORK',
+                avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
+            },
+            {
+                clientName: 'John Smith',
+                clientRole: 'CTO',
+                company: 'E-Commerce Plus',
+                testimonial: 'Great communication and solid technical skills. Our conversion rate improved significantly after the redesign.',
+                rating: 4,
+                featured: false,
+                status: 'APPROVED',
+                source: 'LINKEDIN',
+            },
+        ]);
+        console.log('✅ Sample testimonials created');
+    } else {
+        console.log('⏩ Testimonials already exist');
+    }
+
+    // --- Sample Services ---
+    const serviceCount = await Service.countDocuments();
+    if (serviceCount === 0) {
+        await Service.insertMany([
+            {
+                title: 'Full Stack Web Development',
+                description: 'End-to-end web application development using modern JavaScript frameworks. I handle everything from database design to frontend UI implementation.',
+                features: ['React / Next.js Frontend', 'Node.js / Express Backend', 'Database Architecture', 'API Development', 'Deployment & CI/CD'],
+                startingPrice: '$2,000',
+                featured: true,
+            },
+            {
+                title: 'Backend API Architecture',
+                description: 'Scalable, secure, and well-documented REST or GraphQL APIs for your existing frontend or mobile application.',
+                features: ['Performance Optimization', 'Authentication & Authorization', 'Third-party Integrations', 'Thorough Documentation'],
+                startingPrice: '$1,000',
+                featured: false,
+            },
+        ]);
+        console.log('✅ Sample services created');
+    } else {
+        console.log('⏩ Services already exist');
+    }
+
+    // --- Sample Leads ---
+    const leadCount = await Lead.countDocuments();
+    if (leadCount === 0) {
+        await Lead.insertMany([
+            {
+                name: 'Alice Johnson',
+                email: 'alice.johnson@example.com',
+                company: 'InnovateTech',
+                projectType: 'SAAS',
+                budget: '10000_PLUS',
+                source: 'PORTFOLIO',
+                status: 'NEW',
+                notes: 'Interested in a completely new SaaS dashboard build.',
+            },
+            {
+                name: 'Bob Smith',
+                email: 'bob.smith@example.com',
+                phone: '+1234567890',
+                projectType: 'E_COMMERCE',
+                budget: '5000_10000',
+                source: 'LINKEDIN',
+                status: 'IN_DISCUSSION',
+                notes: 'Wants to migrate from Shopify to a custom Next.js stack.',
+            },
+        ]);
+        console.log('✅ Sample leads created');
+    } else {
+        console.log('⏩ Leads already exist');
     }
 
     console.log('\n🎉 Seed complete!');

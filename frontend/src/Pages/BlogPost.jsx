@@ -49,7 +49,7 @@ const BlogPost = () => {
 
     return (
         <article className='pb-16 pt-8 md:pt-12'>
-            <SEO title={post.title} description={post.excerpt} image={post.featuredImage} />
+            <SEO title={post.title} description={post.excerpt} image={post.coverImage} />
             <div className='section-wrap'>
                 <Link to='/Blog' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'>
                     <ArrowLeft className='h-3.5 w-3.5' />
@@ -68,9 +68,9 @@ const BlogPost = () => {
                         </span>
                         <span className='inline-flex items-center gap-1.5'>
                             <Pencil className='h-3.5 w-3.5' />
-                            {post.author}
+                            {post.author || 'Admin'}
                         </span>
-                        {post.isCaseStudy && (
+                        {post.type === 'CASE_STUDY' && (
                             <span className='inline-flex items-center gap-1.5 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2.5 py-1 text-[10px] font-bold text-[var(--accent-2)]'>
                                 <BookOpenCheck className='h-3.5 w-3.5' /> Case Study
                             </span>
@@ -88,9 +88,9 @@ const BlogPost = () => {
                         </div>
                     )}
 
-                    {post.featuredImage && (
+                    {post.coverImage && (
                         <div className='mt-8 overflow-hidden rounded-3xl border border-[var(--line)]'>
-                            <img src={post.featuredImage} alt={post.title} className='max-h-[440px] w-full object-cover' />
+                            <img src={post.coverImage} alt={post.title} className='max-h-[440px] w-full object-cover' />
                         </div>
                     )}
 

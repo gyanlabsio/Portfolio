@@ -17,19 +17,6 @@ const cookieOptions = {
     maxAge: 24 * 60 * 60 * 1000,
 };
 
-// @desc    Get CSRF token
-// @route   GET /api/auth/csrf-token
-exports.getCsrfToken = async (req, res) => {
-    // In test mode or if csurf middleware is not present, return a dummy token
-    let csrfToken;
-    if (typeof req.csrfToken === 'function') {
-        csrfToken = req.csrfToken();
-    } else {
-        csrfToken = 'test-csrf-token';
-    }
-    res.json({ success: true, csrfToken });
-};
-
 // @desc    Login admin
 // @route   POST /api/auth/login
 exports.login = async (req, res, next) => {
@@ -56,7 +43,7 @@ exports.login = async (req, res, next) => {
 
         res.json({
             success: true,
-            admin: { id: admin._id, email: admin.email, name: admin.name, role: admin.role },
+            admin: { id: admin._id, email: admin.email, role: admin.role },
         });
     } catch (error) {
         next(error);
@@ -68,7 +55,7 @@ exports.login = async (req, res, next) => {
 exports.getMe = async (req, res) => {
     res.json({
         success: true,
-        admin: { id: req.admin._id, email: req.admin.email, name: req.admin.name, role: req.admin.role },
+        admin: { id: req.admin._id, email: req.admin.email, role: req.admin.role },
     });
 };
 
@@ -77,4 +64,29 @@ exports.getMe = async (req, res) => {
 exports.logout = async (req, res) => {
     res.clearCookie('admin_token', cookieOptions);
     res.json({ success: true, message: 'Logged out successfully' });
+};
+
+// @desc    Change admin password
+// @route   PUT /api/auth/change-password
+exports.changePassword = async (req, res, next) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        const admin = await Admin.findById(req.admin._id).select('+password');
+        if (!admin) {
+            return res.status(401).json({ success: false, message: 'Admin not found' });
+        }
+
+        const isMatch = await admin.comparePassword(currentPassword);
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: 'Current password is incorrect' });
+        }
+
+        admin.password = newPassword;
+        await admin.save();
+
+        res.json({ success: true, message: 'Password changed successfully' });
+    } catch (error) {
+        next(error);
+    }
 };

@@ -119,15 +119,15 @@ const Blog = () => {
                 to={`/blog/${post.slug}`}
                 className='glass-card group enter-fade block rounded-3xl p-4 md:p-5'
               >
-                {post.featuredImage && (
+                {post.coverImage && (
                   <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
                     <img
-                      src={post.featuredImage}
+                      src={post.coverImage}
                       alt={post.title}
                       className='h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]'
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-[#10182899] to-transparent' />
-                    {post.isCaseStudy && (
+                    {post.type === 'CASE_STUDY' && (
                       <span className='absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-[#0c7fa3]/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm'>
                         <BookOpenCheck className='h-3 w-3' /> Case Study
                       </span>
@@ -139,7 +139,7 @@ const Blog = () => {
                   <div className='flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
                     <Calendar className='w-3.5 h-3.5' />
                     {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    {post.isCaseStudy && !post.featuredImage && (
+                    {post.type === 'CASE_STUDY' && !post.coverImage && (
                       <span className='ml-auto inline-flex items-center gap-1 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--accent-2)]'>
                         <BookOpenCheck className='h-3 w-3' /> Case Study
                       </span>

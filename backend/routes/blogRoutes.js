@@ -1,23 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const {
-    getPosts,
-    getPost,
-    createPost,
-    updatePost,
-    deletePost,
-} = require('../controllers/blogController');
-const { protect } = require('../middleware/auth');
+    getContent,
+    getContentBySlug,
+    getContentByType,
+    createContent,
+    updateContent,
+    deleteContent,
+} = require('../controllers/contentController');
+const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
-const { blogValidators } = require('../middleware/validators');
+const { contentValidators } = require('../middleware/validators');
 
 // Public routes
-router.get('/', getPosts);
-router.get('/:slug', getPost);
+router.get('/', getContent);
+router.get('/type/:type', getContentByType);
+router.get('/:slug', getContentBySlug);
 
 // Admin routes
-router.post('/', protect, blogValidators.createOrUpdate, validate, createPost);
-router.put('/:id', protect, blogValidators.id, blogValidators.createOrUpdate, validate, updatePost);
-router.delete('/:id', protect, blogValidators.id, validate, deletePost);
+router.post('/', protect, authorize('admin'), contentValidators.create, validate, createContent);
+router.patch('/:id', protect, authorize('admin'), contentValidators.id, contentValidators.update, validate, updateContent);
+router.delete('/:id', protect, authorize('admin'), contentValidators.id, validate, deleteContent);
 
 module.exports = router;

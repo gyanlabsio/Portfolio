@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Compass, Lightbulb, Rocket } from 'lucide-react'
 import SEO from '../components/SEO'
-import { getSiteConfig } from '../api/admin'
+import { getSettings } from '../api/settings'
 import bioProfileImage from '../assets/ChatGPT Image Mar 2, 2026, 09_49_15 PM.png'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
@@ -14,7 +14,7 @@ const Bio = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const { data } = await getSiteConfig()
+        const { data } = await getSettings()
         setConfig(data.data)
       } catch (err) {
         console.error('Failed to load site config in Bio', err)

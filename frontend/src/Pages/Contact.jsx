@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Mail, MessageSquareText, PhoneCall } from 'lucide-react'
 import SEO from '../components/SEO'
 import { submitContact } from '../api/contact'
+import { recordEvent } from '../api/analytics'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 
@@ -21,6 +22,18 @@ const Contact = () => {
     setContactStatus(null)
     try {
       await submitContact(contactData)
+      localStorage.setItem('visitor_real_name', contactData.name)
+      
+      // Track analytics
+      recordEvent({
+          type: 'FORM_SUBMISSION',
+          page: '/Contact',
+          module: 'CONTACT',
+          visitorId: localStorage.getItem('visitor_id') || undefined,
+          visitorLabel: localStorage.getItem('visitor_label') || undefined,
+          realName: contactData.name
+      }).catch(console.error);
+
       setContactStatus({ type: 'success', message: 'Message sent! I\'ll get back to you soon.' })
       setContactData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {

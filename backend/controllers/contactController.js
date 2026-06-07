@@ -17,6 +17,10 @@ exports.submitContact = async (req, res, next) => {
         const safeEmail = escapeHtml(contact.email);
         const safeSubject = escapeHtml(contact.subject);
         const safeMessage = escapeHtml(contact.message).replace(/\n/g, '<br/>');
+        const safeCompany = escapeHtml(contact.company || 'N/A');
+        const safeBudget = escapeHtml(contact.budget || 'N/A');
+        const safeProjectType = escapeHtml(contact.projectType || 'N/A');
+        const safeSource = escapeHtml(contact.source || 'N/A');
 
         // Send email notification to site owner
         try {
@@ -27,7 +31,11 @@ exports.submitContact = async (req, res, next) => {
           <h3>New Contact Form Submission</h3>
           <p><strong>Name:</strong> ${safeName}</p>
           <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Company:</strong> ${safeCompany}</p>
           <p><strong>Subject:</strong> ${safeSubject}</p>
+          <p><strong>Budget:</strong> ${safeBudget}</p>
+          <p><strong>Project Type:</strong> ${safeProjectType}</p>
+          <p><strong>Source:</strong> ${safeSource}</p>
           <p><strong>Message:</strong></p>
           <p>${safeMessage}</p>
         `,
@@ -54,13 +62,46 @@ exports.getContacts = async (req, res, next) => {
     }
 };
 
+// @desc    Get single contact (admin)
+// @route   GET /api/contact/:id
+exports.getContact = async (req, res, next) => {
+    try {
+        const contact = await Contact.findById(req.params.id);
+        if (!contact) {
+            return res.status(404).json({ success: false, message: 'Contact not found' });
+        }
+        res.json({ success: true, data: contact });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Update contact status (admin)
+// @route   PATCH /api/contact/:id/status
+exports.updateStatus = async (req, res, next) => {
+    try {
+        const { status } = req.body;
+        const contact = await Contact.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            { new: true, runValidators: true }
+        );
+        if (!contact) {
+            return res.status(404).json({ success: false, message: 'Contact not found' });
+        }
+        res.json({ success: true, data: contact });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // @desc    Mark contact as read (admin)
-// @route   PUT /api/contact/:id/read
+// @route   PATCH /api/contact/:id/read
 exports.markAsRead = async (req, res, next) => {
     try {
         const contact = await Contact.findByIdAndUpdate(
             req.params.id,
-            { read: true },
+            { isRead: true },
             { new: true }
         );
         if (!contact) {
