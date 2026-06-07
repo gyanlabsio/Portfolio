@@ -18,6 +18,11 @@ const SettingsAdmin = () => {
                 setSettings({
                     siteTitle: '', tagline: '', heroBadge: 'Design + Engineering', description: '', email: '', phone: '',
                     aboutImage: '', bioText: '',
+                    bioSkills: [
+                        { title: 'Product Direction', icon: 'Compass' },
+                        { title: 'Design Thinking', icon: 'Lightbulb' },
+                        { title: 'Fast Execution', icon: 'Rocket' }
+                    ],
                     logoUrl: '', faviconUrl: '', resumeUrl: '',
                     availabilityStatus: 'AVAILABLE',
                     socialLinks: { github: '', linkedin: '', twitter: '', instagram: '' },
@@ -46,6 +51,30 @@ const SettingsAdmin = () => {
             }
         }))
     }
+
+    const handleAddSkill = () => {
+        setSettings(prev => ({
+            ...prev,
+            bioSkills: [...(prev.bioSkills || []), { title: '', icon: 'Compass' }]
+        }))
+    }
+
+    const handleRemoveSkill = (index) => {
+        setSettings(prev => ({
+            ...prev,
+            bioSkills: prev.bioSkills.filter((_, i) => i !== index)
+        }))
+    }
+
+    const handleSkillChange = (index, field, value) => {
+        setSettings(prev => {
+            const newSkills = [...(prev.bioSkills || [])]
+            newSkills[index] = { ...newSkills[index], [field]: value }
+            return { ...prev, bioSkills: newSkills }
+        })
+    }
+
+    const AVAILABLE_ICONS = ['Compass', 'Lightbulb', 'Rocket', 'Code', 'Database', 'Cpu', 'Monitor', 'PenTool', 'Layout', 'Layers', 'Globe', 'Smartphone', 'Server', 'Zap', 'Award', 'Briefcase', 'Star', 'Heart', 'Shield']
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -135,6 +164,30 @@ const SettingsAdmin = () => {
                         <div>
                             <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Biography Text (Supports multi-line)</label>
                             <textarea rows="6" value={settings.bioText || ''} onChange={e => handleChange('bioText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none resize-none' placeholder="I am a full-stack developer..." />
+                        </div>
+                        
+                        <div className='pt-4 border-t border-[var(--line)] mt-4'>
+                            <div className='flex items-center justify-between mb-3'>
+                                <label className='block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Bio Skills</label>
+                                <button type="button" onClick={handleAddSkill} className='text-xs font-semibold text-[var(--accent)] hover:text-[var(--accent-2)] transition'>+ Add Skill</button>
+                            </div>
+                            <div className='space-y-3'>
+                                {(settings.bioSkills || []).map((skill, index) => (
+                                    <div key={index} className='flex gap-3 items-start'>
+                                        <div className='flex-1'>
+                                            <input type='text' value={skill.title} onChange={e => handleSkillChange(index, 'title', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none' placeholder="Skill Title" />
+                                        </div>
+                                        <div className='w-32'>
+                                            <select value={skill.icon} onChange={e => handleSkillChange(index, 'icon', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'>
+                                                {AVAILABLE_ICONS.map(icon => <option key={icon} value={icon}>{icon}</option>)}
+                                            </select>
+                                        </div>
+                                        <button type="button" onClick={() => handleRemoveSkill(index)} className='p-2 text-[var(--ink-soft)] hover:text-red-500 transition rounded-xl bg-[var(--surface)] border border-[var(--line)]'>
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

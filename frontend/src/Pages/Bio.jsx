@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Compass, Lightbulb, Rocket } from 'lucide-react'
+import { 
+  ArrowUpRight, Compass, Lightbulb, Rocket, Code, Database, Cpu, 
+  Monitor, PenTool, Layout, Layers, Globe, Smartphone, 
+  Server, Zap, Award, Briefcase, Star, Heart, Shield
+} from 'lucide-react'
+
+const iconMap = {
+  Compass, Lightbulb, Rocket, Code, Database, Cpu, 
+  Monitor, PenTool, Layout, Layers, Globe, Smartphone, 
+  Server, Zap, Award, Briefcase, Star, Heart, Shield
+}
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
 import bioProfileImage from '../assets/download.png'
@@ -41,6 +51,17 @@ const Bio = () => {
     ]
   }, [config?.bioText])
 
+  const bioSkills = useMemo(() => {
+    if (config?.bioSkills && config.bioSkills.length > 0) {
+      return config.bioSkills;
+    }
+    return [
+      { title: 'Product Direction', icon: 'Compass' },
+      { title: 'Design Thinking', icon: 'Lightbulb' },
+      { title: 'Fast Execution', icon: 'Rocket' }
+    ]
+  }, [config?.bioSkills])
+
   return (
     <main className='pb-16 pt-8 md:pt-12'>
       <SEO title='Bio' description='The story, philosophy, and craft behind the portfolio work.' />
@@ -75,18 +96,18 @@ const Bio = () => {
             </div>
 
             <div className='mt-8 grid gap-3 sm:grid-cols-3'>
-              <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
-                <Compass className='h-5 w-5 text-[var(--accent-2)]' />
-                <p className='mt-2 text-sm font-semibold text-[var(--ink)]'>Product Direction</p>
-              </div>
-              <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
-                <Lightbulb className='h-5 w-5 text-[var(--accent)]' />
-                <p className='mt-2 text-sm font-semibold text-[var(--ink)]'>Design Thinking</p>
-              </div>
-              <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
-                <Rocket className='h-5 w-5 text-[var(--accent-3)]' />
-                <p className='mt-2 text-sm font-semibold text-[var(--ink)]'>Fast Execution</p>
-              </div>
+              {bioSkills.map((skill, index) => {
+                const IconComponent = iconMap[skill.icon] || iconMap.Compass;
+                const accentColors = ['text-[var(--accent-2)]', 'text-[var(--accent)]', 'text-[var(--accent-3)]']
+                const iconColor = accentColors[index % accentColors.length]
+                
+                return (
+                  <div key={index} className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
+                    <IconComponent className={`h-5 w-5 ${iconColor}`} />
+                    <p className='mt-2 text-sm font-semibold text-[var(--ink)]'>{skill.title}</p>
+                  </div>
+                )
+              })}
             </div>
 
             <div className='mt-8'>

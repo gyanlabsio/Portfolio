@@ -28,6 +28,19 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    bioSkills: {
+        type: [
+            {
+                title: String,
+                icon: String
+            }
+        ],
+        default: [
+            { title: 'Product Direction', icon: 'Compass' },
+            { title: 'Design Thinking', icon: 'Lightbulb' },
+            { title: 'Fast Execution', icon: 'Rocket' }
+        ]
+    },
     logoUrl: {
         type: String,
         trim: true,
