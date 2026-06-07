@@ -24,4 +24,16 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+const authorize = (...roles) => (req, res, next) => {
+    const userRole = req.admin.role || 'admin';
+    // superadmin should have access to all admin routes
+    if (!roles.includes(userRole) && userRole !== 'superadmin') {
+        return res.status(403).json({
+            success: false,
+            message: 'Not authorized for this action',
+        });
+    }
+    next();
+};
+
+module.exports = { protect, authorize };

@@ -16,38 +16,31 @@ const projectSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Project description is required'],
-        maxlength: [2000, 'Description cannot exceed 2000 characters'],
+        maxlength: [5000, 'Description cannot exceed 5000 characters'],
     },
-    shortDescription: {
-        type: String,
-        maxlength: [200, 'Short description cannot exceed 200 characters'],
+    coverImage: {
+        type: String, // URL
+        default: '',
     },
     techStack: [{
         type: String,
         trim: true,
     }],
-    featuredImage: {
-        type: String, // Cloudinary URL
-        default: '',
-    },
-    images: [{
-        type: String, // Cloudinary URLs
-    }],
-    githubUrl: {
+    githubLink: {
         type: String,
         default: '',
     },
-    liveUrl: {
+    liveLink: {
         type: String,
         default: '',
+    },
+    category: {
+        type: String,
+        enum: ['WEB_APP', 'SAAS', 'DASHBOARD', 'E_COMMERCE', 'MOBILE', 'OTHER'],
     },
     featured: {
         type: Boolean,
         default: false,
-    },
-    order: {
-        type: Number,
-        default: 0,
     },
 }, {
     timestamps: true,

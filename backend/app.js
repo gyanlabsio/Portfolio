@@ -16,6 +16,12 @@ const blogRoutes = require('./routes/blogRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const configRoutes = require('./routes/configRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const testimonialRoutes = require('./routes/testimonialRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
+const leadRoutes = require('./routes/leadRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
+const seoRoutes = require('./routes/seoRoutes');
 
 const app = express();
 
@@ -55,7 +61,7 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  max: 5000,
   message: { success: false, message: 'Too many requests, please try again later' },
 });
 app.use('/api/', limiter);
@@ -90,6 +96,12 @@ app.use('/api/blog', blogRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/leads', leadRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/seo', seoRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

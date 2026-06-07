@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Code, MonitorSmartphone, Layers, Rocket } from 'lucide-react'
 import updateImage from '../assets/ChatGPT Image Feb 27, 2026, 06_15_59 AM.png'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const LatestUpdates = () => {
   // GSAP Animations
   useGSAP(() => {

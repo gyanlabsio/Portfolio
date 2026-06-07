@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { getConfig, updateConfig } = require('../controllers/configController');
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 const Admin = require('../models/Admin');
 const SiteConfig = require('../models/SiteConfig');
 
 // --- Existing config routes ---
 router.get('/', getConfig);
-router.put('/', protect, updateConfig);
+router.put('/', protect, authorize('admin'), updateConfig);
 
 // --- TEMPORARY: Secure admin seed route ---
 // POST /api/config/seed-admin?token=SECRET
@@ -30,13 +30,11 @@ router.post('/seed-admin', async (req, res) => {
       admin = await Admin.create({
         email,
         password,
-        name: 'Gyanaranjan Das',
-        role: 'superadmin',
+        role: 'admin',
       });
     } else {
       admin.password = password;
-      admin.name = 'Gyanaranjan Das';
-      admin.role = 'superadmin';
+      admin.role = 'admin';
       await admin.save();
     }
     // Optionally seed SiteConfig if not present (optional, safe to skip if not needed)

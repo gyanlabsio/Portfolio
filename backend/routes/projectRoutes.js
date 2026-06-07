@@ -8,7 +8,7 @@ const {
     updateProject,
     deleteProject,
 } = require('../controllers/projectController');
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const { projectValidators } = require('../middleware/validators');
 
@@ -18,8 +18,8 @@ router.get('/featured', getFeaturedProjects);
 router.get('/:slug', getProject);
 
 // Admin routes
-router.post('/', protect, projectValidators.createOrUpdate, validate, createProject);
-router.put('/:id', protect, projectValidators.id, projectValidators.createOrUpdate, validate, updateProject);
-router.delete('/:id', protect, projectValidators.id, validate, deleteProject);
+router.post('/', protect, authorize('admin'), projectValidators.create, validate, createProject);
+router.patch('/:id', protect, authorize('admin'), projectValidators.id, projectValidators.update, validate, updateProject);
+router.delete('/:id', protect, authorize('admin'), projectValidators.id, validate, deleteProject);
 
 module.exports = router;

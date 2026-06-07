@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { to: '/Bio', label: 'Bio' },
   { to: '/Projects', label: 'Projects' },
   { to: '/Blog', label: 'Blog' },
+  { to: '/Testimonials', label: 'Testimonials' },
   { to: '/Contact', label: 'Contact' },
 ]
 
@@ -68,6 +69,14 @@ const Navbar = () => {
                   <social.icon className='h-4 w-4' />
                 </a>
               ))}
+              <div className="w-[1px] h-6 bg-[var(--line)] mx-1"></div>
+              <Link
+                to='/StartProject'
+                onClick={() => setOpen(false)}
+                className='focus-ring button-pop ml-1 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110'
+              >
+                Start a Project
+              </Link>
             </div>
 
             <button
@@ -120,6 +129,14 @@ const Navbar = () => {
                 </a>
               ))}
             </div>
+            
+            <Link
+              to='/StartProject'
+              onClick={() => setOpen(false)}
+              className='focus-ring button-pop mt-2 flex w-full justify-center rounded-xl bg-[var(--accent)] px-4 py-3 text-base font-semibold text-white transition hover:brightness-110'
+            >
+              Start a Project
+            </Link>
           </aside>
         </div>
       )}

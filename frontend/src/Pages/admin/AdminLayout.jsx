@@ -1,15 +1,20 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
-import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, BarChart3, SearchCode } from 'lucide-react'
 import { useState } from 'react'
 import ThemeToggle from '../../components/ThemeToggle'
 
 const navItems = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
     { to: '/admin/projects', label: 'Projects', icon: FolderKanban },
+    { to: '/admin/services', label: 'Services', icon: Briefcase },
     { to: '/admin/blog', label: 'Blog Posts', icon: FileText },
+    { to: '/admin/leads', label: 'Leads CRM', icon: Users },
     { to: '/admin/contacts', label: 'Messages', icon: Mail },
-    { to: '/admin/config', label: 'Site Config', icon: Settings },
+    { to: '/admin/testimonials', label: 'Testimonials', icon: MessageSquare },
+    { to: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+    { to: '/admin/settings', label: 'Settings', icon: Settings },
+    { to: '/admin/seo', label: 'SEO Config', icon: SearchCode },
 ]
 
 const AdminLayout = () => {

@@ -8,7 +8,7 @@ const BlogAdmin = () => {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [form, setForm] = useState({
-        title: '', content: '', excerpt: '', tags: '', published: false, isCaseStudy: false, featuredImage: '',
+        title: '', content: '', excerpt: '', tags: '', status: 'DRAFT', type: 'ARTICLE', coverImage: '', author: 'Admin'
     })
 
     const fetchAll = async () => {
@@ -27,7 +27,7 @@ const BlogAdmin = () => {
     }, [])
 
     const resetForm = () => {
-        setForm({ title: '', content: '', excerpt: '', tags: '', published: false, isCaseStudy: false, featuredImage: '' })
+        setForm({ title: '', content: '', excerpt: '', tags: '', status: 'DRAFT', type: 'ARTICLE', coverImage: '', author: 'Admin' })
         setEditingId(null)
         setShowForm(false)
     }
@@ -38,9 +38,10 @@ const BlogAdmin = () => {
             content: post.content,
             excerpt: post.excerpt || '',
             tags: (post.tags || []).join(', '),
-            published: post.published,
-            isCaseStudy: post.isCaseStudy || false,
-            featuredImage: post.featuredImage || '',
+            status: post.status || 'DRAFT',
+            type: post.type || 'ARTICLE',
+            coverImage: post.coverImage || '',
+            author: post.author || 'Admin',
         })
         setEditingId(post._id)
         setShowForm(true)
@@ -78,7 +79,7 @@ const BlogAdmin = () => {
 
     const togglePublish = async (post) => {
         try {
-            await updatePost(post._id, { published: !post.published })
+            await updatePost(post._id, { status: post.status === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED' })
             fetchAll()
         } catch {
             // no-op
@@ -151,17 +152,17 @@ const BlogAdmin = () => {
                             />
                             <input
                                 type='url'
-                                placeholder='Featured Image URL'
-                                value={form.featuredImage}
-                                onChange={(event) => setForm((prev) => ({ ...prev, featuredImage: event.target.value }))}
+                                placeholder='Cover Image URL'
+                                value={form.coverImage}
+                                onChange={(event) => setForm((prev) => ({ ...prev, coverImage: event.target.value }))}
                                 className={`${inputClass} focus-ring`}
                             />
                             <div className='flex gap-3'>
                                 <label className='surface-interactive flex flex-1 cursor-pointer items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--ink-soft)]'>
                                     <input
                                         type='checkbox'
-                                        checked={form.published}
-                                        onChange={(event) => setForm((prev) => ({ ...prev, published: event.target.checked }))}
+                                        checked={form.status === 'PUBLISHED'}
+                                        onChange={(event) => setForm((prev) => ({ ...prev, status: event.target.checked ? 'PUBLISHED' : 'DRAFT' }))}
                                         className='h-4 w-4 accent-[var(--accent)]'
                                     />
                                     Publish immediately
@@ -169,8 +170,8 @@ const BlogAdmin = () => {
                                 <label className='surface-interactive flex flex-1 cursor-pointer items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--ink-soft)]'>
                                     <input
                                         type='checkbox'
-                                        checked={form.isCaseStudy}
-                                        onChange={(event) => setForm((prev) => ({ ...prev, isCaseStudy: event.target.checked }))}
+                                        checked={form.type === 'CASE_STUDY'}
+                                        onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.checked ? 'CASE_STUDY' : 'ARTICLE' }))}
                                         className='h-4 w-4 accent-[var(--accent-2)]'
                                     />
                                     Case Study
@@ -200,7 +201,7 @@ const BlogAdmin = () => {
                             <div className='min-w-0 flex-1'>
                                 <div className='flex items-center gap-2'>
                                     <h3 className='truncate font-semibold text-[var(--ink)]'>{post.title}</h3>
-                                    {post.isCaseStudy && (
+                                    {post.type === 'CASE_STUDY' && (
                                         <span className='inline-flex shrink-0 items-center gap-1 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--accent-2)]'>
                                             <BookOpenCheck className='h-3 w-3' /> Case Study
                                         </span>
@@ -213,12 +214,12 @@ const BlogAdmin = () => {
                             <div className='flex shrink-0 items-center gap-2'>
                                 <button
                                     onClick={() => togglePublish(post)}
-                                    className={`focus-ring button-pop flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-semibold ${post.published
+                                    className={`focus-ring button-pop flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-semibold ${post.status === 'PUBLISHED'
                                         ? 'border-emerald-600/20 bg-emerald-600/10 text-emerald-600'
                                         : 'border-[var(--line)] bg-[var(--surface)] text-[var(--ink-soft)]'
                                         }`}
                                 >
-                                    {post.published ? <><Eye className='h-3 w-3' /> Published</> : <><EyeOff className='h-3 w-3' /> Draft</>}
+                                    {post.status === 'PUBLISHED' ? <><Eye className='h-3 w-3' /> Published</> : <><EyeOff className='h-3 w-3' /> Draft</>}
                                 </button>
                                 <button onClick={() => handleEdit(post)} className='focus-ring button-pop rounded-full border border-[var(--line)] bg-[var(--surface)] p-2 text-[var(--ink-soft)] hover:text-[var(--accent-2)]'>
                                     <Edit className='h-4 w-4' />

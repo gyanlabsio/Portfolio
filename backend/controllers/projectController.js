@@ -4,7 +4,7 @@ const Project = require('../models/Project');
 // @route   GET /api/projects
 exports.getProjects = async (req, res, next) => {
     try {
-        const projects = await Project.find().sort({ order: 1, createdAt: -1 });
+        const projects = await Project.find().sort({ createdAt: -1 });
         res.json({ success: true, count: projects.length, data: projects });
     } catch (error) {
         next(error);
@@ -15,7 +15,7 @@ exports.getProjects = async (req, res, next) => {
 // @route   GET /api/projects/featured
 exports.getFeaturedProjects = async (req, res, next) => {
     try {
-        const projects = await Project.find({ featured: true }).sort({ order: 1 }).limit(6);
+        const projects = await Project.find({ featured: true }).sort({ createdAt: -1 });
         res.json({ success: true, count: projects.length, data: projects });
     } catch (error) {
         next(error);
@@ -48,7 +48,7 @@ exports.createProject = async (req, res, next) => {
 };
 
 // @desc    Update project (admin)
-// @route   PUT /api/projects/:id
+// @route   PATCH /api/projects/:id
 exports.updateProject = async (req, res, next) => {
     try {
         const project = await Project.findByIdAndUpdate(req.params.id, req.body, {

@@ -13,6 +13,7 @@ const SmoothScroll = ({ children }) => {
         })
 
         lenisRef.current = lenis
+        window.lenis = lenis
 
         function raf(time) {
             lenis.raf(time)
@@ -22,6 +23,7 @@ const SmoothScroll = ({ children }) => {
         requestAnimationFrame(raf)
 
         return () => {
+            window.lenis = undefined
             lenis.destroy()
         }
     }, [])

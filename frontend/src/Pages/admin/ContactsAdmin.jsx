@@ -6,6 +6,7 @@ const ContactsAdmin = () => {
     const [contacts, setContacts] = useState([])
     const [loading, setLoading] = useState(true)
     const [selected, setSelected] = useState(null)
+    const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
 
     const fetchAll = async () => {
         try {
@@ -24,15 +25,18 @@ const ContactsAdmin = () => {
     }
 
     const handleDelete = async (id) => {
-        if (!confirm('Delete this message?')) return
         try {
             await deleteContact(id)
             setSelected(null)
+            setIsConfirmingDelete(false)
             fetchAll()
-        } catch { /* empty */ }
+        } catch (error) { 
+            console.error(error);
+            alert('Failed to delete message: ' + (error.response?.data?.message || error.message));
+        }
     }
 
-    const unreadCount = contacts.filter(c => !c.read).length
+    const unreadCount = contacts.filter(c => !c.isRead).length
 
     return (
         <div className='space-y-5'>
@@ -58,12 +62,12 @@ const ContactsAdmin = () => {
                             <p className='mt-2 text-[var(--ink-soft)]'>No messages yet.</p>
                         </div>
                     ) : contacts.map((c) => (
-                        <button key={c._id} onClick={() => { setSelected(c); if (!c.read) handleMarkRead(c._id) }}
+                        <button key={c._id} onClick={() => { setSelected(c); setIsConfirmingDelete(false); if (!c.isRead) handleMarkRead(c._id) }}
                             className={`glass-card w-full rounded-xl border p-4 text-left transition ${selected?._id === c._id ? 'border-[var(--accent)]/35 bg-[var(--accent)]/5' : 'border-[var(--line)] hover:border-[var(--accent-2)]'
                                 }`}>
                             <div className='flex items-center gap-2 mb-1'>
-                                {c.read ? <MailOpen className='h-3 w-3 text-[var(--ink-soft)]' /> : <Mail className='h-3 w-3 text-[var(--accent)]' />}
-                                <span className={`text-sm font-semibold ${c.read ? 'text-[var(--ink-soft)]' : 'text-[var(--ink)]'}`}>{c.name}</span>
+                                {c.isRead ? <MailOpen className='h-3 w-3 text-[var(--ink-soft)]' /> : <Mail className='h-3 w-3 text-[var(--accent)]' />}
+                                <span className={`text-sm font-semibold ${c.isRead ? 'text-[var(--ink-soft)]' : 'text-[var(--ink)]'}`}>{c.name}</span>
                                 <span className='ml-auto text-xs text-[var(--ink-soft)]'>{new Date(c.createdAt).toLocaleDateString()}</span>
                             </div>
                             <p className='truncate text-xs text-[var(--ink-soft)]'>{c.subject} - {c.message}</p>
@@ -82,9 +86,19 @@ const ContactsAdmin = () => {
                                         {new Date(selected.createdAt).toLocaleString()}
                                     </p>
                                 </div>
-                                <button onClick={() => handleDelete(selected._id)} className='rounded-full border border-[var(--line)] bg-[var(--surface)] p-2 text-[var(--ink-soft)] transition hover:text-[var(--accent)]'>
-                                    <Trash2 className='w-4 h-4' />
-                                </button>
+                                <div className='relative'>
+                                    {isConfirmingDelete ? (
+                                        <div className='flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1.5'>
+                                            <span className='text-xs font-semibold text-red-500'>Sure?</span>
+                                            <button onClick={() => handleDelete(selected._id)} className='text-xs font-bold text-red-500 hover:text-red-400'>Yes</button>
+                                            <button onClick={() => setIsConfirmingDelete(false)} className='text-xs text-[var(--ink-soft)] hover:text-[var(--ink)]'>No</button>
+                                        </div>
+                                    ) : (
+                                        <button onClick={() => setIsConfirmingDelete(true)} className='rounded-full border border-[var(--line)] bg-[var(--surface)] p-2 text-[var(--ink-soft)] transition hover:text-[#EF3E2F] hover:border-[#EF3E2F]/30'>
+                                            <Trash2 className='w-4 h-4' />
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                             <div className='border-t border-[var(--line)] pt-4'>
                                 <p className='mb-2 text-sm font-semibold text-[var(--ink-soft)]'>{selected.subject}</p>

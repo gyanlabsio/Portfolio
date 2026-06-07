@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Code2, ExternalLink, Github, Layers3, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import { getProjects } from '../api/projects'
 import SplitText from '../components/effects/SplitText'
@@ -71,9 +72,10 @@ const Projects = () => {
         {!loading && projects.length > 0 && (
           <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
             {projects.map((project) => (
-              <div
+              <Link
+                to={`/project/${project.slug}`}
                 key={project._id}
-                className='glass-card group enter-fade rounded-3xl p-4 md:p-5'
+                className='glass-card group block enter-fade rounded-3xl p-4 md:p-5 hover:border-[var(--accent)] transition-colors'
               >
                 {project.featuredImage && (
                   <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
@@ -134,7 +136,7 @@ const Projects = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

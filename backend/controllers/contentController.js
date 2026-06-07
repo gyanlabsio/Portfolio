@@ -1,0 +1,115 @@
+const Content = require('../models/Content');
+
+// @desc    Get all published content
+// @route   GET /api/blog
+exports.getContent = async (req, res, next) => {
+    try {
+        const filter = { status: 'PUBLISHED' };
+        
+        // Admins can see all content if they pass ?all=true
+        if (req.query.all === 'true' && req.admin) {
+             delete filter.status;
+        }
+
+        if (req.query.type) {
+            filter.type = req.query.type.toUpperCase();
+        }
+
+        const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+        const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 50);
+        const skip = (page - 1) * limit;
+
+        const [content, total] = await Promise.all([
+            Content.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            Content.countDocuments(filter),
+        ]);
+
+        res.json({
+            success: true,
+            count: content.length,
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            data: content,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get published content by type
+// @route   GET /api/blog/type/:type
+exports.getContentByType = async (req, res, next) => {
+    try {
+        const filter = { 
+            status: 'PUBLISHED',
+            type: req.params.type.toUpperCase(),
+        };
+
+        const content = await Content.find(filter).sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            count: content.length,
+            data: content,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get single content item by slug
+// @route   GET /api/blog/:slug
+exports.getContentBySlug = async (req, res, next) => {
+    try {
+        const content = await Content.findOne({ slug: req.params.slug });
+        if (!content) {
+            return res.status(404).json({ success: false, message: 'Content not found' });
+        }
+        res.json({ success: true, data: content });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Create content (admin)
+// @route   POST /api/blog
+exports.createContent = async (req, res, next) => {
+    try {
+        const content = await Content.create(req.body);
+        res.status(201).json({ success: true, data: content });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Update content (admin)
+// @route   PATCH /api/blog/:id
+exports.updateContent = async (req, res, next) => {
+    try {
+        const content = await Content.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        });
+        if (!content) {
+            return res.status(404).json({ success: false, message: 'Content not found' });
+        }
+        res.json({ success: true, data: content });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Delete content (admin)
+// @route   DELETE /api/blog/:id
+exports.deleteContent = async (req, res, next) => {
+    try {
+        const content = await Content.findByIdAndDelete(req.params.id);
+        if (!content) {
+            return res.status(404).json({ success: false, message: 'Content not found' });
+        }
+        res.json({ success: true, message: 'Content deleted' });
+    } catch (error) {
+        next(error);
+    }
+};

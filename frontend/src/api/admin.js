@@ -5,9 +5,7 @@ export const login = (email, password) => api.post('/auth/login', { email, passw
 export const getMe = () => api.get('/auth/me');
 export const logout = () => api.post('/auth/logout');
 
-// Site Config
-export const getSiteConfig = () => api.get('/config');
-export const updateSiteConfig = (data) => api.put('/config', data);
+
 
 // Upload
 export const uploadImage = (file) => {

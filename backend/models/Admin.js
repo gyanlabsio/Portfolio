@@ -15,13 +15,9 @@ const adminSchema = new mongoose.Schema({
         minlength: [10, 'Password must be at least 10 characters'],
         select: false, // Don't return password by default in queries
     },
-    name: {
-        type: String,
-        default: 'Admin',
-    },
     role: {
         type: String,
-        enum: ['admin', 'superadmin'],
+        enum: ['admin'],
         default: 'admin',
     },
 }, {
