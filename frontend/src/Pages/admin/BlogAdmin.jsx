@@ -97,14 +97,18 @@ const BlogAdmin = () => {
         try {
             await deletePost(id)
             fetchAll()
-        } catch { }
+        } catch {
+            // ignore error
+        }
     }
 
     const togglePublish = async (post) => {
         try {
             await updatePost(post._id, { status: post.status === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED' })
             fetchAll()
-        } catch { }
+        } catch {
+            // ignore error
+        }
     }
 
     const inputClass = 'w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]'
