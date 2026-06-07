@@ -4,11 +4,14 @@ import { getEvents, getAnalyticsSummary, getModulesSummary, getTimeseries, getVi
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from 'recharts'
 
 const AnalyticsAdmin = () => {
-    const [events, setEvents] = useState([])
-    const [summary, setSummary] = useState(null)
-    const [modules, setModules] = useState([])
-    const [timeseries, setTimeseries] = useState([])
-    const [visitors, setVisitors] = useState([])
+    const [state, setState] = useState({
+        events: [],
+        summary: null,
+        modules: [],
+        timeseries: [],
+        visitors: []
+    })
+    const { events, summary, modules, timeseries, visitors } = state;
     const [loading, setLoading] = useState(true)
     const [filterType, setFilterType] = useState('')
 
@@ -22,11 +25,13 @@ const AnalyticsAdmin = () => {
                 getTimeseries(),
                 getVisitors()
             ])
-            setEvents(eventsRes.data.data)
-            setSummary(summaryRes.data.data)
-            setModules(modulesRes.data.data)
-            setTimeseries(timeseriesRes.data.data)
-            setVisitors(visitorsRes.data.data)
+            setState({
+                events: eventsRes.data.data,
+                summary: summaryRes.data.data,
+                modules: modulesRes.data.data,
+                timeseries: timeseriesRes.data.data,
+                visitors: visitorsRes.data.data
+            })
         } catch (error) {
             console.error(error)
         } finally {
@@ -46,6 +51,9 @@ const AnalyticsAdmin = () => {
             default: return <BarChart3 className='h-5 w-5' />
         }
     }
+
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+    const recentEvents = events.filter(ev => new Date(ev.createdAt) >= fifteenMinsAgo);
 
     return (
         <div className='space-y-6'>
@@ -160,17 +168,18 @@ const AnalyticsAdmin = () => {
                                 </select>
                             </div>
                             
-                            <table className='w-full text-left text-sm text-[var(--ink)]'>
-                                <thead className='text-xs uppercase text-[var(--ink-soft)] border-b border-[var(--line)]'>
-                                    <tr>
-                                        <th className='pb-3 font-semibold'>Event</th>
-                                        <th className='pb-3 font-semibold'>Module</th>
-                                        <th className='pb-3 font-semibold'>Page/Element</th>
-                                        <th className='pb-3 font-semibold text-right'>Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {events.length > 0 ? events.map(ev => (
+                            <div className='max-h-96 overflow-y-auto pr-2 styled-scrollbar'>
+                                <table className='w-full text-left text-sm text-[var(--ink)] relative'>
+                                    <thead className='text-xs uppercase text-[var(--ink-soft)] border-b border-[var(--line)] sticky top-0 bg-[var(--surface)] z-10'>
+                                        <tr>
+                                            <th className='pb-3 pt-2 font-semibold'>Event</th>
+                                            <th className='pb-3 pt-2 font-semibold'>Module</th>
+                                            <th className='pb-3 pt-2 font-semibold'>Page/Element</th>
+                                            <th className='pb-3 pt-2 font-semibold text-right'>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {recentEvents.length > 0 ? recentEvents.map(ev => (
                                         <tr key={ev._id} className='border-b border-[var(--line)]/50 last:border-0 hover:bg-[var(--surface)]'>
                                             <td className='py-3'>
                                                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${ev.type === 'PAGE_VIEW' ? 'bg-blue-500/10 text-blue-500' : ev.type === 'CLICK' ? 'bg-purple-500/10 text-purple-500' : 'bg-green-500/10 text-green-500'}`}>
@@ -189,11 +198,12 @@ const AnalyticsAdmin = () => {
                                         </tr>
                                     )) : (
                                         <tr>
-                                            <td colSpan="4" className='py-8 text-center text-[var(--ink-soft)]'>No events found.</td>
+                                            <td colSpan="4" className='py-8 text-center text-[var(--ink-soft)]'>No events found in the last 15 minutes.</td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
 
