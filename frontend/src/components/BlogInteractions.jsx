@@ -69,6 +69,7 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
             // Save name for future
             localStorage.setItem('visitor_real_name', authorName);
         } catch (error) {
+            console.error('Failed to submit comment:', error);
             setSubmitMessage('Failed to submit comment. Please try again.');
         } finally {
             setIsSubmitting(false);
