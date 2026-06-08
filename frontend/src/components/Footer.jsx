@@ -75,6 +75,8 @@ const Footer = () => {
                 <Link to='/privacy-policy' onClick={handleScrollToTop} className='hover:text-[var(--ink)] transition-colors'>Privacy Policy</Link>
                 <span className='hidden sm:inline'>|</span>
                 <Link to='/terms-and-conditions' onClick={handleScrollToTop} className='hover:text-[var(--ink)] transition-colors'>Terms & Conditions</Link>
+                <span className='hidden sm:inline'>|</span>
+                <Link to='/cookie-policy' onClick={handleScrollToTop} className='hover:text-[var(--ink)] transition-colors'>Cookie Policy</Link>
             </div>
             <p className='mt-2 md:mt-0'>Designed and engineered at GyanLabs.io</p>
           </div>

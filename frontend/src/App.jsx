@@ -20,6 +20,7 @@ const Contact = lazy(() => import("./Pages/Contact"));
 const StartProject = lazy(() => import("./Pages/StartProject"));
 const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"));
 const TermsConditions = lazy(() => import("./Pages/TermsConditions"));
+const CookiePolicy = lazy(() => import("./Pages/CookiePolicy"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 
 // Admin pages
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="/StartProject" element={<StartProject />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
 
           <Route path="/admin/login" element={<Login />} />
           <Route
