@@ -70,9 +70,11 @@ const Footer = () => {
           </div>
 
           <div className='mt-8 border-t border-[var(--line)] pt-4 text-xs text-[var(--ink-soft)] md:flex md:items-center md:justify-between'>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-4 flex-wrap'>
                 <p>© 2026 Gyanaranjan Das</p>
                 <Link to='/privacy-policy' onClick={handleScrollToTop} className='hover:text-[var(--ink)] transition-colors'>Privacy Policy</Link>
+                <span className='hidden sm:inline'>|</span>
+                <Link to='/terms-and-conditions' onClick={handleScrollToTop} className='hover:text-[var(--ink)] transition-colors'>Terms & Conditions</Link>
             </div>
             <p className='mt-2 md:mt-0'>Designed and engineered at GyanLabs.io</p>
           </div>
