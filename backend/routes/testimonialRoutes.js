@@ -9,12 +9,12 @@ const {
     updateTestimonialStatus,
     deleteTestimonial,
 } = require('../controllers/testimonialController');
-const { protect, authorize } = require('../middleware/auth');
+const { protect, optionalProtect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const { testimonialValidators } = require('../middleware/validators');
 
 // Public routes
-router.get('/', getTestimonials);
+router.get('/', optionalProtect, getTestimonials);
 router.get('/featured', getFeaturedTestimonials);
 
 const submitLimiter = require('express-rate-limit')({
