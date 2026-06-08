@@ -172,10 +172,14 @@ const TestimonialsAdmin = () => {
                                     <button onClick={() => handleOpenForm(t)} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
                                         <Edit2 className='h-4 w-4' />
                                     </button>
-                                    <button onClick={(e) => {
-                                        e.target.innerText === 'Sure?' ? handleDelete(t._id) : (e.target.innerText = 'Sure?');
-                                        setTimeout(() => { if(e.target) e.target.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 h-4 w-4"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>' }, 3000);
-                                    }} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[#EF3E2F] text-xs font-semibold'>
+                                    <button 
+                                        onClick={() => {
+                                            if (window.confirm('Are you sure you want to delete this testimonial?')) {
+                                                handleDelete(t._id);
+                                            }
+                                        }} 
+                                        className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[#EF3E2F] text-xs font-semibold'
+                                    >
                                         <Trash2 className='h-4 w-4 pointer-events-none' />
                                     </button>
                                 </div>
