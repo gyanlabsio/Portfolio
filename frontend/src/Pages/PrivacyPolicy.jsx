@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
     return (
         <main className='pb-16 pt-8 md:pt-12'>
             <SEO title="Privacy Policy - Gyanaranjan Das" description="Privacy Policy for Gyanaranjan Das portfolio and services." />
-            
+
             <div className='section-wrap'>
                 <Link to='/' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)] mb-5'>
                     <ArrowLeft className='h-3.5 w-3.5' />
@@ -22,7 +22,7 @@ const PrivacyPolicy = () => {
                         prose-p:leading-relaxed prose-a:text-[var(--accent-2)]
                         prose-strong:text-[var(--ink)] prose-ul:list-disc prose-ul:pl-6
                         prose-li:my-1'>
-                        
+
                         <h2>1. Introduction</h2>
                         <p>Welcome to my personal freelancer portfolio and technical consulting website ("Website"). I am committed to respecting your privacy and protecting your personal data. This Privacy Policy ("Policy") explains how I collect, use, disclose, and safeguard your information when you visit my Website, read my blog, view my portfolio, or engage my professional services (collectively, the "Services").</p>
                         <p>Please read this Privacy Policy carefully. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by all the terms outlined in this Privacy Policy. If you do not agree with these terms, please do not access the Website.</p>
@@ -116,8 +116,8 @@ const PrivacyPolicy = () => {
 
                         <h2>20. Contact Information</h2>
                         <p>If you have questions, comments, or concerns about this Privacy Policy, or if you would like to exercise your privacy rights, please contact me at:</p>
-                        <p><strong>Email:</strong> hello@gyanaranjandas.me<br />
-                        <strong>Website:</strong> <a href="https://gyanaranjandas.me">gyanaranjandas.me</a></p>
+                        <p><strong>Email:</strong> gyanlabs.io@gmail.com<br />
+                            <strong>Website:</strong> <a href="https://gyanaranjandas.me">gyanaranjandas.me</a></p>
                     </div>
                 </div>
             </div>
