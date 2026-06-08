@@ -52,8 +52,8 @@ const AnalyticsAdmin = () => {
         }
     }
 
-    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
-    const recentEvents = events.filter(ev => new Date(ev.createdAt) >= fifteenMinsAgo);
+    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const recentEvents = events.filter(ev => new Date(ev.createdAt) >= oneWeekAgo);
 
     return (
         <div className='space-y-6'>
@@ -198,7 +198,7 @@ const AnalyticsAdmin = () => {
                                         </tr>
                                     )) : (
                                         <tr>
-                                            <td colSpan="4" className='py-8 text-center text-[var(--ink-soft)]'>No events found in the last 15 minutes.</td>
+                                            <td colSpan="4" className='py-8 text-center text-[var(--ink-soft)]'>No events found in the last week.</td>
                                         </tr>
                                     )}
                                 </tbody>
