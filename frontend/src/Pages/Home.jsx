@@ -210,16 +210,16 @@ const Home = () => {
             {services.map((service, idx) => (
               <div 
                 key={service._id} 
-                className='group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
+                className='group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
               >
                 {/* Background Glow Effect on Hover */}
-                <div className='pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[var(--accent)]/0 blur-3xl transition-all duration-500 group-hover:bg-[var(--accent)]/10' />
+                <div className='pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[var(--accent)]/0 blur-3xl transition-all duration-700 ease-out group-hover:bg-[var(--accent)]/10' />
                 
-                <div className='mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--surface)] to-[var(--bg-alt)] border border-[var(--line)] text-[var(--accent)] shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:border-[var(--accent)]/30'>
+                <div className='mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--surface)] to-[var(--bg-alt)] border border-[var(--line)] text-[var(--accent)] shadow-sm transition-transform duration-700 ease-out group-hover:scale-110 group-hover:border-[var(--accent)]/30'>
                   {service.iconUrl ? <img src={service.iconUrl} alt="icon" className="h-7 w-7 object-contain" /> : <Sparkles className='h-6 w-6' />}
                 </div>
                 
-                <h3 className='mb-3 font-nevera text-xl tracking-wide text-[var(--ink)] transition-colors duration-300 group-hover:text-[var(--accent)]'>
+                <h3 className='mb-3 font-nevera text-xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
                   {service.title}
                 </h3>
                 
@@ -228,7 +228,7 @@ const Home = () => {
                 </p>
 
                 {/* Bottom decorative line that expands on hover */}
-                <div className='mt-8 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-500 group-hover:w-full group-hover:bg-[var(--accent)]' />
+                <div className='mt-8 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-700 ease-out group-hover:w-full group-hover:bg-[var(--accent)]' />
               </div>
             ))}
           </div>
