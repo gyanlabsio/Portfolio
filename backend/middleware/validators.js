@@ -584,6 +584,84 @@ const seoValidators = {
   ],
 };
 
+const quotationValidators = {
+  create: [
+    body('clientName')
+      .trim()
+      .notEmpty().withMessage('Client name is required')
+      .isLength({ max: 100 }).withMessage('Client name cannot exceed 100 characters'),
+    body('clientEmail')
+      .trim()
+      .notEmpty().withMessage('Client email is required')
+      .isEmail().withMessage('Please provide a valid email'),
+    body('company')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 100 }).withMessage('Company cannot exceed 100 characters'),
+    body('projectTitle')
+      .trim()
+      .notEmpty().withMessage('Project title is required')
+      .isLength({ max: 200 }).withMessage('Project title cannot exceed 200 characters'),
+    body('projectDescription')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 5000 }).withMessage('Project description cannot exceed 5000 characters'),
+    body('currency')
+      .optional()
+      .trim()
+      .isLength({ min: 3, max: 3 }).withMessage('Currency must be a 3-letter code'),
+    body('validUntil')
+      .notEmpty().withMessage('Valid until date is required')
+      .isISO8601().toDate().withMessage('Must be a valid date'),
+    body('notes')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 2000 }).withMessage('Notes cannot exceed 2000 characters'),
+    body('items')
+      .isArray({ min: 1 }).withMessage('At least one quotation item is required'),
+    body('items.*.title')
+      .trim()
+      .notEmpty().withMessage('Item title is required')
+      .isLength({ max: 150 }).withMessage('Item title cannot exceed 150 characters'),
+    body('items.*.description')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isLength({ max: 500 }).withMessage('Item description cannot exceed 500 characters'),
+    body('items.*.quantity')
+      .notEmpty().withMessage('Item quantity is required')
+      .isFloat({ gt: 0 }).withMessage('Quantity must be greater than 0'),
+    body('items.*.rate')
+      .notEmpty().withMessage('Item rate is required')
+      .isFloat({ min: 0 }).withMessage('Rate cannot be negative'),
+  ],
+  update: [
+    body('clientName')
+      .optional()
+      .trim()
+      .notEmpty().withMessage('Client name cannot be empty if provided'),
+    body('clientEmail')
+      .optional()
+      .trim()
+      .isEmail().withMessage('Please provide a valid email'),
+    body('items')
+      .optional()
+      .isArray({ min: 1 }).withMessage('At least one quotation item is required'),
+    body('items.*.quantity')
+      .optional()
+      .isFloat({ gt: 0 }).withMessage('Quantity must be greater than 0'),
+    body('items.*.rate')
+      .optional()
+      .isFloat({ min: 0 }).withMessage('Rate cannot be negative'),
+  ],
+  updateStatus: [
+    body('status')
+      .notEmpty().withMessage('Status is required')
+      .isIn(['DRAFT', 'SENT', 'VIEWED', 'ACCEPTED', 'REJECTED', 'EXPIRED'])
+      .withMessage('Invalid status'),
+  ],
+  id: [objectIdRule('id')],
+};
+
 module.exports = {
   authValidators,
   contentValidators,
@@ -596,4 +674,5 @@ module.exports = {
   analyticsValidators,
   settingsValidators,
   seoValidators,
+  quotationValidators,
 };
