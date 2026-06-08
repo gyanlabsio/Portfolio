@@ -24,6 +24,7 @@ const settingsRoutes = require('./routes/settingsRoutes');
 const seoRoutes = require('./routes/seoRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const quotationRoutes = require('./routes/quotationRoutes');
+const proposalRoutes = require('./routes/proposalRoutes');
 
 const app = express();
 
@@ -106,6 +107,7 @@ app.use('/api/settings', settingsRoutes);
 app.use('/api/seo', seoRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/quotations', quotationRoutes);
+app.use('/api/proposals', proposalRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

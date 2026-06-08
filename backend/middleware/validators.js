@@ -662,6 +662,44 @@ const quotationValidators = {
   id: [objectIdRule('id')],
 };
 
+const proposalValidators = {
+  create: [
+    body('clientName').trim().notEmpty().withMessage('Client name is required').isLength({ max: 100 }),
+    body('clientEmail').trim().notEmpty().withMessage('Client email is required').isEmail().withMessage('Valid email is required'),
+    body('projectTitle').trim().notEmpty().withMessage('Project title is required').isLength({ max: 200 }),
+    body('executiveSummary').trim().notEmpty().withMessage('Executive summary is required'),
+    body('problemStatement').trim().notEmpty().withMessage('Problem statement is required'),
+    body('objectives').trim().notEmpty().withMessage('Objectives are required'),
+    body('scopeOfWork').trim().notEmpty().withMessage('Scope of work is required'),
+    body('deliverables').trim().notEmpty().withMessage('Deliverables are required'),
+    body('timeline').trim().notEmpty().withMessage('Timeline is required'),
+    body('assumptions').trim().notEmpty().withMessage('Assumptions are required'),
+    body('pricingSummary').trim().notEmpty().withMessage('Pricing summary is required'),
+    body('validUntil').notEmpty().withMessage('Valid until date is required').isISO8601().toDate().withMessage('Must be a valid date'),
+  ],
+  update: [
+    body('clientName').optional().trim().notEmpty(),
+    body('clientEmail').optional().trim().isEmail(),
+    body('projectTitle').optional().trim().notEmpty(),
+    body('executiveSummary').optional().trim().notEmpty(),
+    body('problemStatement').optional().trim().notEmpty(),
+    body('objectives').optional().trim().notEmpty(),
+    body('scopeOfWork').optional().trim().notEmpty(),
+    body('deliverables').optional().trim().notEmpty(),
+    body('timeline').optional().trim().notEmpty(),
+    body('assumptions').optional().trim().notEmpty(),
+    body('pricingSummary').optional().trim().notEmpty(),
+    body('validUntil').optional().isISO8601().toDate(),
+  ],
+  updateStatus: [
+    body('status')
+      .notEmpty().withMessage('Status is required')
+      .isIn(['DRAFT', 'SENT', 'VIEWED', 'ACCEPTED', 'REJECTED', 'EXPIRED'])
+      .withMessage('Invalid status'),
+  ],
+  id: [objectIdRule('id')],
+};
+
 module.exports = {
   authValidators,
   contentValidators,
@@ -675,4 +713,5 @@ module.exports = {
   settingsValidators,
   seoValidators,
   quotationValidators,
+  proposalValidators,
 };

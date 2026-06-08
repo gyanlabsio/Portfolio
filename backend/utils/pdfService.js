@@ -150,6 +150,116 @@ const generateQuotationPdf = (quotation, items, res) => {
   });
 };
 
+const generateProposalPdf = (proposal, res) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 50, size: 'A4' });
+
+      doc.pipe(res);
+
+      // --- COVER PAGE ---
+      doc
+        .fillColor('#333333')
+        .fontSize(24)
+        .text('PROJECT PROPOSAL', { align: 'right' })
+        .fontSize(12)
+        .text(`Proposal #: ${proposal.proposalNumber}`, { align: 'right' })
+        .text(`Date: ${new Date(proposal.createdAt).toLocaleDateString()}`, { align: 'right' })
+        .text(`Valid Until: ${new Date(proposal.validUntil).toLocaleDateString()}`, { align: 'right' })
+        .moveDown(4);
+
+      doc
+        .fontSize(20)
+        .text('Gyanaranjan Das', 50, doc.y)
+        .fontSize(12)
+        .text('Freelance Full Stack Developer')
+        .text('gyanlabs.io@gmail.com')
+        .text('https://gyanaranjandas.me')
+        .moveDown(4);
+
+      doc
+        .fontSize(14)
+        .text('Prepared For:', 50, doc.y)
+        .fontSize(12)
+        .text(proposal.clientName)
+        .text(proposal.clientEmail)
+        .moveDown(4);
+
+      doc
+        .fontSize(18)
+        .text(`Project: ${proposal.projectTitle}`, 50, doc.y, { underline: true });
+
+      doc.addPage();
+
+      // --- CONTENT PAGES ---
+      const addSection = (title, content) => {
+        if (!content) return;
+        doc
+          .fillColor('#111111')
+          .fontSize(16)
+          .text(title, { underline: true })
+          .moveDown(0.5)
+          .fillColor('#444444')
+          .fontSize(11)
+          .text(content, { align: 'justify' })
+          .moveDown(2);
+      };
+
+      addSection('Executive Summary', proposal.executiveSummary);
+      addSection('Problem Statement', proposal.problemStatement);
+      addSection('Objectives', proposal.objectives);
+      addSection('Scope of Work', proposal.scopeOfWork);
+      addSection('Deliverables', proposal.deliverables);
+      addSection('Timeline', proposal.timeline);
+      addSection('Assumptions', proposal.assumptions);
+      addSection('Pricing Summary', proposal.pricingSummary);
+
+      doc.addPage();
+
+      // --- TERMS & SIGNATURE ---
+      doc
+        .fillColor('#111111')
+        .fontSize(16)
+        .text('Terms and Acceptance', { underline: true })
+        .moveDown(0.5)
+        .fillColor('#444444')
+        .fontSize(11)
+        .text('By signing below, both parties agree to the scope, timeline, and pricing detailed in this proposal. This document serves as a binding agreement to commence work.')
+        .moveDown(4);
+
+      const ySig = doc.y;
+
+      // Client Signature Line
+      doc
+        .moveTo(50, ySig + 40)
+        .lineTo(250, ySig + 40)
+        .stroke()
+        .text('Client Signature', 50, ySig + 50)
+        .text('Date', 50, ySig + 65);
+
+      // Consultant Signature Line
+      doc
+        .moveTo(300, ySig + 40)
+        .lineTo(500, ySig + 40)
+        .stroke()
+        .text('Consultant Signature', 300, ySig + 50)
+        .text('Date', 300, ySig + 65);
+
+      // Footer
+      doc
+        .fontSize(8)
+        .fillColor('#888888')
+        .text('Thank you for considering Gyanaranjan Das for your project.', 50, 750, { align: 'center', width: 490 });
+
+      doc.end();
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
-  generateQuotationPdf
+  generateQuotationPdf,
+  generateProposalPdf
 };
