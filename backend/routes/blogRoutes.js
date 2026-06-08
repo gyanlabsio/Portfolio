@@ -7,6 +7,7 @@ const {
     createContent,
     updateContent,
     deleteContent,
+    toggleLike
 } = require('../controllers/contentController');
 const { protect, optionalProtect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
@@ -22,6 +23,7 @@ router.get('/admin/all', protect, authorize('admin'), (req, res, next) => {
 router.get('/', optionalProtect, getContent);
 router.get('/type/:type', optionalProtect, getContentByType);
 router.get('/:slug', optionalProtect, getContentBySlug);
+router.post('/:id/like', toggleLike);
 
 // Admin routes
 router.post('/', protect, authorize('admin'), contentValidators.create, validate, createContent);

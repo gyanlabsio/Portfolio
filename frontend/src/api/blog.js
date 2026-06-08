@@ -13,3 +13,4 @@ export const getPost = (slug) => api.get(`/blog/${slug}`);
 export const createPost = (data) => api.post('/blog', data);
 export const updatePost = (id, data) => api.put(`/blog/${id}`, data);
 export const deletePost = (id) => api.delete(`/blog/${id}`);
+export const toggleLike = (id, data) => api.post(`/blog/${id}/like`, data);

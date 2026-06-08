@@ -5,6 +5,7 @@ import DOMPurify from 'dompurify'
 import SEO from '../components/SEO'
 import { getPost } from '../api/blog'
 import Loader from '../components/Loader'
+import BlogInteractions from '../components/BlogInteractions'
 
 const BlogPost = () => {
     const { slug } = useParams()
@@ -114,6 +115,8 @@ const BlogPost = () => {
               prose-blockquote:border-l-[var(--accent)] prose-blockquote:text-[var(--ink-soft)]'
                         dangerouslySetInnerHTML={{ __html: safeContent }}
                     />
+                    
+                    <BlogInteractions postId={post._id} initialLikes={post.likes || []} />
                 </div>
             </div>
         </article>

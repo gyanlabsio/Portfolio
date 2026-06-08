@@ -125,3 +125,40 @@ exports.deleteContent = async (req, res, next) => {
         next(error);
     }
 };
+
+// @desc    Toggle like for a blog post
+// @route   POST /api/blog/:id/like
+// @access  Public
+exports.toggleLike = async (req, res, next) => {
+    try {
+        const { visitorId } = req.body;
+        if (!visitorId) {
+            return res.status(400).json({ success: false, message: 'visitorId is required' });
+        }
+
+        const content = await Content.findById(req.params.id);
+        if (!content) {
+            return res.status(404).json({ success: false, message: 'Content not found' });
+        }
+
+        const hasLiked = content.likes.includes(visitorId);
+        
+        if (hasLiked) {
+            // Unlike
+            content.likes = content.likes.filter(id => id !== visitorId);
+        } else {
+            // Like
+            content.likes.push(visitorId);
+        }
+
+        await content.save();
+
+        res.json({ 
+            success: true, 
+            liked: !hasLiked,
+            likesCount: content.likes.length 
+        });
+    } catch (error) {
+        next(error);
+    }
+};

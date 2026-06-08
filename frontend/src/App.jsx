@@ -29,6 +29,7 @@ const BlogAdmin = lazy(() => import("./Pages/admin/BlogAdmin"));
 const ContactsAdmin = lazy(() => import("./Pages/admin/ContactsAdmin"));
 const ServicesAdmin = lazy(() => import("./Pages/admin/ServicesAdmin"));
 const LeadsAdmin = lazy(() => import("./Pages/admin/LeadsAdmin"));
+const CommentsAdmin = lazy(() => import("./Pages/admin/CommentsAdmin"));
 const TestimonialsAdmin = lazy(() => import("./Pages/admin/TestimonialsAdmin"));
 const AnalyticsAdmin = lazy(() => import("./Pages/admin/AnalyticsAdmin"));
 const SettingsAdmin = lazy(() => import("./Pages/admin/SettingsAdmin"));
@@ -81,6 +82,7 @@ const App = () => {
             <Route path="blog" element={<BlogAdmin />} />
             <Route path="leads" element={<LeadsAdmin />} />
             <Route path="contacts" element={<ContactsAdmin />} />
+            <Route path="comments" element={<CommentsAdmin />} />
             <Route path="testimonials" element={<TestimonialsAdmin />} />
             <Route path="analytics" element={<AnalyticsAdmin />} />
             <Route path="settings" element={<SettingsAdmin />} />

@@ -43,6 +43,9 @@ const contentSchema = new mongoose.Schema({
         type: String,
         trim: true,
     }],
+    likes: [{
+        type: String // Will store visitorIds
+    }],
     seoTitle: {
         type: String,
         maxlength: [100, 'SEO Title cannot exceed 100 characters'],
