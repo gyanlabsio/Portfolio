@@ -37,6 +37,7 @@ const TestimonialsAdmin = lazy(() => import("./Pages/admin/TestimonialsAdmin"));
 const AnalyticsAdmin = lazy(() => import("./Pages/admin/AnalyticsAdmin"));
 const SettingsAdmin = lazy(() => import("./Pages/admin/SettingsAdmin"));
 const SeoAdmin = lazy(() => import("./Pages/admin/SeoAdmin"));
+const QuotationsAdmin = lazy(() => import("./Pages/admin/QuotationsAdmin"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -93,6 +94,7 @@ const App = () => {
             <Route path="analytics" element={<AnalyticsAdmin />} />
             <Route path="settings" element={<SettingsAdmin />} />
             <Route path="seo" element={<SeoAdmin />} />
+            <Route path="quotations" element={<QuotationsAdmin />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
