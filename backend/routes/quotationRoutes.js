@@ -10,7 +10,7 @@ const {
   getQuotationPdf
 } = require('../controllers/quotationController');
 const { protect, authorize } = require('../middleware/auth');
-const { validate } = require('../middleware/validate');
+const validate = require('../middleware/validate');
 const { quotationValidators } = require('../middleware/validators');
 
 // All quotation routes are protected and restricted to admin
@@ -20,20 +20,20 @@ router.use(authorize('admin'));
 router
   .route('/')
   .get(getQuotations)
-  .post(validate(quotationValidators.create), createQuotation);
+  .post(quotationValidators.create, validate, createQuotation);
 
 router
   .route('/:id')
-  .get(validate(quotationValidators.id), getQuotation)
-  .patch(validate([...quotationValidators.id, ...quotationValidators.update]), updateQuotation)
-  .delete(validate(quotationValidators.id), deleteQuotation);
+  .get(quotationValidators.id, validate, getQuotation)
+  .patch([...quotationValidators.id, ...quotationValidators.update], validate, updateQuotation)
+  .delete(quotationValidators.id, validate, deleteQuotation);
 
 router
   .route('/:id/status')
-  .patch(validate([...quotationValidators.id, ...quotationValidators.updateStatus]), updateQuotationStatus);
+  .patch([...quotationValidators.id, ...quotationValidators.updateStatus], validate, updateQuotationStatus);
 
 router
   .route('/:id/pdf')
-  .get(validate(quotationValidators.id), getQuotationPdf);
+  .get(quotationValidators.id, validate, getQuotationPdf);
 
 module.exports = router;
