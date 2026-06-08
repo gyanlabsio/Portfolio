@@ -36,7 +36,7 @@ const projectSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['WEB_APP', 'SAAS', 'DASHBOARD', 'E_COMMERCE', 'MOBILE', 'OTHER'],
+        enum: ['WEB_APP', 'SAAS', 'DASHBOARD', 'E_COMMERCE', 'MOBILE', 'OTHER', 'PORTFOLIO'],
     },
     featured: {
         type: Boolean,
