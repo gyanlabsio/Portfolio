@@ -207,7 +207,7 @@ const Home = () => {
             <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Services</h2>
           </div>
           <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-            {services.map((service, idx) => (
+            {services.map((service) => (
               <div 
                 key={service._id} 
                 className='group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
