@@ -9,9 +9,7 @@ const LikeButton = ({ initialLikesCount, initialIsLiked, onToggleLike }) => {
     
     // Update local state if props change (e.g. after fetch finishes)
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsLiked(initialIsLiked);
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLikesCount(initialLikesCount);
     }, [initialIsLiked, initialLikesCount]);
 

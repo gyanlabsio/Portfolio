@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDateRange, setCategory, setSearchQuery } from '../../store/slices/analyticsFilterSlice';
+import { setDateRange, setCategory } from '../../store/slices/analyticsFilterSlice';
 import ExportMenu from './ExportMenu'; // We'll create this next
 
 const GlobalFilters = () => {

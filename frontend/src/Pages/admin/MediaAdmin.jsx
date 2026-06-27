@@ -54,7 +54,6 @@ const MediaAdmin = () => {
             const { data } = await api.delete(`/upload/${id}`)
             if (data.success) {
                 setFiles(prev => prev.filter(file => file._id !== id))
-                setTotal(prev => prev - 1)
                 setSelectedFiles(prev => prev.filter(selectedId => selectedId !== id))
             }
         } catch (error) {
