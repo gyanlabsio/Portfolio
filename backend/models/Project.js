@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 
 const projectSchema = new mongoose.Schema({
     title: {
@@ -42,6 +43,9 @@ const projectSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    likes: [{
+        type: String // Stores visitor/user IDs or IPs for anonymous likes
+    }],
 }, {
     timestamps: true,
 });
@@ -52,5 +56,8 @@ projectSchema.pre('validate', function () {
         this.slug = slugify(this.title, { lower: true, strict: true });
     }
 });
+
+// Apply soft delete plugin
+projectSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Project', projectSchema);

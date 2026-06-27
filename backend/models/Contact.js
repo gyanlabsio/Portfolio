@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 
 const contactSchema = new mongoose.Schema({
     name: {
@@ -13,6 +14,14 @@ const contactSchema = new mongoose.Schema({
         trim: true,
         match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email'],
     },
+    phone: {
+        type: String,
+        trim: true
+    },
+    jobTitle: {
+        type: String,
+        trim: true
+    },
     subject: {
         type: String,
         trim: true,
@@ -21,21 +30,28 @@ const contactSchema = new mongoose.Schema({
     },
     message: {
         type: String,
-        required: [true, 'Message is required'],
         maxlength: [5000, 'Message cannot exceed 5000 characters'],
     },
-    company: {
-        type: String,
-        trim: true,
-        maxlength: [100, 'Company cannot exceed 100 characters'],
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company'
     },
-    budget: {
-        type: String,
-        enum: ['UNDER_1000', '1000_5000', '5000_10000', '10000_PLUS', 'NOT_SPECIFIED'],
+    ownerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin'
     },
-    projectType: {
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
+    customFields: {
+        type: Map,
+        of: mongoose.Schema.Types.Mixed
+    },
+    lifecycleStage: {
         type: String,
-        enum: ['WEB_APP', 'SAAS', 'PORTFOLIO', 'E_COMMERCE', 'DASHBOARD', 'API', 'OTHER'],
+        enum: ['LEAD', 'MQL', 'SQL', 'CUSTOMER', 'CHURNED', 'OTHER'],
+        default: 'LEAD'
     },
     status: {
         type: String,
@@ -50,8 +66,21 @@ const contactSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    socialLinks: {
+        linkedin: String,
+        twitter: String,
+        github: String,
+        website: String
+    },
+    privacy: {
+        consentGiven: { type: Boolean, default: false },
+        unsubscribed: { type: Boolean, default: false }
+    }
 }, {
     timestamps: true,
 });
+
+// Apply soft delete plugin
+contactSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Contact', contactSchema);

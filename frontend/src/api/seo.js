@@ -1,5 +1,8 @@
 import api from './index';
 
+export const getSiteSettings = () => api.get('/seo/settings');
+export const updateSiteSettings = (data) => api.put('/seo/settings', data);
+
 export const getGlobalSeo = () => api.get('/seo/global');
 export const getSeoBySlug = (slug) => api.get(`/seo/${slug}`);
 export const createSeo = (data) => api.post('/seo', data);

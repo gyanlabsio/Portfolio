@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 const slugify = require('slugify');
 
 const serviceSchema = new mongoose.Schema({
@@ -41,5 +42,8 @@ serviceSchema.pre('validate', function () {
         this.slug = slugify(this.title, { lower: true, strict: true });
     }
 });
+
+// Apply soft delete plugin
+serviceSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Service', serviceSchema);

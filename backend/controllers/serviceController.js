@@ -62,7 +62,8 @@ exports.updateService = async (req, res, next) => {
 // @route   DELETE /api/services/:id
 exports.deleteService = async (req, res, next) => {
     try {
-        const service = await Service.findByIdAndDelete(req.params.id);
+        const service = await Service.findById(req.params.id);
+        if (service) await service.softDelete(req.admin ? req.admin._id : null, "Admin soft delete");
         if (!service) {
             return res.status(404).json({ success: false, message: 'Service not found' });
         }

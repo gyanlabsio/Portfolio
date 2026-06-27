@@ -443,6 +443,9 @@ const leadValidators = {
       .optional({ values: 'falsy' })
       .trim()
       .isLength({ max: 2000 }).withMessage('Notes cannot exceed 2000 characters'),
+    body('dealValue')
+      .optional({ values: 'falsy' })
+      .isFloat({ min: 0 }).withMessage('Deal value must be a positive number'),
   ],
   update: [
     body('name')
@@ -479,6 +482,9 @@ const leadValidators = {
       .optional({ values: 'falsy' })
       .trim()
       .isLength({ max: 2000 }).withMessage('Notes cannot exceed 2000 characters'),
+    body('dealValue')
+      .optional({ values: 'falsy' })
+      .isFloat({ min: 0 }).withMessage('Deal value must be a positive number'),
   ],
   id: [objectIdRule('id')],
 };

@@ -6,6 +6,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import ScrollToTop from "./components/ScrollToTop";
+import useVisitorTracking from "./hooks/useVisitorTracking";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./Pages/Home"));
@@ -38,6 +39,10 @@ const AnalyticsAdmin = lazy(() => import("./Pages/admin/AnalyticsAdmin"));
 const SettingsAdmin = lazy(() => import("./Pages/admin/SettingsAdmin"));
 const SeoAdmin = lazy(() => import("./Pages/admin/SeoAdmin"));
 const QuotationsAdmin = lazy(() => import("./Pages/admin/QuotationsAdmin"));
+const MediaAdmin = lazy(() => import("./Pages/admin/MediaAdmin"));
+const SubscribersAdmin = lazy(() => import("./Pages/admin/SubscribersAdmin"));
+const NewsletterAdmin = lazy(() => import("./Pages/admin/NewsletterAdmin"));
+const RecycleBinAdmin = lazy(() => import("./Pages/admin/RecycleBinAdmin"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -49,6 +54,7 @@ const PageLoader = () => (
 const App = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  useVisitorTracking();
 
   const content = (
     <div className="page-shell">
@@ -95,6 +101,10 @@ const App = () => {
             <Route path="settings" element={<SettingsAdmin />} />
             <Route path="seo" element={<SeoAdmin />} />
             <Route path="quotations" element={<QuotationsAdmin />} />
+            <Route path="media" element={<MediaAdmin />} />
+            <Route path="subscribers" element={<SubscribersAdmin />} />
+            <Route path="newsletter" element={<NewsletterAdmin />} />
+            <Route path="recycle-bin" element={<RecycleBinAdmin />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -2,30 +2,42 @@ import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, BookOpenCheck, Calendar, Pencil, Tag } from 'lucide-react'
 import DOMPurify from 'dompurify'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchBlog, toggleBlogLike, fetchBlogComments, addBlogComment, clearBlogState } from '../store/slices/blogSlice'
 import SEO from '../components/SEO'
-import { getPost } from '../api/blog'
 import Loader from '../components/Loader'
-import BlogInteractions from '../components/BlogInteractions'
+import LikeButton from '../components/interactions/LikeButton'
+import CommentSection from '../components/interactions/CommentSection'
 
 const BlogPost = () => {
     const { slug } = useParams()
-    const [post, setPost] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const dispatch = useDispatch()
+    const { activeBlog: post, loading, error, comments, commentsLoading, commentStatus } = useSelector(state => state.blog)
 
     useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                const { data } = await getPost(slug)
-                setPost(data.data)
-            } catch (err) {
-                setError(err.response?.status === 404 ? 'Post not found' : 'Failed to load post')
-            } finally {
-                setLoading(false)
-            }
+        dispatch(fetchBlog(slug))
+        return () => {
+            dispatch(clearBlogState())
         }
-        fetchPost()
-    }, [slug])
+    }, [slug, dispatch])
+
+    useEffect(() => {
+        if (post?._id) {
+            dispatch(fetchBlogComments(post._id))
+        }
+    }, [post?._id, dispatch])
+
+    const handleToggleLike = (visitorId) => {
+        if (post?._id) {
+            dispatch(toggleBlogLike({ id: post._id, visitorId }))
+        }
+    }
+
+    const handleAddComment = (commentData) => {
+        if (post?._id) {
+            dispatch(addBlogComment({ contentId: post._id, ...commentData }))
+        }
+    }
 
     const safeContent = useMemo(() => DOMPurify.sanitize(post?.content || ''), [post?.content])
 
@@ -116,7 +128,20 @@ const BlogPost = () => {
                         dangerouslySetInnerHTML={{ __html: safeContent }}
                     />
                     
-                    <BlogInteractions postId={post._id} initialLikes={post.likes || []} />
+                    <div className="mt-12 flex items-center justify-center border-t border-[var(--line)] pt-8">
+                        <LikeButton 
+                            initialLikesCount={post.likes?.length || 0}
+                            initialIsLiked={post.likes?.includes(localStorage.getItem('visitorId'))}
+                            onToggleLike={handleToggleLike} 
+                        />
+                    </div>
+
+                    <CommentSection 
+                        comments={comments} 
+                        commentsLoading={commentsLoading} 
+                        onAddComment={handleAddComment} 
+                        commentStatus={commentStatus} 
+                    />
                 </div>
             </div>
         </article>

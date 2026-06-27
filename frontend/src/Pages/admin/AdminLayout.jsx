@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
-import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, MessageCircle, BarChart3, SearchCode, Receipt } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, MessageCircle, BarChart3, SearchCode, Receipt, Image, MailCheck, Trash2, Megaphone } from 'lucide-react'
 import { useState } from 'react'
 import ThemeToggle from '../../components/ThemeToggle'
 
@@ -9,6 +9,9 @@ const navItems = [
     { to: '/admin/projects', label: 'Projects', icon: FolderKanban },
     { to: '/admin/services', label: 'Services', icon: Briefcase },
     { to: '/admin/blog', label: 'Blog Posts', icon: FileText },
+    { to: '/admin/media', label: 'Media Library', icon: Image },
+    { to: '/admin/subscribers', label: 'Subscribers', icon: MailCheck },
+    { to: '/admin/newsletter', label: 'Newsletter', icon: Megaphone },
     { to: '/admin/leads', label: 'Leads CRM', icon: Users },
     { to: '/admin/quotations', label: 'Quotations', icon: Receipt },
     { to: '/admin/contacts', label: 'Messages', icon: Mail },
@@ -17,6 +20,7 @@ const navItems = [
     { to: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
     { to: '/admin/settings', label: 'Settings', icon: Settings },
     { to: '/admin/seo', label: 'SEO Config', icon: SearchCode },
+    { to: '/admin/recycle-bin', label: 'Recycle Bin', icon: Trash2 },
 ]
 
 const AdminLayout = () => {

@@ -2,29 +2,42 @@ import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, Github, Layers3 } from 'lucide-react'
 import DOMPurify from 'dompurify'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProject, toggleProjectLike, fetchProjectComments, addProjectComment, clearProjectState } from '../store/slices/projectSlice'
 import SEO from '../components/SEO'
-import { getProject } from '../api/projects'
 import Loader from '../components/Loader'
+import LikeButton from '../components/interactions/LikeButton'
+import CommentSection from '../components/interactions/CommentSection'
 
 const ProjectDetails = () => {
     const { slug } = useParams()
-    const [project, setProject] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const dispatch = useDispatch()
+    const { activeProject: project, loading, error, comments, commentsLoading, commentStatus } = useSelector(state => state.project)
 
     useEffect(() => {
-        const fetchProject = async () => {
-            try {
-                const { data } = await getProject(slug)
-                setProject(data.data)
-            } catch (err) {
-                setError(err.response?.status === 404 ? 'Project not found' : 'Failed to load project')
-            } finally {
-                setLoading(false)
-            }
+        dispatch(fetchProject(slug))
+        return () => {
+            dispatch(clearProjectState())
         }
-        fetchProject()
-    }, [slug])
+    }, [slug, dispatch])
+
+    useEffect(() => {
+        if (project?._id) {
+            dispatch(fetchProjectComments(project._id))
+        }
+    }, [project?._id, dispatch])
+
+    const handleToggleLike = (visitorId) => {
+        if (project?._id) {
+            dispatch(toggleProjectLike({ id: project._id, visitorId }))
+        }
+    }
+
+    const handleAddComment = (commentData) => {
+        if (project?._id) {
+            dispatch(addProjectComment({ projectId: project._id, ...commentData }))
+        }
+    }
 
     const safeDescription = useMemo(() => DOMPurify.sanitize(project?.description || ''), [project?.description])
 
@@ -46,7 +59,7 @@ const ProjectDetails = () => {
 
     return (
         <article className='pb-16 pt-8 md:pt-12'>
-            <SEO title={project.title} description={project.shortDescription || project.description.substring(0, 160)} image={project.coverImage || project.featuredImage} />
+            <SEO title={project.title} description={project.description?.substring(0, 160)} image={project.coverImage} />
             <div className='section-wrap'>
                 <Link to='/Projects' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'>
                     <ArrowLeft className='h-3.5 w-3.5' />
@@ -118,6 +131,21 @@ const ProjectDetails = () => {
               prose-code:px-1 prose-pre:border prose-pre:border-[var(--line)] prose-pre:bg-[var(--bg-alt)] prose-pre:text-[var(--ink)]
               prose-blockquote:border-l-[var(--accent)] prose-blockquote:text-[var(--ink-soft)]'
                         dangerouslySetInnerHTML={{ __html: safeDescription }}
+                    />
+                    
+                    <div className="mt-12 flex items-center justify-center border-t border-[var(--line)] pt-8">
+                        <LikeButton 
+                            initialLikesCount={project.likes?.length || 0}
+                            initialIsLiked={project.likes?.includes(localStorage.getItem('visitorId'))}
+                            onToggleLike={handleToggleLike} 
+                        />
+                    </div>
+
+                    <CommentSection 
+                        comments={comments} 
+                        commentsLoading={commentsLoading} 
+                        onAddComment={handleAddComment} 
+                        commentStatus={commentStatus} 
                     />
                 </div>
             </div>

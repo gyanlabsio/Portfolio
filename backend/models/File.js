@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 
 const fileSchema = new mongoose.Schema({
     filename: {
@@ -23,13 +24,21 @@ const fileSchema = new mongoose.Schema({
         enum: ['IMAGE', 'PDF', 'OTHER'],
         required: true,
     },
+    folder: {
+        type: String,
+        default: 'root',
+        trim: true,
+    },
     module: {
         type: String,
-        enum: ['PROJECT', 'CONTENT', 'TESTIMONIAL', 'SERVICE'],
-        required: true,
+        enum: ['PROJECT', 'CONTENT', 'TESTIMONIAL', 'SERVICE', 'GENERAL'],
+        default: 'GENERAL',
     },
 }, {
     timestamps: true,
 });
+
+// Apply soft delete plugin
+fileSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('File', fileSchema);

@@ -74,6 +74,7 @@ const uploadSingle = async (req, res, next) => {
             publicId: result.public_id,
             fileType: determineFileType(req.file.mimetype),
             module: targetModule,
+            folder: req.body.folder || 'root'
         });
 
         res.status(201).json({
@@ -117,14 +118,16 @@ const uploadMultiple = async (req, res, next) => {
             });
             fs.unlinkSync(file.path);
 
-            return File.create({
+            const fileRecord = await File.create({
                 filename: file.filename,
                 originalName: file.originalname,
                 url: result.secure_url,
                 publicId: result.public_id,
                 fileType: determineFileType(file.mimetype),
                 module: targetModule,
+                folder: req.body.folder || 'root'
             });
+            return fileRecord;
         });
 
         const uploadedFiles = await Promise.all(uploadPromises);
@@ -170,4 +173,75 @@ const deleteFile = async (req, res, next) => {
     }
 };
 
-module.exports = { upload, uploadSingle, uploadMultiple, deleteFile };
+// @desc    Get all files (admin)
+// @route   GET /api/upload
+const getAllFiles = async (req, res, next) => {
+    try {
+        const { module: targetModule, search, page = 1, limit = 20 } = req.query;
+        const query = {};
+
+        if (targetModule) {
+            query.module = targetModule;
+        }
+
+        if (search) {
+            query.originalName = { $regex: search, $options: 'i' };
+        }
+
+        const skip = (page - 1) * limit;
+        const total = await File.countDocuments(query);
+        const files = await File.find(query)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(parseInt(limit));
+
+        res.json({
+            success: true,
+            total,
+            page: parseInt(page),
+            pages: Math.ceil(total / limit),
+            data: files
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Bulk delete files
+// @route   POST /api/upload/bulk-delete
+const bulkDelete = async (req, res, next) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({ success: false, message: 'No file IDs provided' });
+        }
+
+        const files = await File.find({ _id: { $in: ids } });
+        
+        for (const file of files) {
+            try {
+                await cloudinary.uploader.destroy(file.publicId, {
+                    resource_type: file.fileType === 'IMAGE' ? 'image' : 'raw',
+                });
+            } catch (cloudErr) {
+                console.error(`Failed to delete ${file.publicId} from Cloudinary:`, cloudErr);
+            }
+        }
+        
+        // Hard delete from DB
+        await File.deleteMany({ _id: { $in: ids } });
+
+        res.json({ success: true, message: `Successfully deleted ${files.length} files` });
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    upload,
+    uploadSingle,
+    uploadMultiple,
+    deleteFile,
+    getAllFiles,
+    bulkDelete
+};

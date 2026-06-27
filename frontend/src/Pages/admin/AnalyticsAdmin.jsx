@@ -1,272 +1,99 @@
-import { useState, useEffect } from 'react'
-import { BarChart3, MousePointerClick, Eye, MessageSquare, Briefcase, FileText, Star, RefreshCw, Users, Clock } from 'lucide-react'
-import { getEvents, getAnalyticsSummary, getModulesSummary, getTimeseries, getVisitors } from '../../api/analytics'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from 'recharts'
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+import { useAnalytics } from '../../hooks/useAnalytics';
+import { setConnected, setLastUpdate } from '../../store/slices/realtimeSlice';
+import GlobalFilters from '../../components/analytics/GlobalFilters';
+import KpiCard from '../../components/analytics/KpiCard';
+import { TimeSeriesLineChart, ModulesBarChart } from '../../components/analytics/Charts';
+import DataTable from '../../components/analytics/DataTable';
+import VisitorAnalytics from '../../components/analytics/VisitorAnalytics';
+import { Eye, MousePointerClick, Send, Users } from 'lucide-react';
 
 const AnalyticsAdmin = () => {
-    const [state, setState] = useState({
-        events: [],
-        summary: null,
-        modules: [],
-        timeseries: [],
-        visitors: []
-    })
-    const { events, summary, modules, timeseries, visitors } = state;
-    const [loading, setLoading] = useState(true)
-    const [filterType, setFilterType] = useState('')
+  const dispatch = useDispatch();
+  useAnalytics();
 
-    const fetchAll = async () => {
-        try {
-            setLoading(true)
-            const [eventsRes, summaryRes, modulesRes, timeseriesRes, visitorsRes] = await Promise.all([
-                getEvents(filterType ? { type: filterType } : {}),
-                getAnalyticsSummary(),
-                getModulesSummary(),
-                getTimeseries(),
-                getVisitors()
-            ])
-            setState({
-                events: eventsRes.data.data,
-                summary: summaryRes.data.data,
-                modules: modulesRes.data.data,
-                timeseries: timeseriesRes.data.data,
-                visitors: visitorsRes.data.data
-            })
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
+  const [activeTab, setActiveTab] = useState('overview');
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { fetchAll() }, [filterType])
+  const { kpis, loading: metricsLoading } = useSelector((state) => state.metrics);
+  const { connected } = useSelector((state) => state.realtime);
 
-    const getModuleIcon = (moduleName) => {
-        switch (moduleName) {
-            case 'PROJECT': return <Briefcase className='h-5 w-5' />
-            case 'CONTENT': return <FileText className='h-5 w-5' />
-            case 'TESTIMONIAL': return <Star className='h-5 w-5' />
-            case 'CONTACT': return <MessageSquare className='h-5 w-5' />
-            default: return <BarChart3 className='h-5 w-5' />
-        }
-    }
+  useEffect(() => {
+    const socketURL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    const socket = io(socketURL, { withCredentials: true });
 
-    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const recentEvents = events.filter(ev => new Date(ev.createdAt) >= oneWeekAgo);
+    socket.on('connect', () => {
+      dispatch(setConnected(true));
+      socket.emit('join_admin');
+    });
 
-    return (
-        <div className='space-y-6'>
-            <div className='glass-card flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 md:p-6'>
-                <div>
-                    <h1 className='font-nevera text-3xl tracking-[0.08em] text-[var(--ink)]'>Analytics</h1>
-                    <p className='mt-1 text-sm text-[var(--ink-soft)]'>Track engagement, views, and clicks across your portfolio.</p>
-                </div>
-                <button onClick={fetchAll} className='focus-ring button-pop flex items-center gap-2 rounded-xl bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--bg-alt)]'>
-                    <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
-                </button>
-            </div>
+    socket.on('disconnect', () => {
+      dispatch(setConnected(false));
+    });
 
-            {loading && !summary ? (
-                <div className='glass-card rounded-2xl py-14'>
-                    <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
-                </div>
-            ) : (
-                <>
-                    {/* Top Level Summary Cards */}
-                    {summary && (
-                        <div className='grid gap-4 md:grid-cols-3'>
-                            <div className='glass-card rounded-2xl p-5 flex items-center gap-4'>
-                                <div className='flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500'>
-                                    <Eye className='h-6 w-6' />
-                                </div>
-                                <div>
-                                    <p className='text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Total Views</p>
-                                    <h3 className='text-2xl font-bold text-[var(--ink)]'>{summary.totalPageViews}</h3>
-                                </div>
-                            </div>
-                            <div className='glass-card rounded-2xl p-5 flex items-center gap-4'>
-                                <div className='flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-purple-500'>
-                                    <MousePointerClick className='h-6 w-6' />
-                                </div>
-                                <div>
-                                    <p className='text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Total Clicks</p>
-                                    <h3 className='text-2xl font-bold text-[var(--ink)]'>{summary.totalClicks}</h3>
-                                </div>
-                            </div>
-                            <div className='glass-card rounded-2xl p-5 flex items-center gap-4'>
-                                <div className='flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/10 text-green-500'>
-                                    <MessageSquare className='h-6 w-6' />
-                                </div>
-                                <div>
-                                    <p className='text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Form Submissions</p>
-                                    <h3 className='text-2xl font-bold text-[var(--ink)]'>{summary.totalFormSubmissions}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+    socket.on('analytics_event_recorded', (event) => {
+      dispatch(setLastUpdate(new Date().toISOString()));
+    });
 
-                    {/* Time Series Chart */}
-                    {timeseries.length > 0 && (
-                        <div className='glass-card rounded-3xl p-6 md:p-8'>
-                            <h2 className='font-nevera text-2xl tracking-[0.05em] text-[var(--ink)] mb-6'>Traffic Overview (Last 30 Days)</h2>
-                            <div className='h-[350px] w-full'>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={timeseries} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" vertical={false} />
-                                        <XAxis dataKey="date" stroke="var(--ink-soft)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => new Date(val).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})} />
-                                        <YAxis stroke="var(--ink-soft)" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
-                                        <RechartsTooltip 
-                                            contentStyle={{ backgroundColor: 'var(--surface)', borderColor: 'var(--line)', borderRadius: '16px', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.2)' }}
-                                            itemStyle={{ color: 'var(--ink)' }}
-                                            labelStyle={{ color: 'var(--ink-soft)', marginBottom: '8px' }}
-                                        />
-                                        <Legend wrapperStyle={{ paddingTop: '20px' }} />
-                                        <Line type="monotone" name="Page Views" dataKey="pageViews" stroke="var(--accent)" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
-                                        <Line type="monotone" name="Clicks" dataKey="clicks" stroke="var(--accent-2)" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
-                                        <Line type="monotone" name="Forms" dataKey="formSubmissions" stroke="var(--accent-3)" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-                    )}
+    return () => {
+      socket.disconnect();
+    };
+  }, [dispatch]);
 
-                    <div className='grid gap-6 lg:grid-cols-3'>
-                        {/* Modules Breakdown */}
-                        <div className='glass-card rounded-2xl p-6 lg:col-span-1'>
-                            <h2 className='font-nevera text-xl text-[var(--ink)] mb-4'>By Module</h2>
-                            <div className='space-y-3'>
-                                {modules.length > 0 ? modules.map(m => (
-                                    <div key={m._id} className='flex items-center justify-between rounded-xl bg-[var(--surface)] p-3'>
-                                        <div className='flex items-center gap-3'>
-                                            <div className='text-[var(--accent-2)]'>
-                                                {getModuleIcon(m._id)}
-                                            </div>
-                                            <span className='text-sm font-semibold text-[var(--ink)]'>{m._id}</span>
-                                        </div>
-                                        <span className='font-bold text-[var(--ink)]'>{m.count}</span>
-                                    </div>
-                                )) : (
-                                    <p className='text-sm text-[var(--ink-soft)]'>No module data available.</p>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Recent Events Log */}
-                        <div className='glass-card rounded-2xl p-6 lg:col-span-2 overflow-x-auto'>
-                            <div className='flex items-center justify-between mb-4'>
-                                <h2 className='font-nevera text-xl text-[var(--ink)]'>Recent Events</h2>
-                                <select 
-                                    value={filterType} 
-                                    onChange={(e) => setFilterType(e.target.value)}
-                                    className='rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--accent-2)]'
-                                >
-                                    <option value="">All Types</option>
-                                    <option value="PAGE_VIEW">Page Views</option>
-                                    <option value="CLICK">Clicks</option>
-                                    <option value="FORM_SUBMISSION">Form Submissions</option>
-                                </select>
-                            </div>
-                            
-                            <div className='max-h-96 overflow-y-auto pr-2 styled-scrollbar'>
-                                <table className='w-full text-left text-sm text-[var(--ink)] relative'>
-                                    <thead className='text-xs uppercase text-[var(--ink-soft)] border-b border-[var(--line)] sticky top-0 bg-[var(--surface)] z-10'>
-                                        <tr>
-                                            <th className='pb-3 pt-2 font-semibold'>Event</th>
-                                            <th className='pb-3 pt-2 font-semibold'>Module</th>
-                                            <th className='pb-3 pt-2 font-semibold'>Page/Element</th>
-                                            <th className='pb-3 pt-2 font-semibold text-right'>Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {recentEvents.length > 0 ? recentEvents.map(ev => (
-                                        <tr key={ev._id} className='border-b border-[var(--line)]/50 last:border-0 hover:bg-[var(--surface)]'>
-                                            <td className='py-3'>
-                                                <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${ev.type === 'PAGE_VIEW' ? 'bg-blue-500/10 text-blue-500' : ev.type === 'CLICK' ? 'bg-purple-500/10 text-purple-500' : 'bg-green-500/10 text-green-500'}`}>
-                                                    {ev.type}
-                                                </span>
-                                            </td>
-                                            <td className='py-3 font-medium'>{ev.module}</td>
-                                            <td className='py-3'>
-                                                <div className='truncate max-w-[200px]'>
-                                                    {ev.page} {ev.element && <span className='text-[var(--ink-soft)] ml-1'>({ev.element})</span>}
-                                                </div>
-                                            </td>
-                                            <td className='py-3 text-right text-xs text-[var(--ink-soft)]'>
-                                                {new Date(ev.createdAt).toLocaleString()}
-                                            </td>
-                                        </tr>
-                                    )) : (
-                                        <tr>
-                                            <td colSpan="4" className='py-8 text-center text-[var(--ink-soft)]'>No events found in the last week.</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Unique Visitors List */}
-                    <div className='glass-card rounded-2xl p-6 overflow-x-auto mt-6'>
-                        <div className='flex items-center gap-3 mb-6'>
-                            <Users className='h-6 w-6 text-[var(--accent)]' />
-                            <h2 className='font-nevera text-2xl tracking-[0.05em] text-[var(--ink)]'>Unique Visitors</h2>
-                        </div>
-                        
-                        <table className='w-full text-left text-sm text-[var(--ink)]'>
-                            <thead className='text-xs uppercase text-[var(--ink-soft)] border-b border-[var(--line)]'>
-                                <tr>
-                                    <th className='pb-3 font-semibold'>Identity</th>
-                                    <th className='pb-3 font-semibold'>System</th>
-                                    <th className='pb-3 font-semibold text-center'>Page Views</th>
-                                    <th className='pb-3 font-semibold text-center'>Total Events</th>
-                                    <th className='pb-3 font-semibold text-right'>First Seen / Last Seen</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {visitors.length > 0 ? visitors.map(v => (
-                                    <tr key={v._id} className='border-b border-[var(--line)]/50 last:border-0 hover:bg-[var(--surface)]'>
-                                        <td className='py-4'>
-                                            {v.realName ? (
-                                                <div className='flex items-center gap-2'>
-                                                    <div className='flex h-8 w-8 items-center justify-center rounded-full bg-[var(--accent)] text-white font-bold text-xs'>
-                                                        {v.realName.charAt(0).toUpperCase()}
-                                                    </div>
-                                                    <span className='font-bold text-[var(--accent)]'>{v.realName}</span>
-                                                </div>
-                                            ) : (
-                                                <span className='font-medium text-[var(--ink-soft)] font-mono text-xs'>Anon: {v._id ? v._id.split('-')[0] : 'Legacy'}</span>
-                                            )}
-                                        </td>
-                                        <td className='py-4 text-[var(--ink)]'>
-                                            {v.visitorLabel}
-                                        </td>
-                                        <td className='py-4 text-center font-bold'>
-                                            {v.pageViews}
-                                        </td>
-                                        <td className='py-4 text-center font-bold text-[var(--accent-2)]'>
-                                            {v.totalEvents}
-                                        </td>
-                                        <td className='py-4 text-right text-xs text-[var(--ink-soft)]'>
-                                            <div className='flex flex-col items-end gap-1'>
-                                                <span title="First seen">{new Date(v.firstVisit).toLocaleDateString()}</span>
-                                                <span title="Last seen" className='flex items-center gap-1 text-[var(--accent)]'><Clock className='h-3 w-3'/> {new Date(v.lastVisit).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )) : (
-                                    <tr>
-                                        <td colSpan="5" className='py-8 text-center text-[var(--ink-soft)]'>No visitors tracked yet.</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-            )}
+  return (
+    <div id="analytics-dashboard" className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Real-time tracking and conversion metrics. {connected ? <span className="text-green-500 ml-2">● Live</span> : <span className="text-red-500 ml-2">● Disconnected</span>}
+          </p>
         </div>
-    )
-}
+      </div>
 
-export default AnalyticsAdmin
+      <div className="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-700">
+        <button 
+          onClick={() => setActiveTab('overview')}
+          className={`pb-4 px-4 font-semibold ${activeTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Overview
+        </button>
+        <button 
+          onClick={() => setActiveTab('visitors')}
+          className={`pb-4 px-4 font-semibold ${activeTab === 'visitors' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Visitor Tracking
+        </button>
+      </div>
+
+      {activeTab === 'overview' && (
+        <>
+          <div className="mb-8">
+            <GlobalFilters />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <KpiCard title="Page Views" value={kpis?.pageViews || 0} growth={12.5} icon={<Eye className="w-6 h-6" />} />
+            <KpiCard title="Clicks" value={kpis?.clicks || 0} growth={-2.4} icon={<MousePointerClick className="w-6 h-6" />} />
+            <KpiCard title="Form Submissions" value={kpis?.formSubmissions || 0} growth={5.1} icon={<Send className="w-6 h-6" />} />
+            <KpiCard title="Unique Visitors" value={kpis?.visitors || 0} icon={<Users className="w-6 h-6" />} />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <TimeSeriesLineChart />
+            <ModulesBarChart />
+          </div>
+
+          <DataTable />
+        </>
+      )}
+
+      {activeTab === 'visitors' && (
+        <VisitorAnalytics />
+      )}
+    </div>
+  );
+};
+
+export default AnalyticsAdmin;

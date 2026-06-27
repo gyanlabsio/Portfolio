@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 
 const leadSchema = new mongoose.Schema({
     name: {
@@ -49,8 +50,15 @@ const leadSchema = new mongoose.Schema({
         trim: true,
         maxlength: [2000, 'Notes cannot exceed 2000 characters'],
     },
+    dealValue: {
+        type: Number,
+        default: 0,
+    },
 }, {
     timestamps: true,
 });
+
+// Apply soft delete plugin
+leadSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Lead', leadSchema);

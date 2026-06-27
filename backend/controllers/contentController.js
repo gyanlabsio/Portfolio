@@ -116,7 +116,8 @@ exports.updateContent = async (req, res, next) => {
 // @route   DELETE /api/blog/:id
 exports.deleteContent = async (req, res, next) => {
     try {
-        const content = await Content.findByIdAndDelete(req.params.id);
+        const content = await Content.findById(req.params.id);
+        if (content) await content.softDelete(req.admin ? req.admin._id : null, "Admin soft delete");
         if (!content) {
             return res.status(404).json({ success: false, message: 'Content not found' });
         }
@@ -158,6 +159,40 @@ exports.toggleLike = async (req, res, next) => {
             liked: !hasLiked,
             likesCount: content.likes.length 
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.getContentVersions = async (req, res, next) => {
+    try {
+        const versions = await ContentVersion.find({ contentId: req.params.id }).sort({ savedAt: -1 });
+        res.json({ success: true, data: versions });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.rollbackContent = async (req, res, next) => {
+    try {
+        const version = await ContentVersion.findById(req.params.versionId);
+        if (!version) return res.status(404).json({ success: false, message: 'Version not found' });
+        const content = await Content.findByIdAndUpdate(req.params.id, { ...version.contentSnapshot, status: 'DRAFT' }, { new: true });
+        res.json({ success: true, data: content });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.getRSSFeed = async (req, res, next) => {
+    try {
+        const posts = await Content.find({ status: 'PUBLISHED' }).sort({ createdAt: -1 }).limit(20);
+        let rss = '<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n<title>Portfolio Blog</title>\n';
+        posts.forEach(post => {
+            rss += `<item><title>${post.title}</title><link>${process.env.CLIENT_URL}/blog/${post.slug}</link></item>\n`;
+        });
+        rss += '</channel></rss>';
+        res.type('application/xml').send(rss);
     } catch (error) {
         next(error);
     }

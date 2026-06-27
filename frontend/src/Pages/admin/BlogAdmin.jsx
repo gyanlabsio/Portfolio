@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { BookOpenCheck, Edit, Eye, EyeOff, PenSquare, Plus, Trash2, X, ChevronDown, ChevronUp } from 'lucide-react'
 import { createPost, deletePost, getPosts, updatePost } from '../../api/blog'
+import VersionHistory from '../../components/admin/VersionHistory'
 
 const BlogAdmin = () => {
     const [posts, setPosts] = useState([])
@@ -8,10 +9,21 @@ const BlogAdmin = () => {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [sections, setSections] = useState({ seo: false, advanced: false })
+    const [searchTerm, setSearchTerm] = useState('')
+    const [typeFilter, setTypeFilter] = useState('ALL')
     const [form, setForm] = useState({
         title: '', slug: '', content: '', excerpt: '', tags: '', status: 'DRAFT', type: 'ARTICLE', coverImage: '', author: 'Admin',
-        seoTitle: '', seoDescription: '', canonicalUrl: '', category: '', featured: false
+        seoTitle: '', seoDescription: '', canonicalUrl: '', category: '', featured: false, publishedAt: ''
     })
+
+    const filteredPosts = useMemo(() => {
+        return posts.filter(post => {
+            const matchesSearch = post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  (post.tags && post.tags.join(' ').toLowerCase().includes(searchTerm.toLowerCase()));
+            const matchesType = typeFilter === 'ALL' || post.type === typeFilter;
+            return matchesSearch && matchesType;
+        });
+    }, [posts, searchTerm, typeFilter]);
 
     const fetchAll = async () => {
         try {
@@ -29,7 +41,7 @@ const BlogAdmin = () => {
     }, [])
 
     const resetForm = () => {
-        setForm({ title: '', slug: '', content: '', excerpt: '', tags: '', status: 'DRAFT', type: 'ARTICLE', coverImage: '', author: 'Admin', seoTitle: '', seoDescription: '', canonicalUrl: '', category: '', featured: false })
+        setForm({ title: '', slug: '', content: '', excerpt: '', tags: '', status: 'DRAFT', type: 'ARTICLE', coverImage: '', author: 'Admin', seoTitle: '', seoDescription: '', canonicalUrl: '', category: '', featured: false, publishedAt: '' })
         setEditingId(null)
         setShowForm(false)
         setSections({ seo: false, advanced: false })
@@ -51,6 +63,7 @@ const BlogAdmin = () => {
             canonicalUrl: post.canonicalUrl || '',
             category: post.category || '',
             featured: post.featured || false,
+            publishedAt: post.publishedAt ? new Date(post.publishedAt).toISOString().slice(0, 16) : '',
         })
         setEditingId(post._id)
         setShowForm(true)
@@ -217,9 +230,24 @@ const BlogAdmin = () => {
                                                 <option value='DRAFT'>Draft</option>
                                                 <option value='REVIEW'>Ready for Review</option>
                                                 <option value='PUBLISHED'>Published</option>
+                                                <option value='SCHEDULED'>Scheduled</option>
                                                 <option value='ARCHIVED'>Archived</option>
                                             </select>
                                         </div>
+
+                                        {form.status === 'SCHEDULED' && (
+                                            <div>
+                                                <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Publish Date & Time</label>
+                                                <input 
+                                                    type='datetime-local' 
+                                                    name='publishedAt' 
+                                                    required 
+                                                    value={form.publishedAt} 
+                                                    onChange={handleChange} 
+                                                    className={inputClass} 
+                                                />
+                                            </div>
+                                        )}
 
                                         <div>
                                             <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Post Type</label>
@@ -233,13 +261,35 @@ const BlogAdmin = () => {
 
                                         <div>
                                             <label className='mb-1.5 block text-sm font-medium text-[var(--ink-soft)]'>Category</label>
-                                            <select name='category' value={form.category} onChange={handleChange} className={`${inputClass} py-2 [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}>
+                                            <select 
+                                                name='category' 
+                                                value={!['', 'engineering', 'design', 'product', 'tutorial'].includes(form.category) ? 'other' : form.category} 
+                                                onChange={(e) => {
+                                                    if (e.target.value === 'other') {
+                                                        setForm(p => ({ ...p, category: 'other' }))
+                                                    } else {
+                                                        handleChange(e)
+                                                    }
+                                                }} 
+                                                className={`${inputClass} py-2 [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}
+                                            >
                                                 <option value=''>Select Category</option>
                                                 <option value='engineering'>Engineering</option>
                                                 <option value='design'>Design</option>
                                                 <option value='product'>Product</option>
                                                 <option value='tutorial'>Tutorial</option>
+                                                <option value='other'>Other</option>
                                             </select>
+
+                                            {!['', 'engineering', 'design', 'product', 'tutorial'].includes(form.category) && (
+                                                <input 
+                                                    type='text' 
+                                                    placeholder='Enter custom category' 
+                                                    value={form.category === 'other' ? '' : form.category}
+                                                    onChange={(e) => setForm(p => ({ ...p, category: e.target.value }))}
+                                                    className={`${inputClass} mt-2`}
+                                                />
+                                            )}
                                         </div>
 
                                         <label className='flex items-center gap-3 pt-2 cursor-pointer'>
@@ -254,6 +304,13 @@ const BlogAdmin = () => {
                                         </button>
                                     </div>
                                 </div>
+
+                                {editingId && (
+                                    <VersionHistory 
+                                        contentId={editingId} 
+                                        onRollbackSuccess={handleEdit} 
+                                    />
+                                )}
                             </div>
                         </form>
                     </div>
@@ -270,8 +327,40 @@ const BlogAdmin = () => {
                     <p className='mt-2 text-[var(--ink-soft)]'>No blog posts yet.</p>
                 </div>
             ) : (
-                <div className='stagger-children space-y-3'>
-                    {posts.map((post) => (
+                <div className='space-y-5'>
+                    {!showForm && (
+                        <div className='flex flex-col sm:flex-row gap-3 items-center justify-between'>
+                            <div className='w-full sm:w-1/3'>
+                                <input 
+                                    type='text' 
+                                    placeholder='Search by title or tag...' 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className={inputClass}
+                                />
+                            </div>
+                            <div className='w-full sm:w-1/4'>
+                                <select 
+                                    value={typeFilter} 
+                                    onChange={(e) => setTypeFilter(e.target.value)}
+                                    className={`${inputClass} [&>option]:bg-[var(--bg)] [&>option]:text-[var(--ink)]`}
+                                >
+                                    <option value='ALL'>All Types</option>
+                                    <option value='BLOG'>Blog</option>
+                                    <option value='ARTICLE'>Article</option>
+                                    <option value='CASE_STUDY'>Case Study</option>
+                                </select>
+                            </div>
+                        </div>
+                    )}
+
+                    {filteredPosts.length === 0 ? (
+                        <div className='glass-card rounded-2xl py-16 text-center'>
+                            <p className='text-[var(--ink-soft)]'>No posts match your search filters.</p>
+                        </div>
+                    ) : (
+                        <div className='stagger-children space-y-3'>
+                            {filteredPosts.map((post) => (
                         <div key={post._id} className='glass-card surface-interactive flex items-center justify-between gap-4 rounded-2xl p-4'>
                             <div className='min-w-0 flex-1'>
                                 <div className='flex items-center gap-2'>
@@ -304,6 +393,8 @@ const BlogAdmin = () => {
                             </div>
                         </div>
                     ))}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

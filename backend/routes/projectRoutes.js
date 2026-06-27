@@ -7,6 +7,7 @@ const {
     createProject,
     updateProject,
     deleteProject,
+    toggleLike
 } = require('../controllers/projectController');
 const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
@@ -16,6 +17,7 @@ const { projectValidators } = require('../middleware/validators');
 router.get('/', getProjects);
 router.get('/featured', getFeaturedProjects);
 router.get('/:slug', getProject);
+router.post('/:id/like', toggleLike);
 
 // Admin routes
 router.post('/', protect, authorize('admin'), projectValidators.create, validate, createProject);

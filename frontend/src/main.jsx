@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { Provider } from 'react-redux'
+import { store } from './store'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import 'lenis/dist/lenis.css'
@@ -18,9 +20,11 @@ createRoot(document.getElementById('root')).render(
     <HelmetProvider>
       <BrowserRouter>
         <ThemeProvider>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
+          <Provider store={store}>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </Provider>
         </ThemeProvider>
       </BrowserRouter>
     </HelmetProvider>

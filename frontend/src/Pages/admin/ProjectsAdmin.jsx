@@ -9,8 +9,8 @@ const ProjectsAdmin = () => {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [form, setForm] = useState({
-        title: '', description: '', shortDescription: '', techStack: '',
-        githubUrl: '', liveUrl: '', featured: false, order: 0, featuredImage: '',
+        title: '', description: '', techStack: '',
+        githubLink: '', liveLink: '', featured: false, coverImage: '',
     })
 
     const fetchAll = async () => {
@@ -23,7 +23,7 @@ const ProjectsAdmin = () => {
     useEffect(() => { fetchAll() }, [])
 
     const resetForm = () => {
-        setForm({ title: '', description: '', shortDescription: '', techStack: '', githubUrl: '', liveUrl: '', featured: false, order: 0, featuredImage: '' })
+        setForm({ title: '', description: '', techStack: '', githubLink: '', liveLink: '', featured: false, coverImage: '' })
         setEditingId(null)
         setShowForm(false)
     }
@@ -32,13 +32,11 @@ const ProjectsAdmin = () => {
         setForm({
             title: project.title,
             description: project.description,
-            shortDescription: project.shortDescription || '',
             techStack: (project.techStack || []).join(', '),
-            githubUrl: project.githubUrl || '',
-            liveUrl: project.liveUrl || '',
+            githubLink: project.githubLink || '',
+            liveLink: project.liveLink || '',
             featured: project.featured,
-            order: project.order || 0,
-            featuredImage: project.featuredImage || '',
+            coverImage: project.coverImage || '',
         })
         setEditingId(project._id)
         setShowForm(true)
@@ -76,7 +74,7 @@ const ProjectsAdmin = () => {
         if (!file) return
         try {
             const { data } = await uploadImage(file)
-            setForm(prev => ({ ...prev, featuredImage: data.data.url }))
+            setForm(prev => ({ ...prev, coverImage: data.data.url }))
         } catch {
             alert('Image upload failed')
         }
@@ -107,22 +105,18 @@ const ProjectsAdmin = () => {
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             <input type='text' placeholder='Title' value={form.title} onChange={(e) => setForm(p => ({ ...p, title: e.target.value }))} required
                                 className={inputClass} />
-                            <input type='text' placeholder='Short Description' value={form.shortDescription} onChange={(e) => setForm(p => ({ ...p, shortDescription: e.target.value }))}
-                                className={inputClass} />
                             <textarea placeholder='Full Description' value={form.description} onChange={(e) => setForm(p => ({ ...p, description: e.target.value }))} required rows={4}
                                 className={`${inputClass} resize-none`} />
                             <input type='text' placeholder='Tech Stack (comma-separated)' value={form.techStack} onChange={(e) => setForm(p => ({ ...p, techStack: e.target.value }))}
                                 className={inputClass} />
                             <div className='grid grid-cols-2 gap-4'>
-                                <input type='url' placeholder='GitHub URL' value={form.githubUrl} onChange={(e) => setForm(p => ({ ...p, githubUrl: e.target.value }))}
+                                <input type='url' placeholder='GitHub URL' value={form.githubLink} onChange={(e) => setForm(p => ({ ...p, githubLink: e.target.value }))}
                                     className={inputClass} />
-                                <input type='url' placeholder='Live URL' value={form.liveUrl} onChange={(e) => setForm(p => ({ ...p, liveUrl: e.target.value }))}
+                                <input type='url' placeholder='Live URL' value={form.liveLink} onChange={(e) => setForm(p => ({ ...p, liveLink: e.target.value }))}
                                     className={inputClass} />
                             </div>
-                            <div className='grid grid-cols-2 gap-4'>
-                                <input type='number' placeholder='Order' value={form.order} onChange={(e) => setForm(p => ({ ...p, order: parseInt(e.target.value) || 0 }))}
-                                    className={inputClass} />
-                                <label className='flex cursor-pointer items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--ink-soft)]'>
+                            <div>
+                                <label className='flex cursor-pointer items-center gap-3 w-fit rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--ink-soft)]'>
                                     <input type='checkbox' checked={form.featured} onChange={(e) => setForm(p => ({ ...p, featured: e.target.checked }))}
                                         className='h-4 w-4 accent-[var(--accent)]' />
                                     Featured project
@@ -135,7 +129,7 @@ const ProjectsAdmin = () => {
                                         <ImagePlus className='h-4 w-4 text-[var(--accent-2)]' /> Upload image
                                         <input type='file' accept='image/*' onChange={handleImageUpload} className='hidden' />
                                     </label>
-                                    {form.featuredImage && <img src={form.featuredImage} alt='preview' className='mt-3 h-32 rounded-xl border border-[var(--line)] object-cover' />}
+                                    {form.coverImage && <img src={form.coverImage} alt='preview' className='mt-3 h-32 rounded-xl border border-[var(--line)] object-cover' />}
                                 </div>
                             </div>
                             <button type='submit' className='w-full rounded-full bg-[var(--accent)] py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110'>
@@ -158,7 +152,7 @@ const ProjectsAdmin = () => {
                     {projects.map((p) => (
                         <div key={p._id} className='glass-card flex items-center justify-between gap-4 rounded-2xl p-4'>
                             <div className='flex items-center gap-4 flex-1 min-w-0'>
-                                {p.featuredImage && <img src={p.featuredImage} alt='' className='h-12 w-16 shrink-0 rounded-lg border border-[var(--line)] object-cover' />}
+                                {p.coverImage && <img src={p.coverImage} alt='' className='h-12 w-16 shrink-0 rounded-lg border border-[var(--line)] object-cover' />}
                                 <div className='min-w-0'>
                                     <h3 className='truncate font-semibold text-[var(--ink)]'>{p.title}</h3>
                                     <p className='text-xs text-[var(--ink-soft)]'>{(p.techStack || []).join(' · ')}</p>

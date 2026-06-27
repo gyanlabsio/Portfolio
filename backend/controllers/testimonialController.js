@@ -117,7 +117,8 @@ exports.updateTestimonialStatus = async (req, res, next) => {
 // @route   DELETE /api/testimonials/:id
 exports.deleteTestimonial = async (req, res, next) => {
     try {
-        const testimonial = await Testimonial.findByIdAndDelete(req.params.id);
+        const testimonial = await Testimonial.findById(req.params.id);
+        if (testimonial) await testimonial.softDelete(req.admin ? req.admin._id : null, "Admin soft delete");
         if (!testimonial) {
             return res.status(404).json({ success: false, message: 'Testimonial not found' });
         }

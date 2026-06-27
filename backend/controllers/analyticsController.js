@@ -1,4 +1,7 @@
 const AnalyticsEvent = require('../models/AnalyticsEvent');
+const SavedView = require('../models/SavedView');
+const VisitorProfile = require('../models/VisitorProfile');
+const AnalyticsSession = require('../models/AnalyticsSession');
 
 // @desc    Record an analytics event
 // @route   POST /api/analytics
@@ -7,7 +10,7 @@ const recordEvent = async (req, res, next) => {
     try {
         const { type, page, module, element, metadata, visitorId, visitorLabel, realName } = req.body;
         
-        await AnalyticsEvent.create({
+        const event = await AnalyticsEvent.create({
             type: type.toUpperCase(),
             page,
             module: module.toUpperCase(),
@@ -17,6 +20,12 @@ const recordEvent = async (req, res, next) => {
             visitorLabel,
             realName
         });
+
+        // Emit to admin clients
+        const io = req.app.get('io');
+        if (io) {
+            io.to('admin').emit('analytics_event_recorded', event);
+        }
 
         res.status(201).json({ success: true, message: 'Event recorded' });
     } catch (error) {
@@ -172,38 +181,83 @@ const getTimeSeries = async (req, res, next) => {
     }
 };
 
-// @desc    Get grouped unique visitors
+// @desc    Get all visitors
 // @route   GET /api/analytics/visitors
 // @access  Private/Admin
 const getVisitors = async (req, res, next) => {
     try {
-        const visitors = await AnalyticsEvent.aggregate([
-            {
-                $match: { visitorId: { $exists: true, $ne: null } }
-            },
-            {
-                $group: {
-                    _id: "$visitorId",
-                    visitorLabel: { $last: "$visitorLabel" },
-                    realName: { $last: "$realName" },
-                    firstVisit: { $min: "$createdAt" },
-                    lastVisit: { $max: "$createdAt" },
-                    totalEvents: { $sum: 1 },
-                    pageViews: {
-                        $sum: { $cond: [{ $eq: ["$type", "PAGE_VIEW"] }, 1, 0] }
-                    },
-                    pagesVisited: { $addToSet: "$page" }
-                }
-            },
-            {
-                $sort: { lastVisit: -1 }
-            },
-            {
-                $limit: 200 // Limit to latest 200 visitors for performance
-            }
-        ]);
+        const { type } = req.query; // 'anonymous', 'identified', 'all'
+        
+        let query = {};
+        if (type === 'identified') query.isIdentified = true;
+        if (type === 'anonymous') query.isIdentified = false;
 
-        res.json({ success: true, data: visitors });
+        const visitors = await VisitorProfile.find(query)
+            .populate('userId', 'name email role')
+            .sort({ lastSeen: -1 })
+            .lean();
+
+        res.json({ success: true, count: visitors.length, data: visitors });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get visitor details (drill-down)
+// @route   GET /api/analytics/visitors/:visitorId
+// @access  Private/Admin
+const getVisitorDetails = async (req, res, next) => {
+    try {
+        const visitorId = req.params.visitorId;
+
+        const profile = await VisitorProfile.findOne({ visitorId })
+            .populate('userId', 'name email role')
+            .lean();
+
+        if (!profile) {
+            return res.status(404).json({ success: false, message: 'Visitor not found' });
+        }
+
+        const sessions = await AnalyticsSession.find({ visitorId }).sort({ startTime: -1 }).lean();
+        const events = await AnalyticsEvent.find({ visitorId }).sort({ timestamp: -1 }).lean();
+
+        res.json({ 
+            success: true, 
+            data: {
+                profile,
+                sessions,
+                timeline: events
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get saved views
+// @route   GET /api/analytics/views
+// @access  Private/Admin
+const getSavedViews = async (req, res, next) => {
+    try {
+        const views = await SavedView.find({ createdBy: req.admin._id }).sort({ createdAt: -1 });
+        res.json({ success: true, data: views });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Create a saved view
+// @route   POST /api/analytics/views
+// @access  Private/Admin
+const createSavedView = async (req, res, next) => {
+    try {
+        const { name, filters } = req.body;
+        const view = await SavedView.create({
+            name,
+            filters,
+            createdBy: req.admin._id
+        });
+        res.status(201).json({ success: true, data: view });
     } catch (error) {
         next(error);
     }
@@ -215,5 +269,8 @@ module.exports = {
     getSummary,
     getModulesSummary,
     getTimeSeries,
-    getVisitors
+    getVisitors,
+    getVisitorDetails,
+    getSavedViews,
+    createSavedView
 };

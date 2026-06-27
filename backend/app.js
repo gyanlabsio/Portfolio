@@ -9,6 +9,9 @@ require('dotenv').config();
 
 const errorHandler = require('./middleware/errorHandler');
 
+// Start Cron Jobs
+require('./cron/autoPurge');
+
 // Route imports
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
@@ -25,6 +28,7 @@ const seoRoutes = require('./routes/seoRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const quotationRoutes = require('./routes/quotationRoutes');
 const proposalRoutes = require('./routes/proposalRoutes');
+const subscriberRoutes = require('./routes/subscriberRoutes');
 
 const app = express();
 
@@ -92,7 +96,29 @@ app.get('/', (req, res) => {
   });
 });
 
+const crmRoutes = require('./routes/crmRoutes');
+const recycleBinRoutes = require('./routes/recycleBinRoutes');
+const trackingRoutes = require('./routes/trackingRoutes');
+const newsletterRoutes = require('./routes/newsletterRoutes');
+
 // --- API Routes ---
+const { generateSitemap, getSiteSettings } = require('./controllers/seoController');
+
+app.get('/sitemap.xml', generateSitemap);
+app.get('/robots.txt', async (req, res, next) => {
+    try {
+        const settings = await require('./models/SiteSettings').findOne();
+        res.type('text/plain');
+        if (settings && settings.robotsTxt) {
+            res.send(settings.robotsTxt);
+        } else {
+            res.send('User-agent: *\nAllow: /');
+        }
+    } catch (err) {
+        next(err);
+    }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/blog', blogRoutes);
@@ -108,6 +134,11 @@ app.use('/api/seo', seoRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/quotations', quotationRoutes);
 app.use('/api/proposals', proposalRoutes);
+app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/crm', crmRoutes);
+app.use('/api/trash', recycleBinRoutes);
+app.use('/api/tracking', trackingRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

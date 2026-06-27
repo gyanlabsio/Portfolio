@@ -6,7 +6,10 @@ const {
     getSummary, 
     getModulesSummary,
     getTimeSeries,
-    getVisitors
+    getVisitors,
+    getSavedViews,
+    createSavedView,
+    getVisitorDetails
 } = require('../controllers/analyticsController');
 const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
@@ -23,6 +26,9 @@ router.get('/', protect, authorize('ADMIN'), getEvents);
 router.get('/summary', protect, authorize('ADMIN'), getSummary);
 router.get('/modules', protect, authorize('ADMIN'), getModulesSummary);
 router.get('/timeseries', protect, authorize('ADMIN'), getTimeSeries);
-router.get('/visitors', protect, authorize('ADMIN'), getVisitors);
+router.get('/visitors', protect, authorize('admin'), getVisitors);
+router.get('/visitors/:visitorId', protect, authorize('admin'), getVisitorDetails);
+router.get('/views', protect, authorize('admin'), getSavedViews);
+router.post('/views', protect, authorize('admin'), createSavedView);
 
 module.exports = router;

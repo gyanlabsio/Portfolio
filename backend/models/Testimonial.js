@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 
 const testimonialSchema = new mongoose.Schema({
     clientName: {
@@ -56,5 +57,8 @@ const testimonialSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+
+// Apply soft delete plugin
+testimonialSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Testimonial', testimonialSchema);

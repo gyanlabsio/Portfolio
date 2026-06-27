@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Save, Search, SearchCode, Globe, Trash2 } from 'lucide-react'
-import { getGlobalSeo, getSeoBySlug, createSeo, updateSeo, deleteSeo } from '../../api/seo'
+import { getGlobalSeo, getSeoBySlug, createSeo, updateSeo, deleteSeo, getSiteSettings, updateSiteSettings } from '../../api/seo'
 
 const SeoAdmin = () => {
     const [seoData, setSeoData] = useState({
@@ -23,9 +23,26 @@ const SeoAdmin = () => {
     const [saving, setSaving] = useState(false)
     const [isNewRecord, setIsNewRecord] = useState(false)
 
+    // Site Settings State
+    const [siteSettings, setSiteSettings] = useState({
+        globalTitleSuffix: '',
+        defaultOgImage: '',
+        robotsTxt: ''
+    })
+
     const fetchSeo = async (slug) => {
         try {
             setLoading(true)
+            if (slug === 'settings') {
+                const { data } = await getSiteSettings()
+                if (data.data) {
+                    setSiteSettings(data.data)
+                }
+                setCurrentSlug('settings')
+                setLoading(false)
+                return
+            }
+
             const fetchFn = slug === 'global' ? getGlobalSeo : () => getSeoBySlug(slug)
             const { data } = await fetchFn()
             
@@ -73,18 +90,23 @@ const SeoAdmin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setSaving(true)
         try {
-            setSaving(true)
-            if (isNewRecord) {
-                await createSeo(seoData)
-                setIsNewRecord(false)
+            if (currentSlug === 'settings') {
+                await updateSiteSettings(siteSettings)
+                alert('Site Settings Saved!')
             } else {
-                await updateSeo(currentSlug, seoData)
+                if (isNewRecord && currentSlug !== 'global') {
+                    await createSeo(seoData)
+                    setIsNewRecord(false)
+                } else {
+                    await updateSeo(currentSlug, seoData)
+                }
+                alert('Saved successfully!')
             }
-            alert('SEO Data saved successfully!')
         } catch (error) {
             console.error(error)
-            alert('Failed to save SEO data.')
+            alert('Failed to save')
         } finally {
             setSaving(false)
         }
@@ -130,9 +152,12 @@ const SeoAdmin = () => {
                             />
                             <button type="submit" className='rounded-xl bg-[var(--surface)] px-4 py-2 text-[var(--ink)] border border-[var(--line)] hover:bg-[var(--bg-alt)]'>Go</button>
                         </form>
-                        <div className='mt-4 pt-4 border-t border-[var(--line)]'>
+                        <div className='mt-4 pt-4 border-t border-[var(--line)] space-y-2'>
                             <p className='text-xs text-[var(--ink-soft)] mb-2'>Quick Links:</p>
-                            <button onClick={() => { setSearchSlug('global'); fetchSeo('global') }} className='w-full text-left px-3 py-2 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface)] rounded-xl flex items-center gap-2'>
+                            <button onClick={() => { setSearchSlug('settings'); fetchSeo('settings') }} className={`w-full text-left px-3 py-2 text-sm font-semibold rounded-xl flex items-center gap-2 ${currentSlug === 'settings' ? 'bg-[var(--surface)] text-[var(--ink)]' : 'text-[var(--ink-soft)] hover:bg-[var(--surface)]'}`}>
+                                <Save className='h-4 w-4 text-[var(--accent-2)]' /> Site Settings (Robots.txt & Meta)
+                            </button>
+                            <button onClick={() => { setSearchSlug('global'); fetchSeo('global') }} className={`w-full text-left px-3 py-2 text-sm font-semibold rounded-xl flex items-center gap-2 ${currentSlug === 'global' ? 'bg-[var(--surface)] text-[var(--ink)]' : 'text-[var(--ink-soft)] hover:bg-[var(--surface)]'}`}>
                                 <Globe className='h-4 w-4 text-[var(--accent)]' /> global (Default Fallback)
                             </button>
                         </div>
@@ -141,8 +166,13 @@ const SeoAdmin = () => {
                     <div className='glass-card rounded-2xl p-6 border-l-4 border-l-[var(--accent)]'>
                         <h3 className='font-semibold text-[var(--ink)]'>Current Selection: <span className='text-[var(--accent)]'>{currentSlug}</span></h3>
                         <p className='text-xs text-[var(--ink-soft)] mt-1'>
-                            {isNewRecord ? "No data exists yet for this route. Fill the form to create it." : "Editing existing SEO data for this route."}
+                            {currentSlug === 'settings' ? "Global site configurations." : (isNewRecord ? "No data exists yet for this route. Fill the form to create it." : "Editing existing SEO data for this route.")}
                         </p>
+                        {currentSlug === 'settings' && (
+                            <a href="/sitemap.xml" target="_blank" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[var(--accent)] hover:underline">
+                                View Dynamic Sitemap.xml
+                            </a>
+                        )}
                     </div>
                 </div>
 
@@ -153,6 +183,33 @@ const SeoAdmin = () => {
                             <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
                         </div>
                     ) : (
+                        currentSlug === 'settings' ? (
+                            <form onSubmit={handleSubmit} className='glass-card rounded-2xl p-6 space-y-6'>
+                                <div className='flex items-center justify-between border-b border-[var(--line)] pb-4'>
+                                    <h2 className='font-nevera text-xl text-[var(--ink)] flex items-center gap-2'>
+                                        <Globe className='h-5 w-5 text-[var(--accent)]' /> Site Settings
+                                    </h2>
+                                    <button type="submit" disabled={saving} className='focus-ring button-pop flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--accent-2)] disabled:opacity-50'>
+                                        {saving ? <div className='h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white'></div> : <Save className='h-4 w-4' />} 
+                                        Save Settings
+                                    </button>
+                                </div>
+                                <div className='space-y-4'>
+                                    <div>
+                                        <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Global Title Suffix</label>
+                                        <input type='text' value={siteSettings.globalTitleSuffix || ''} onChange={e => setSiteSettings(prev => ({ ...prev, globalTitleSuffix: e.target.value }))} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder=" | Portfolio" />
+                                    </div>
+                                    <div>
+                                        <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>Default OG Image URL</label>
+                                        <input type='url' value={siteSettings.defaultOgImage || ''} onChange={e => setSiteSettings(prev => ({ ...prev, defaultOgImage: e.target.value }))} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="https://" />
+                                    </div>
+                                    <div>
+                                        <label className='mb-1.5 block text-xs font-semibold text-[var(--ink-soft)]'>robots.txt</label>
+                                        <textarea rows="4" value={siteSettings.robotsTxt || ''} onChange={e => setSiteSettings(prev => ({ ...prev, robotsTxt: e.target.value }))} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="User-agent: *\nAllow: /" />
+                                    </div>
+                                </div>
+                            </form>
+                        ) : (
                         <form onSubmit={handleSubmit} className='glass-card rounded-2xl p-6 space-y-6'>
                             <div className='flex items-center justify-between border-b border-[var(--line)] pb-4'>
                                 <h2 className='font-nevera text-xl text-[var(--ink)] flex items-center gap-2'>
@@ -232,6 +289,7 @@ const SeoAdmin = () => {
                             </div>
 
                         </form>
+                        )
                     )}
                 </div>
             </div>

@@ -1,5 +1,6 @@
 const Quotation = require('../models/Quotation');
 const QuotationItem = require('../models/QuotationItem');
+const SiteSettings = require('../models/SiteSettings');
 const { generateQuotationPdf } = require('../utils/pdfService');
 
 // @desc    Get all quotations
@@ -46,7 +47,15 @@ const getQuotation = async (req, res) => {
 // @access  Private/Admin
 const createQuotation = async (req, res) => {
   try {
-    const { items, tax = 0, ...quotationData } = req.body;
+    const { items, tax = 0, discount = 0, discountType = 'FLAT', useGlobalTerms = false, ...quotationData } = req.body;
+
+    let finalTerms = quotationData.termsAndConditions;
+    if (useGlobalTerms) {
+      const settings = await SiteSettings.findOne();
+      if (settings && settings.globalQuotationTerms) {
+        finalTerms = settings.globalQuotationTerms;
+      }
+    }
 
     // Generate unique quotation number QT-YYYY-XXX
     const year = new Date().getFullYear();
@@ -63,11 +72,24 @@ const createQuotation = async (req, res) => {
       return { ...item, amount };
     });
 
-    const total = subtotal + Number(tax);
+    let discountAmount = 0;
+    if (discountType === 'PERCENTAGE') {
+        discountAmount = subtotal * (Number(discount) / 100);
+    } else {
+        discountAmount = Number(discount);
+    }
+    
+    // Tax is applied after discount
+    const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount);
+    const total = subtotalAfterDiscount + Number(tax);
 
     const quotation = await Quotation.create({
       ...quotationData,
       quotationNumber,
+      discount: Number(discount),
+      discountType,
+      useGlobalTerms,
+      termsAndConditions: finalTerms,
       subtotal,
       tax: Number(tax),
       total
@@ -109,10 +131,22 @@ const updateQuotation = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Can only update quotations in DRAFT status' });
     }
 
-    const { items, tax, ...quotationData } = req.body;
+    const { items, tax, discount, discountType, useGlobalTerms, ...quotationData } = req.body;
 
     let newSubtotal = quotation.subtotal;
     let newTax = tax !== undefined ? Number(tax) : quotation.tax;
+    let newDiscount = discount !== undefined ? Number(discount) : quotation.discount;
+    let newDiscountType = discountType || quotation.discountType;
+    let newUseGlobalTerms = useGlobalTerms !== undefined ? useGlobalTerms : quotation.useGlobalTerms;
+    
+    let finalTerms = quotationData.termsAndConditions !== undefined ? quotationData.termsAndConditions : quotation.termsAndConditions;
+
+    if (newUseGlobalTerms) {
+      const settings = await SiteSettings.findOne();
+      if (settings && settings.globalQuotationTerms) {
+        finalTerms = settings.globalQuotationTerms;
+      }
+    }
 
     // Update items if provided
     if (items && items.length > 0) {
@@ -129,12 +163,24 @@ const updateQuotation = async (req, res) => {
       await QuotationItem.insertMany(validatedItems);
     }
 
-    const newTotal = newSubtotal + newTax;
+    let discountAmount = 0;
+    if (newDiscountType === 'PERCENTAGE') {
+        discountAmount = newSubtotal * (newDiscount / 100);
+    } else {
+        discountAmount = newDiscount;
+    }
+
+    const subtotalAfterDiscount = Math.max(0, newSubtotal - discountAmount);
+    const newTotal = subtotalAfterDiscount + newTax;
 
     const updatedQuotation = await Quotation.findByIdAndUpdate(
       req.params.id,
       {
         ...quotationData,
+        discount: newDiscount,
+        discountType: newDiscountType,
+        useGlobalTerms: newUseGlobalTerms,
+        termsAndConditions: finalTerms,
         subtotal: newSubtotal,
         tax: newTax,
         total: newTotal

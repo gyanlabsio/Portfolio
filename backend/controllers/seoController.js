@@ -1,4 +1,7 @@
 const Seo = require('../models/Seo');
+const SiteSettings = require('../models/SiteSettings');
+const Project = require('../models/Project');
+const Content = require('../models/Content');
 
 // @desc    Get SEO metadata for a specific page
 // @route   GET /api/seo/:pageSlug
@@ -101,10 +104,84 @@ const deleteSeo = async (req, res, next) => {
     }
 };
 
+// @desc    Get global site settings (robots.txt, default OG image)
+// @route   GET /api/seo/settings
+// @access  Public
+const getSiteSettings = async (req, res, next) => {
+    try {
+        let settings = await SiteSettings.findOne();
+        if (!settings) {
+            settings = await SiteSettings.create({});
+        }
+        res.json({ success: true, data: settings });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Update site settings
+// @route   PUT /api/seo/settings
+// @access  Private/Admin
+const updateSiteSettings = async (req, res, next) => {
+    try {
+        let settings = await SiteSettings.findOne();
+        if (!settings) {
+            settings = new SiteSettings(req.body);
+        } else {
+            Object.assign(settings, req.body);
+        }
+        settings.updatedBy = req.admin.id;
+        await settings.save();
+        res.json({ success: true, data: settings });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Generate dynamic sitemap
+// @route   GET /sitemap.xml
+// @access  Public
+const generateSitemap = async (req, res, next) => {
+    try {
+        const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const projects = await Project.find({ status: 'published' }).select('slug updatedAt');
+        const blogs = await Content.find({ type: 'blog', status: 'published' }).select('slug updatedAt');
+
+        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+        // Static routes
+        const staticRoutes = ['', '/projects', '/services', '/blog', '/contact'];
+        staticRoutes.forEach(route => {
+            xml += `  <url>\n    <loc>${baseUrl}${route}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${route === '' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+        });
+
+        // Dynamic Projects
+        projects.forEach(project => {
+            xml += `  <url>\n    <loc>${baseUrl}/projects/${project.slug}</loc>\n    <lastmod>${project.updatedAt.toISOString()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+        });
+
+        // Dynamic Blogs
+        blogs.forEach(blog => {
+            xml += `  <url>\n    <loc>${baseUrl}/blog/${blog.slug}</loc>\n    <lastmod>${blog.updatedAt.toISOString()}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+        });
+
+        xml += '</urlset>';
+
+        res.header('Content-Type', 'application/xml');
+        res.send(xml);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getSeoBySlug,
     getGlobalSeo,
     createSeo,
     updateSeo,
-    deleteSeo
+    deleteSeo,
+    getSiteSettings,
+    updateSiteSettings,
+    generateSitemap
 };

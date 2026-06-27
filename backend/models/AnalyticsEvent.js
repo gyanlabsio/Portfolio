@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const analyticsEventSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['PAGE_VIEW', 'CLICK', 'FORM_SUBMISSION'],
+        enum: ['PAGE_VIEW', 'CLICK', 'FORM_SUBMISSION', 'IDENTIFY', 'CONSENT'],
         required: [true, 'Event type is required'],
     },
     page: {
@@ -26,7 +26,13 @@ const analyticsEventSchema = new mongoose.Schema({
     },
     visitorId: {
         type: String,
+        ref: 'VisitorProfile',
         required: [true, 'Visitor ID is required'],
+        index: true,
+    },
+    sessionId: {
+        type: String,
+        ref: 'AnalyticsSession',
         index: true,
     },
     visitorLabel: {

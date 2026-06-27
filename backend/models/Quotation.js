@@ -29,10 +29,26 @@ const quotationSchema = new mongoose.Schema({
   projectDescription: {
     type: String
   },
+  clientAddress: {
+    type: String
+  },
+  issueDate: {
+    type: Date,
+    default: Date.now
+  },
   subtotal: {
     type: Number,
     required: true,
     default: 0
+  },
+  discount: {
+    type: Number,
+    default: 0
+  },
+  discountType: {
+    type: String,
+    enum: ['PERCENTAGE', 'FLAT'],
+    default: 'FLAT'
   },
   tax: {
     type: Number,
@@ -60,6 +76,13 @@ const quotationSchema = new mongoose.Schema({
   },
   notes: {
     type: String
+  },
+  termsAndConditions: {
+    type: String
+  },
+  useGlobalTerms: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

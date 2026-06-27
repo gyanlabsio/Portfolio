@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const softDeletePlugin = require('../utils/softDeletePlugin');
 const slugify = require('slugify');
 
 const contentSchema = new mongoose.Schema({
@@ -36,7 +37,7 @@ const contentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED'],
+        enum: ['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED', 'SCHEDULED'],
         default: 'DRAFT',
     },
     tags: [{
@@ -92,5 +93,8 @@ contentSchema.pre('validate', function () {
         this.readingTime = Math.ceil(wordCount / 200) || 1;
     }
 });
+
+// Apply soft delete plugin
+contentSchema.plugin(softDeletePlugin);
 
 module.exports = mongoose.model('Content', contentSchema);

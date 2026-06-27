@@ -6,6 +6,7 @@ import { getPosts } from '../api/blog'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import Loader from '../components/Loader'
+import NewsletterSubscribe from '../components/interactions/NewsletterSubscribe'
 
 const FILTERS = [
   { key: '', label: 'All' },
@@ -187,6 +188,10 @@ const Blog = () => {
             ))}
           </div>
         )}
+      </section>
+
+      <section className='section-wrap mt-12 max-w-2xl mx-auto'>
+        <NewsletterSubscribe />
       </section>
     </main>
   )

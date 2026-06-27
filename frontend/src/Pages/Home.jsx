@@ -133,7 +133,7 @@ const Home = () => {
                 {featuredProjects.slice(0, 3).map((project) => (
                   <Link key={project._id} to='/Projects' className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]'>
                     <p className='text-base font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]'>{project.title}</p>
-                    <p className='mt-1 text-sm leading-relaxed text-[var(--ink-soft)]'>{project.shortDescription || project.description}</p>
+                    <p className='mt-1 text-sm leading-relaxed text-[var(--ink-soft)]'>{project.description}</p>
                   </Link>
                 ))}
               </div>

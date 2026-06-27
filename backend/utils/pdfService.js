@@ -11,11 +11,12 @@ const generateQuotationPdf = (quotation, items, res) => {
       // Header
       doc
         .fillColor('#333333')
-        .fontSize(20)
+        .fontSize(24)
         .text('QUOTATION', { align: 'right' })
         .fontSize(10)
+        .moveDown(0.5)
         .text(`Quotation Number: ${quotation.quotationNumber}`, { align: 'right' })
-        .text(`Date: ${new Date(quotation.createdAt).toLocaleDateString()}`, { align: 'right' })
+        .text(`Issue Date: ${new Date(quotation.issueDate || quotation.createdAt).toLocaleDateString()}`, { align: 'right' })
         .text(`Valid Until: ${new Date(quotation.validUntil).toLocaleDateString()}`, { align: 'right' })
         .moveDown(2);
 
@@ -35,11 +36,15 @@ const generateQuotationPdf = (quotation, items, res) => {
         .fontSize(12)
         .text('Prepared For:', 50, 150)
         .fontSize(10)
+        .moveDown(0.5)
         .text(quotation.clientName)
         .text(quotation.clientEmail);
         
       if (quotation.company) {
         doc.text(quotation.company);
+      }
+      if (quotation.clientAddress) {
+        doc.text(quotation.clientAddress);
       }
 
       doc.moveDown(2);
@@ -113,27 +118,74 @@ const generateQuotationPdf = (quotation, items, res) => {
         .text(`${quotation.currency} ${quotation.subtotal.toFixed(2)}`, 450, y, { width: 90, align: 'right' });
       
       y += 15;
+      
+      if (quotation.discount > 0) {
+        const discountLabel = quotation.discountType === 'PERCENTAGE' 
+          ? `Discount (${quotation.discount}%):` 
+          : 'Discount:';
+        let discountAmount = quotation.discountType === 'PERCENTAGE' 
+          ? quotation.subtotal * (quotation.discount / 100)
+          : quotation.discount;
+
+        doc
+          .text(discountLabel, 360, y, { width: 90, align: 'right' })
+          .text(`-${quotation.currency} ${discountAmount.toFixed(2)}`, 450, y, { width: 90, align: 'right' });
+        y += 15;
+      }
+
       doc
         .text('Tax:', 380, y, { width: 70, align: 'right' })
         .text(`${quotation.currency} ${quotation.tax.toFixed(2)}`, 450, y, { width: 90, align: 'right' });
 
       y += 15;
+      
+      doc
+        .moveTo(380, y)
+        .lineTo(540, y)
+        .strokeColor('#333333')
+        .stroke();
+
+      y += 5;
       doc
         .fontSize(12)
+        .font('Helvetica-Bold')
         .text('Total:', 380, y, { width: 70, align: 'right' })
-        .text(`${quotation.currency} ${quotation.total.toFixed(2)}`, 450, y, { width: 90, align: 'right' });
+        .text(`${quotation.currency} ${quotation.total.toFixed(2)}`, 450, y, { width: 90, align: 'right' })
+        .font('Helvetica');
 
-      // Notes
+      // Notes & Terms
+      let currentY = doc.y > y ? doc.y + 20 : y + 40;
+      if (currentY > 650) {
+        doc.addPage();
+        currentY = 50;
+      }
+
       if (quotation.notes) {
-        if (doc.y > 650) {
+        doc
+          .fontSize(11)
+          .font('Helvetica-Bold')
+          .text('Notes:', 50, currentY)
+          .font('Helvetica')
+          .fontSize(9)
+          .moveDown(0.5)
+          .text(quotation.notes);
+        currentY = doc.y + 15;
+      }
+
+      if (quotation.termsAndConditions) {
+        if (currentY > 650) {
           doc.addPage();
+          currentY = 50;
         }
         doc
-          .moveDown(4)
-          .fontSize(10)
-          .text('Notes:', 50)
-          .fontSize(9)
-          .text(quotation.notes);
+          .fontSize(11)
+          .font('Helvetica-Bold')
+          .text('Terms and Conditions:', 50, currentY)
+          .font('Helvetica')
+          .fontSize(8)
+          .fillColor('#555555')
+          .moveDown(0.5)
+          .text(quotation.termsAndConditions);
       }
 
       // Footer

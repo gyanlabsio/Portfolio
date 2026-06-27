@@ -3,6 +3,7 @@ const router = express.Router();
 const {
     addComment,
     getPostComments,
+    getProjectComments,
     getAllComments,
     updateCommentStatus,
     deleteComment
@@ -12,6 +13,7 @@ const { protect, authorize } = require('../middleware/auth');
 // Public routes
 router.post('/', addComment);
 router.get('/post/:contentId', getPostComments);
+router.get('/project/:projectId', getProjectComments);
 
 // Admin routes
 router.use(protect);

@@ -77,10 +77,10 @@ const Projects = () => {
                 key={project._id}
                 className='glass-card group block enter-fade rounded-3xl p-4 md:p-5 hover:border-[var(--accent)] transition-colors'
               >
-                {project.featuredImage && (
+                {project.coverImage && (
                   <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
                     <img
-                      src={project.featuredImage}
+                      src={project.coverImage}
                       alt={project.title}
                       className='h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]'
                     />
@@ -94,7 +94,7 @@ const Projects = () => {
                   </h3>
 
                   <p className='line-clamp-3 text-sm leading-relaxed text-[var(--ink-soft)]'>
-                    {project.shortDescription || project.description}
+                    {project.description}
                   </p>
 
                   {project.techStack && project.techStack.length > 0 && (
@@ -112,9 +112,9 @@ const Projects = () => {
                   )}
 
                   <div className='flex gap-3 pt-2'>
-                    {project.githubUrl && (
+                    {project.githubLink && (
                       <a
-                        href={project.githubUrl}
+                        href={project.githubLink}
                         target='_blank'
                         rel='noopener noreferrer'
                         className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
@@ -123,9 +123,9 @@ const Projects = () => {
                         <Github className='w-4 h-4' />
                       </a>
                     )}
-                    {project.liveUrl && (
+                    {project.liveLink && (
                       <a
-                        href={project.liveUrl}
+                        href={project.liveLink}
                         target='_blank'
                         rel='noopener noreferrer'
                         className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)]'
