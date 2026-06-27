@@ -125,11 +125,21 @@ const ProjectsAdmin = () => {
                             <div>
                                 <label className='mb-2 block text-sm font-semibold text-[var(--ink-soft)]'>Featured Image</label>
                                 <div className='rounded-2xl border border-dashed border-[var(--line)] bg-[var(--surface)] p-4'>
-                                    <label className='inline-flex cursor-pointer items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink)]'>
-                                        <ImagePlus className='h-4 w-4 text-[var(--accent-2)]' /> Upload image
-                                        <input type='file' accept='image/*' onChange={handleImageUpload} className='hidden' />
-                                    </label>
-                                    {form.coverImage && <img src={form.coverImage} alt='preview' className='mt-3 h-32 rounded-xl border border-[var(--line)] object-cover' />}
+                                    <div className='flex flex-wrap items-center gap-3'>
+                                        <input 
+                                            type='url' 
+                                            placeholder='Paste image URL...' 
+                                            value={form.coverImage} 
+                                            onChange={(e) => setForm(p => ({ ...p, coverImage: e.target.value }))}
+                                            className='flex-1 min-w-[200px] rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/55 focus:outline-none'
+                                        />
+                                        <span className='text-[var(--ink-soft)] text-xs font-bold uppercase'>OR</span>
+                                        <label className='inline-flex cursor-pointer whitespace-nowrap items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]'>
+                                            <ImagePlus className='h-4 w-4' /> Upload Local File
+                                            <input type='file' accept='image/*' onChange={handleImageUpload} className='hidden' />
+                                        </label>
+                                    </div>
+                                    {form.coverImage && <img src={form.coverImage} alt='preview' className='mt-4 h-32 w-full max-w-[200px] rounded-xl border border-[var(--line)] object-cover' />}
                                 </div>
                             </div>
                             <button type='submit' className='w-full rounded-full bg-[var(--accent)] py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110'>
