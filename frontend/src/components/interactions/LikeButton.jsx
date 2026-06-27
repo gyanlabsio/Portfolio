@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,11 +7,14 @@ const LikeButton = ({ initialLikesCount, initialIsLiked, onToggleLike }) => {
     const [likesCount, setLikesCount] = useState(initialLikesCount || 0);
     const [isAnimating, setIsAnimating] = useState(false);
     
+    const [prevInitial, setPrevInitial] = useState({ initialIsLiked, initialLikesCount });
+    
     // Update local state if props change (e.g. after fetch finishes)
-    useEffect(() => {
+    if (initialIsLiked !== prevInitial.initialIsLiked || initialLikesCount !== prevInitial.initialLikesCount) {
         setIsLiked(initialIsLiked);
         setLikesCount(initialLikesCount);
-    }, [initialIsLiked, initialLikesCount]);
+        setPrevInitial({ initialIsLiked, initialLikesCount });
+    }
 
     const handleLike = () => {
         const newIsLiked = !isLiked;
