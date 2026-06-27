@@ -10,7 +10,9 @@ require('dotenv').config();
 const errorHandler = require('./middleware/errorHandler');
 
 // Start Cron Jobs
-require('./cron/autoPurge');
+if (process.env.NODE_ENV !== 'test') {
+  require('./cron/autoPurge');
+}
 
 // Route imports
 const authRoutes = require('./routes/authRoutes');
