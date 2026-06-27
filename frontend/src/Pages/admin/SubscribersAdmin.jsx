@@ -42,6 +42,7 @@ const SubscribersAdmin = () => {
                 setSubscribers(prev => prev.filter(sub => sub._id !== id))
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to delete subscriber')
         }
     }

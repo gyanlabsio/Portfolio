@@ -6,18 +6,8 @@ import ExportMenu from './ExportMenu'; // We'll create this next
 const GlobalFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.analyticsFilter);
-  const [localSearch, setLocalSearch] = useState(filters.searchQuery);
-
   const handleDateChange = (type, value) => {
     dispatch(setDateRange({ ...filters.dateRange, [type]: value }));
-  };
-
-  const handleSearch = (e) => {
-    setLocalSearch(e.target.value);
-    // Debounce would normally go here
-    setTimeout(() => {
-      dispatch(setSearchQuery(e.target.value));
-    }, 500);
   };
 
   return (

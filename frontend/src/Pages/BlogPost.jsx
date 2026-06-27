@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, BookOpenCheck, Calendar, Pencil, Tag } from 'lucide-react'
 import DOMPurify from 'dompurify'

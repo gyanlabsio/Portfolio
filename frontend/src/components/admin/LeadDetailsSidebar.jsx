@@ -55,6 +55,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 alert('Lead profile updated!')
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to update lead profile')
         }
     }
@@ -69,6 +70,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 setNewLog({ type: 'NOTE', content: '' })
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to log activity')
         }
     }
@@ -83,6 +85,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 setNewTask({ title: '', dueDate: '' })
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to add task')
         }
     }
@@ -94,6 +97,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 setTasks(prev => prev.map(t => t._id === task._id ? data.data : t))
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to update task')
         }
     }
@@ -105,6 +109,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 setTasks(prev => prev.filter(t => t._id !== taskId))
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to delete task')
         }
     }

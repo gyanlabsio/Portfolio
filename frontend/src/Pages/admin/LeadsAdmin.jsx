@@ -117,6 +117,7 @@ const LeadsAdmin = () => {
                 })
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to create lead')
         }
     }
@@ -131,6 +132,7 @@ const LeadsAdmin = () => {
                 if (selectedLead?._id === id) setSelectedLead(null)
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to delete lead')
         }
     }
@@ -142,6 +144,7 @@ const LeadsAdmin = () => {
                 setLeads(prev => prev.map(l => l._id === id ? data.data : l))
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to update stage')
         }
     }

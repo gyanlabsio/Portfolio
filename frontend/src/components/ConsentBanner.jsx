@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 
 const ConsentBanner = () => {
-  const [showBanner, setShowBanner] = useState(false);
-
-  useEffect(() => {
-    // Check if consent has already been given or denied in local storage
-    const consent = localStorage.getItem('cookieConsent');
-    if (!consent) {
-      setShowBanner(true);
-    }
-  }, []);
+  const [showBanner, setShowBanner] = useState(!localStorage.getItem('cookieConsent'));
 
   const handleConsent = async (status) => {
     try {

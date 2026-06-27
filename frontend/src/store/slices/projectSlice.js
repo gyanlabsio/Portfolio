@@ -100,7 +100,7 @@ const projectSlice = createSlice({
         builder.addCase(addProjectComment.pending, (state) => {
             state.commentStatus = 'loading';
         });
-        builder.addCase(addProjectComment.fulfilled, (state, action) => {
+        builder.addCase(addProjectComment.fulfilled, (state) => {
             state.commentStatus = 'pending_approval';
             // We do not add the comment to the array because it needs approval first.
         });

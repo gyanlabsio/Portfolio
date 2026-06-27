@@ -98,7 +98,7 @@ const blogSlice = createSlice({
         builder.addCase(addBlogComment.pending, (state) => {
             state.commentStatus = 'loading';
         });
-        builder.addCase(addBlogComment.fulfilled, (state, action) => {
+        builder.addCase(addBlogComment.fulfilled, (state) => {
             state.commentStatus = 'pending_approval';
         });
         builder.addCase(addBlogComment.rejected, (state) => {

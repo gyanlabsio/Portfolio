@@ -16,7 +16,7 @@ const AnalyticsAdmin = () => {
 
   const [activeTab, setActiveTab] = useState('overview');
 
-  const { kpis, loading: metricsLoading } = useSelector((state) => state.metrics);
+  const { kpis } = useSelector((state) => state.metrics);
   const { connected } = useSelector((state) => state.realtime);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const AnalyticsAdmin = () => {
       dispatch(setConnected(false));
     });
 
-    socket.on('analytics_event_recorded', (event) => {
+    socket.on('analytics_event_recorded', () => {
       dispatch(setLastUpdate(new Date().toISOString()));
     });
 

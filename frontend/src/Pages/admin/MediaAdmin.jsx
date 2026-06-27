@@ -4,7 +4,6 @@ import api from '../../api'
 
 const MediaAdmin = () => {
     const [files, setFiles] = useState([])
-    const [total, setTotal] = useState(0)
     const [pages, setPages] = useState(1)
     const [currentPage, setCurrentPage] = useState(1)
     const [search, setSearch] = useState('')
@@ -30,7 +29,6 @@ const MediaAdmin = () => {
             })
             if (data.success) {
                 setFiles(data.data)
-                setTotal(data.total)
                 setPages(data.pages)
             }
         } catch (error) {
@@ -60,6 +58,7 @@ const MediaAdmin = () => {
                 setSelectedFiles(prev => prev.filter(selectedId => selectedId !== id))
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to delete file')
         }
     }
@@ -70,10 +69,10 @@ const MediaAdmin = () => {
             const { data } = await api.post(`/upload/bulk-delete`, { ids: selectedFiles })
             if (data.success) {
                 setFiles(prev => prev.filter(file => !selectedFiles.includes(file._id)))
-                setTotal(prev => prev - selectedFiles.length)
                 setSelectedFiles([])
             }
         } catch (error) {
+            console.error(error)
             alert('Failed to delete files')
         }
     }

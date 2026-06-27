@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, Github, Layers3 } from 'lucide-react'
 import DOMPurify from 'dompurify'

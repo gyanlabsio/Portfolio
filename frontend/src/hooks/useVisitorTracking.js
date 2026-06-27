@@ -1,10 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../api';
 
 const useVisitorTracking = () => {
   const location = useLocation();
   const isInitialized = useRef(false);
+
+  const logPageView = useCallback(async (path) => {
+    try {
+      const visitorId = localStorage.getItem('visitorId');
+      const sessionId = sessionStorage.getItem('sessionId');
+      
+      if (!visitorId || !sessionId) return;
+
+      if (path.startsWith('/admin')) return;
+
+      await api.post('/tracking/event', {
+        visitorId,
+        sessionId,
+        eventType: 'PAGE_VIEW',
+        pageUrl: path,
+        metadata: { title: document.title }
+      });
+    } catch (error) {
+      console.error('Analytics page view failed:', error);
+    }
+  }, []);
 
   useEffect(() => {
     const initTracking = async () => {
@@ -31,34 +52,16 @@ const useVisitorTracking = () => {
     if (!isInitialized.current) {
       initTracking();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (isInitialized.current) {
       logPageView(location.pathname);
     }
-  }, [location.pathname]);
+  }, [location.pathname, logPageView]);
 
-  const logPageView = async (path) => {
-    try {
-      const visitorId = localStorage.getItem('visitorId');
-      const sessionId = sessionStorage.getItem('sessionId');
-      
-      if (!visitorId || !sessionId) return;
 
-      if (path.startsWith('/admin')) return;
-
-      await api.post('/tracking/event', {
-        visitorId,
-        sessionId,
-        eventType: 'PAGE_VIEW',
-        pageUrl: path,
-        metadata: { title: document.title }
-      });
-    } catch (error) {
-      console.error('Analytics page view failed:', error);
-    }
-  };
 
   const trackEvent = async (eventType, metadata = {}) => {
     try {

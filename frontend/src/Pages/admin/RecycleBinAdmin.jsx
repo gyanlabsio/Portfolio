@@ -56,7 +56,8 @@ const RecycleBinAdmin = () => {
       dispatch(removeItemsLocally(selectedIds));
       setSelectedIds([]);
     } catch (err) {
-      toast.error('Failed to restore items');
+      console.error(err);
+      toast.error("Failed to restore items");
     } finally {
       setIsActionLoading(false);
     }
@@ -73,7 +74,8 @@ const RecycleBinAdmin = () => {
       dispatch(removeItemsLocally(selectedIds));
       setSelectedIds([]);
     } catch (err) {
-      toast.error('Failed to delete items');
+      console.error(err);
+      toast.error("Failed to delete item permanently");
     } finally {
       setIsActionLoading(false);
     }
@@ -91,6 +93,7 @@ const RecycleBinAdmin = () => {
       downloadAnchorNode.remove();
       toast.success('Export started');
     } catch (err) {
+      console.error(err);
       toast.error('Failed to export data');
     }
   };
