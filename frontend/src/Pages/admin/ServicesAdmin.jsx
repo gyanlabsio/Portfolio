@@ -29,6 +29,11 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
                         </div>
                     </div>
                 </div>
+                {service.thumbnail && (
+                    <div className="mt-4 overflow-hidden rounded-xl">
+                        <img src={service.thumbnail} alt={service.title} className="h-32 w-full object-cover transition hover:scale-105" />
+                    </div>
+                )}
                 <h3 className='mt-4 font-semibold text-[var(--ink)]'>{service.title}</h3>
                 <p className='mt-2 line-clamp-3 text-sm text-[var(--ink-soft)]'>{service.description}</p>
             </div>
@@ -53,6 +58,7 @@ const ServicesAdmin = () => {
         title: '',
         description: '',
         iconUrl: '',
+        thumbnail: '',
         status: 'ACTIVE'
     })
 
@@ -77,11 +83,12 @@ const ServicesAdmin = () => {
                 title: service.title,
                 description: service.description,
                 iconUrl: service.iconUrl || '',
+                thumbnail: service.thumbnail || '',
                 status: service.status
             })
         } else {
             setEditingService(null)
-            setFormData({ title: '', description: '', iconUrl: '', status: 'ACTIVE' })
+            setFormData({ title: '', description: '', iconUrl: '', thumbnail: '', status: 'ACTIVE' })
         }
         setIsFormOpen(true)
     }
@@ -204,6 +211,11 @@ const ServicesAdmin = () => {
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Icon URL (Optional)</label>
                                 <input type='url' value={formData.iconUrl} onChange={e => setFormData({ ...formData, iconUrl: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                            </div>
+
+                            <div>
+                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Thumbnail URL (Optional)</label>
+                                <input type='url' value={formData.thumbnail} onChange={e => setFormData({ ...formData, thumbnail: e.target.value })} placeholder="Paste image link from Media Gallery" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>

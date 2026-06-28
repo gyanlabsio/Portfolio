@@ -377,6 +377,10 @@ const serviceValidators = {
     body('startingPrice')
       .optional()
       .trim(),
+    body('thumbnail')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isURL().withMessage('Thumbnail must be a valid URL'),
     body('featured')
       .optional()
       .isBoolean().withMessage('Featured must be a boolean'),
@@ -402,6 +406,10 @@ const serviceValidators = {
     body('startingPrice')
       .optional()
       .trim(),
+    body('thumbnail')
+      .optional({ values: 'falsy' })
+      .trim()
+      .isURL().withMessage('Thumbnail must be a valid URL'),
     body('featured')
       .optional()
       .isBoolean().withMessage('Featured must be a boolean'),

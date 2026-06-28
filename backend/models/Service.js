@@ -28,6 +28,10 @@ const serviceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed, // String or Number
         trim: true,
     },
+    thumbnail: {
+        type: String,
+        trim: true,
+    },
     featured: {
         type: Boolean,
         default: false,
