@@ -30,8 +30,8 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
                     </div>
                 </div>
                 {service.thumbnail && (
-                    <div className="mt-4 overflow-hidden rounded-xl">
-                        <img src={service.thumbnail} alt={service.title} className="h-32 w-full object-cover transition hover:scale-105" />
+                    <div className="mt-4 w-full aspect-video overflow-hidden rounded-xl bg-[var(--surface)] p-2">
+                        <img src={service.thumbnail} alt={service.title} className="h-full w-full object-contain transition hover:scale-105" />
                     </div>
                 )}
                 <h3 className='mt-4 font-semibold text-[var(--ink)]'>{service.title}</h3>

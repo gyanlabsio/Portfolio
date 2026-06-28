@@ -213,9 +213,9 @@ const Home = () => {
                 className='group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
               >
                 {service.thumbnail && (
-                  <div className='w-full h-48 overflow-hidden border-b border-[var(--line)] relative'>
+                  <div className='w-full aspect-video overflow-hidden border-b border-[var(--line)] relative bg-[var(--surface)]'>
                     <div className='absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent z-10' />
-                    <img src={service.thumbnail} alt={service.title} className='h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105' />
+                    <img src={service.thumbnail} alt={service.title} className='h-full w-full object-contain p-2 transition-transform duration-700 ease-out group-hover:scale-105' />
                   </div>
                 )}
                 
