@@ -17,6 +17,7 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
         <div ref={setNodeRef} style={style} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
             <div>
                 <div className='flex items-start justify-end'>
+                    <div className='flex items-center gap-2'>
                         <span className="rounded-full bg-[var(--surface)] border border-[var(--line)] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--ink)]">
                             {service.domain}
                         </span>
