@@ -1,6 +1,48 @@
 import { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, Briefcase, X } from 'lucide-react'
-import { getServices, createService, updateService, deleteService } from '../../api/service'
+import { Plus, Edit2, Trash2, Briefcase, X, GripVertical } from 'lucide-react'
+import { getServices, createService, updateService, deleteService, reorderServices } from '../../api/service'
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy, useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
+const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: service._id });
+    
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    return (
+        <div ref={setNodeRef} style={style} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
+            <div>
+                <div className='flex items-start justify-between'>
+                    <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--accent)]'>
+                        {service.iconUrl ? <img src={service.iconUrl} alt="icon" className="h-6 w-6 object-contain" /> : <Briefcase className='h-5 w-5' />}
+                    </div>
+                    <div className='flex items-center gap-2'>
+                        <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
+                            {service.status}
+                        </span>
+                        <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[var(--ink-soft)] hover:text-[var(--ink)]">
+                            <GripVertical className='h-5 w-5' />
+                        </div>
+                    </div>
+                </div>
+                <h3 className='mt-4 font-semibold text-[var(--ink)]'>{service.title}</h3>
+                <p className='mt-2 line-clamp-3 text-sm text-[var(--ink-soft)]'>{service.description}</p>
+            </div>
+            <div className='mt-6 flex items-center justify-end gap-2 border-t border-[var(--line)] pt-4'>
+                <button onClick={(e) => { e.stopPropagation(); handleOpenForm(service); }} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)] z-20 relative'>
+                    <Edit2 className='h-4 w-4' />
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); handleDelete(service._id); }} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--accent)] z-20 relative'>
+                    <Trash2 className='h-4 w-4' />
+                </button>
+            </div>
+        </div>
+    )
+}
 
 const ServicesAdmin = () => {
     const [services, setServices] = useState([])
@@ -75,6 +117,31 @@ const ServicesAdmin = () => {
         }
     }
 
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    )
+
+    const handleDragEnd = async (event) => {
+        const { active, over } = event;
+        if (over && active.id !== over.id) {
+            setServices((items) => {
+                const oldIndex = items.findIndex((i) => i._id === active.id);
+                const newIndex = items.findIndex((i) => i._id === over.id);
+                const newOrder = arrayMove(items, oldIndex, newIndex);
+                
+                // Trigger backend update
+                const orderedItems = newOrder.map((item, index) => ({ id: item._id, order: index }));
+                reorderServices({ items: orderedItems }).catch(err => {
+                    console.error('Failed to reorder services', err);
+                    alert('Failed to save order to the server.');
+                });
+                
+                return newOrder;
+            });
+        }
+    }
+
     return (
         <div className='space-y-6'>
             <div className='glass-card flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 md:p-6'>
@@ -97,32 +164,20 @@ const ServicesAdmin = () => {
                     <p className='mt-2 text-[var(--ink-soft)]'>No services added yet.</p>
                 </div>
             ) : (
-                <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
-                    {services.map(service => (
-                        <div key={service._id} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30'>
-                            <div>
-                                <div className='flex items-start justify-between'>
-                                    <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--accent)]'>
-                                        {service.iconUrl ? <img src={service.iconUrl} alt="icon" className="h-6 w-6 object-contain" /> : <Briefcase className='h-5 w-5' />}
-                                    </div>
-                                    <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
-                                        {service.status}
-                                    </span>
-                                </div>
-                                <h3 className='mt-4 font-semibold text-[var(--ink)]'>{service.title}</h3>
-                                <p className='mt-2 line-clamp-3 text-sm text-[var(--ink-soft)]'>{service.description}</p>
-                            </div>
-                            <div className='mt-6 flex items-center justify-end gap-2 border-t border-[var(--line)] pt-4'>
-                                <button onClick={() => handleOpenForm(service)} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
-                                    <Edit2 className='h-4 w-4' />
-                                </button>
-                                <button onClick={() => handleDelete(service._id)} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--accent)]'>
-                                    <Trash2 className='h-4 w-4' />
-                                </button>
-                            </div>
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                    <SortableContext items={services.map(s => s._id)} strategy={rectSortingStrategy}>
+                        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+                            {services.map(service => (
+                                <SortableServiceCard 
+                                    key={service._id} 
+                                    service={service} 
+                                    handleOpenForm={handleOpenForm} 
+                                    handleDelete={handleDelete} 
+                                />
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </SortableContext>
+                </DndContext>
             )}
 
             {isFormOpen && (

@@ -4,7 +4,7 @@ const Service = require('../models/Service');
 // @route   GET /api/services
 exports.getServices = async (req, res, next) => {
     try {
-        const services = await Service.find().sort({ createdAt: -1 });
+        const services = await Service.find().sort({ order: 1, createdAt: -1 });
 
         res.json({
             success: true,

@@ -6,6 +6,7 @@ const {
     createService,
     updateService,
     deleteService,
+    reorderServices,
 } = require('../controllers/serviceController');
 const { protect, authorize } = require('../middleware/auth');
 const validate = require('../middleware/validate');
@@ -17,6 +18,7 @@ router.get('/:slug', getServiceBySlug);
 
 // Admin routes
 router.post('/', protect, authorize('admin'), serviceValidators.create, validate, createService);
+router.put('/reorder', protect, authorize('admin'), serviceValidators.reorder, validate, reorderServices);
 router.patch('/:id', protect, authorize('admin'), serviceValidators.id, serviceValidators.update, validate, updateService);
 router.delete('/:id', protect, authorize('admin'), serviceValidators.id, validate, deleteService);
 

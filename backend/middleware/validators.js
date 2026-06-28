@@ -406,6 +406,14 @@ const serviceValidators = {
       .optional()
       .isBoolean().withMessage('Featured must be a boolean'),
   ],
+  reorder: [
+    body('items')
+      .isArray({ min: 1 }).withMessage('Items must be a non-empty array'),
+    body('items.*.id')
+      .isMongoId().withMessage('Each item must have a valid Mongo ID'),
+    body('items.*.order')
+      .isNumeric().withMessage('Each item must have a valid numeric order'),
+  ],
   id: [objectIdRule('id')],
 };
 
