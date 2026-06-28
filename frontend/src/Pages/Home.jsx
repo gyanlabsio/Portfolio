@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight, ChevronLeft } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -11,11 +11,6 @@ import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import ShinyText from '../components/effects/ShinyText'
 import Loader from '../components/Loader'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const Home = () => {
   const [config, setConfig] = useState(null)
@@ -28,10 +23,6 @@ const Home = () => {
 
   // Extract unique domains
   const domains = [...new Set(services.map(s => s.domain || 'Web Development'))]
-
-  const servicesRef = useRef(null)
-  const servicesContainerRef = useRef(null)
-  const domainGridRef = useRef(null)
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -215,7 +206,7 @@ const Home = () => {
         <section className='mt-16 mb-16 overflow-hidden min-h-[400px]'>
           
           {/* DOMAINS ACCORDION VIEW */}
-          <div ref={domainGridRef} className='px-6 md:px-10'>
+          <div className='px-6 md:px-10'>
             <div className='mb-12 flex flex-col items-center justify-center text-center'>
               <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
                 Expertise
