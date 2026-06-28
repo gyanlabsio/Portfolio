@@ -217,7 +217,6 @@ const Home = () => {
             <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto'>
               {domains.map(domain => {
                 const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
-                const coverImage = domainServices.find(s => s.thumbnail)?.thumbnail;
                 const isActive = activeDomain === domain;
 
                 return (
@@ -227,14 +226,7 @@ const Home = () => {
                     onMouseLeave={() => setActiveDomain(null)}
                     className={`group cursor-pointer flex flex-col justify-start rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-500 ease-in-out hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden ${isActive ? 'col-span-full min-h-[400px]' : 'h-64 hover:-translate-y-2'}`}
                   >
-                    <div className='flex justify-between items-start'>
-                      {coverImage ? (
-                        <div className='h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)]'>
-                          <img src={coverImage} alt={domain} className='block w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110' />
-                        </div>
-                      ) : (
-                        <div className='h-16 w-16 shrink-0 rounded-2xl border border-[var(--line)] bg-[var(--bg)]' />
-                      )}
+                    <div className='flex justify-end items-start'>
                       <div className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)] ${isActive ? 'rotate-90 bg-[var(--accent)] border-[var(--accent)] text-white' : ''}`}>
                         <ArrowRight className='h-5 w-5' />
                       </div>
