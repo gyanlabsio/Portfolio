@@ -16,10 +16,7 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
     return (
         <div ref={setNodeRef} style={style} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
             <div>
-                <div className='flex items-start justify-between'>
-                    <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--accent)]'>
-                        {service.iconUrl ? <img src={service.iconUrl} alt="icon" className="h-6 w-6 object-contain" /> : <Briefcase className='h-5 w-5' />}
-                    </div>
+                <div className='flex items-start justify-end'>
                     <div className='flex items-center gap-2'>
                         <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
                             {service.status}
@@ -57,7 +54,6 @@ const ServicesAdmin = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        iconUrl: '',
         thumbnail: '',
         status: 'ACTIVE'
     })
@@ -82,13 +78,12 @@ const ServicesAdmin = () => {
             setFormData({
                 title: service.title,
                 description: service.description,
-                iconUrl: service.iconUrl || '',
                 thumbnail: service.thumbnail || '',
                 status: service.status
             })
         } else {
             setEditingService(null)
-            setFormData({ title: '', description: '', iconUrl: '', thumbnail: '', status: 'ACTIVE' })
+            setFormData({ title: '', description: '', thumbnail: '', status: 'ACTIVE' })
         }
         setIsFormOpen(true)
     }
@@ -206,11 +201,6 @@ const ServicesAdmin = () => {
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description</label>
                                 <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
-                            </div>
-
-                            <div>
-                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Icon URL (Optional)</label>
-                                <input type='url' value={formData.iconUrl} onChange={e => setFormData({ ...formData, iconUrl: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>

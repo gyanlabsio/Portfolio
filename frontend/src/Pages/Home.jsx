@@ -219,13 +219,9 @@ const Home = () => {
                   </div>
                 )}
                 
-                <div className='flex flex-col flex-1 p-8 relative'>
+                <div className='flex flex-col flex-1 p-6 md:p-8 relative'>
                   {/* Background Glow Effect on Hover */}
                   <div className='pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[var(--accent)]/0 blur-3xl transition-all duration-700 ease-out group-hover:bg-[var(--accent)]/10' />
-                  
-                  <div className='mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--surface)] to-[var(--bg-alt)] border border-[var(--line)] text-[var(--accent)] shadow-sm transition-transform duration-700 ease-out group-hover:scale-110 group-hover:border-[var(--accent)]/30'>
-                    {service.iconUrl ? <img src={service.iconUrl} alt="icon" className="h-7 w-7 object-contain" /> : <Sparkles className='h-6 w-6' />}
-                  </div>
                   
                   <h3 className='mb-3 font-nevera text-xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
                     {service.title}
@@ -236,7 +232,7 @@ const Home = () => {
                   </p>
 
                   {/* Bottom decorative line that expands on hover */}
-                  <div className='mt-8 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-700 ease-out group-hover:w-full group-hover:bg-[var(--accent)]' />
+                  <div className='mt-6 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-700 ease-out group-hover:w-full group-hover:bg-[var(--accent)]' />
                 </div>
               </div>
             ))}
