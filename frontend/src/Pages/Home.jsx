@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -11,6 +11,11 @@ import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import ShinyText from '../components/effects/ShinyText'
 import Loader from '../components/Loader'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const Home = () => {
   const [config, setConfig] = useState(null)
@@ -19,6 +24,33 @@ const Home = () => {
   const [featuredProjects, setFeaturedProjects] = useState([])
   const [latestPosts, setLatestPosts] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const servicesRef = useRef(null)
+  const servicesContainerRef = useRef(null)
+
+  useGSAP(() => {
+    if (!servicesRef.current || !servicesContainerRef.current || services.length === 0) return
+
+    const container = servicesContainerRef.current;
+    
+    // Calculate total scroll distance based on container width vs viewport width
+    const scrollDistance = container.scrollWidth - window.innerWidth;
+    
+    if (scrollDistance > 0) {
+      gsap.to(container, {
+        x: () => -(scrollDistance + 40), // slightly more to ensure last card has margin
+        ease: "none",
+        scrollTrigger: {
+          trigger: servicesRef.current,
+          start: "top 20%",
+          end: () => `+=${scrollDistance}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        }
+      })
+    }
+  }, [services])
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -199,43 +231,46 @@ const Home = () => {
       )}
 
       {showServices && services.length > 0 && (
-        <section className='section-wrap mt-16 mb-16 enter-fade'>
-          <div className='mb-12 flex flex-col items-center justify-center text-center'>
+        <section ref={servicesRef} className='mt-16 mb-16 overflow-hidden'>
+          <div className='mb-12 flex flex-col items-center justify-center text-center px-6'>
             <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
               Expertise
             </span>
             <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Services</h2>
           </div>
-          <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-            {services.map((service) => (
-              <div 
-                key={service._id} 
-                className='group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
-              >
-                {service.thumbnail && (
-                  <div className='w-full overflow-hidden border-b border-[var(--line)] relative'>
-                    <div className='absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent z-10' />
-                    <img src={service.thumbnail} alt={service.title} className='block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105' />
-                  </div>
-                )}
-                
-                <div className='flex flex-col flex-1 p-6 md:p-8 relative'>
-                  {/* Background Glow Effect on Hover */}
-                  <div className='pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[var(--accent)]/0 blur-3xl transition-all duration-700 ease-out group-hover:bg-[var(--accent)]/10' />
+          
+          <div className='pl-6 md:pl-10'>
+            <div ref={servicesContainerRef} className='flex gap-6 w-max pb-12'>
+              {services.map((service) => (
+                <div 
+                  key={service._id} 
+                  className='w-[85vw] md:w-[400px] shrink-0 group relative flex flex-col overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
+                >
+                  {service.thumbnail && (
+                    <div className='w-full overflow-hidden border-b border-[var(--line)] relative'>
+                      <div className='absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent z-10' />
+                      <img src={service.thumbnail} alt={service.title} className='block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105' />
+                    </div>
+                  )}
                   
-                  <h3 className='mb-3 font-nevera text-xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
-                    {service.title}
-                  </h3>
-                  
-                  <p className='relative z-10 flex-1 text-sm leading-relaxed text-[var(--ink-soft)]'>
-                    {service.description}
-                  </p>
+                  <div className='flex flex-col flex-1 p-6 md:p-8 relative'>
+                    {/* Background Glow Effect on Hover */}
+                    <div className='pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[var(--accent)]/0 blur-3xl transition-all duration-700 ease-out group-hover:bg-[var(--accent)]/10' />
+                    
+                    <h3 className='mb-3 font-nevera text-xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
+                      {service.title}
+                    </h3>
+                    
+                    <p className='relative z-10 flex-1 text-sm leading-relaxed text-[var(--ink-soft)]'>
+                      {service.description}
+                    </p>
 
-                  {/* Bottom decorative line that expands on hover */}
-                  <div className='mt-6 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-700 ease-out group-hover:w-full group-hover:bg-[var(--accent)]' />
+                    {/* Bottom decorative line that expands on hover */}
+                    <div className='mt-6 h-1 w-12 rounded-full bg-[var(--line)] transition-all duration-700 ease-out group-hover:w-full group-hover:bg-[var(--accent)]' />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       )}
