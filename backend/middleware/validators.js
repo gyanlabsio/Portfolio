@@ -363,6 +363,10 @@ const serviceValidators = {
       .trim()
       .notEmpty().withMessage('Service title is required')
       .isLength({ max: 100 }).withMessage('Title cannot exceed 100 characters'),
+    body('domain')
+      .trim()
+      .notEmpty().withMessage('Service domain is required')
+      .isLength({ max: 50 }).withMessage('Domain cannot exceed 50 characters'),
     body('description')
       .trim()
       .notEmpty().withMessage('Service description is required')
@@ -391,6 +395,11 @@ const serviceValidators = {
       .trim()
       .notEmpty().withMessage('Service title cannot be empty if provided')
       .isLength({ max: 100 }).withMessage('Title cannot exceed 100 characters'),
+    body('domain')
+      .optional()
+      .trim()
+      .notEmpty().withMessage('Service domain cannot be empty if provided')
+      .isLength({ max: 50 }).withMessage('Domain cannot exceed 50 characters'),
     body('description')
       .optional()
       .trim()

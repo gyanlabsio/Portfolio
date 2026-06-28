@@ -17,7 +17,9 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
         <div ref={setNodeRef} style={style} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
             <div>
                 <div className='flex items-start justify-end'>
-                    <div className='flex items-center gap-2'>
+                        <span className="rounded-full bg-[var(--surface)] border border-[var(--line)] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--ink)]">
+                            {service.domain}
+                        </span>
                         <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
                             {service.status}
                         </span>
@@ -53,6 +55,7 @@ const ServicesAdmin = () => {
     const [editingService, setEditingService] = useState(null)
     const [formData, setFormData] = useState({
         title: '',
+        domain: 'Web Development',
         description: '',
         thumbnail: '',
         status: 'ACTIVE'
@@ -77,13 +80,14 @@ const ServicesAdmin = () => {
             setEditingService(service)
             setFormData({
                 title: service.title,
+                domain: service.domain || 'Web Development',
                 description: service.description,
                 thumbnail: service.thumbnail || '',
                 status: service.status
             })
         } else {
             setEditingService(null)
-            setFormData({ title: '', description: '', thumbnail: '', status: 'ACTIVE' })
+            setFormData({ title: '', domain: 'Web Development', description: '', thumbnail: '', status: 'ACTIVE' })
         }
         setIsFormOpen(true)
     }
@@ -197,9 +201,14 @@ const ServicesAdmin = () => {
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Title</label>
                                 <input required type='text' value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
+
+                            <div>
+                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Domain / Category *</label>
+                                <input type='text' required value={formData.domain} onChange={e => setFormData({ ...formData, domain: e.target.value })} placeholder="e.g. Web Development, AI Automation" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                            </div>
                             
                             <div>
-                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description</label>
+                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description *</label>
                                 <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 

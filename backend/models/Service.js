@@ -28,6 +28,12 @@ const serviceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed, // String or Number
         trim: true,
     },
+    domain: {
+        type: String,
+        required: [true, 'Service domain is required'],
+        default: 'Web Development',
+        trim: true,
+    },
     thumbnail: {
         type: String,
         trim: true,
