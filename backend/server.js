@@ -14,10 +14,23 @@ const startServer = async () => {
     await connectDB();
     startPublishScheduler();
     
+    const allowedOrigins = [
+        'https://gyanaranjandas.me',
+        'https://www.gyanaranjandas.me',
+        'http://localhost:5173',
+        'http://localhost:5174',
+    ];
+    if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
+        allowedOrigins.push(process.env.CLIENT_URL);
+    }
+    if (process.env.FRONTEND_URL && !allowedOrigins.includes(process.env.FRONTEND_URL)) {
+        allowedOrigins.push(process.env.FRONTEND_URL);
+    }
+
     const server = http.createServer(app);
     const io = new Server(server, {
         cors: {
-            origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+            origin: allowedOrigins,
             methods: ['GET', 'POST'],
             credentials: true
         }

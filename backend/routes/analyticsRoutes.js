@@ -22,13 +22,13 @@ router.post('/', analyticsValidators.create, validate, recordEvent);
 router.use(protect);
 router.use(authorize('admin'));
 
-router.get('/', protect, authorize('ADMIN'), getEvents);
-router.get('/summary', protect, authorize('ADMIN'), getSummary);
-router.get('/modules', protect, authorize('ADMIN'), getModulesSummary);
-router.get('/timeseries', protect, authorize('ADMIN'), getTimeSeries);
-router.get('/visitors', protect, authorize('admin'), getVisitors);
-router.get('/visitors/:visitorId', protect, authorize('admin'), getVisitorDetails);
-router.get('/views', protect, authorize('admin'), getSavedViews);
-router.post('/views', protect, authorize('admin'), createSavedView);
+router.get('/', getEvents);
+router.get('/summary', getSummary);
+router.get('/modules', getModulesSummary);
+router.get('/timeseries', getTimeSeries);
+router.get('/visitors', getVisitors);
+router.get('/visitors/:visitorId', getVisitorDetails);
+router.get('/views', getSavedViews);
+router.post('/views', createSavedView);
 
 module.exports = router;
