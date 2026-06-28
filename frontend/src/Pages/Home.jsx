@@ -224,22 +224,20 @@ const Home = () => {
                     key={domain}
                     onClick={() => setActiveDomain(isActive ? null : domain)}
                     onMouseLeave={() => setActiveDomain(null)}
-                    className={`group cursor-pointer flex flex-col justify-start rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-500 ease-in-out hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden ${isActive ? 'col-span-full min-h-[400px]' : 'h-64 hover:-translate-y-2'}`}
+                    className={`group cursor-pointer flex flex-col justify-start rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-all duration-500 ease-in-out hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden ${isActive ? 'col-span-full' : 'hover:-translate-y-2'}`}
                   >
-                    <div className='flex justify-end items-start'>
-                      <div className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)] ${isActive ? 'rotate-90 bg-[var(--accent)] border-[var(--accent)] text-white' : ''}`}>
-                        <ArrowRight className='h-5 w-5' />
+                    <div className='flex items-center justify-between gap-4'>
+                      <h3 className='font-nevera text-lg tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
+                        {domain}
+                      </h3>
+                      <div className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)] ${isActive ? 'rotate-90 bg-[var(--accent)] border-[var(--accent)] text-white' : ''}`}>
+                        <ArrowRight className='h-4 w-4' />
                       </div>
                     </div>
                     
-                    <div className='mt-auto pt-6'>
-                      <h3 className='mb-2 font-nevera text-2xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
-                        {domain}
-                      </h3>
-                      <p className='text-sm text-[var(--ink-soft)]'>
-                        {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
-                      </p>
-                    </div>
+                    <p className='mt-1 text-xs text-[var(--ink-soft)]'>
+                      {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
+                    </p>
 
                     {/* EXPANDED SERVICES LIST */}
                     <div className={`transition-all duration-700 ease-in-out transform ${isActive ? 'mt-8 max-h-[800px] opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-8'}`}>
