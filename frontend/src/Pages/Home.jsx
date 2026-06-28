@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight } from 'lucide-react'
+import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight, ChevronLeft } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
 import { getServices } from '../api/service'
@@ -51,6 +51,16 @@ const Home = () => {
       })
     }
   }, [services])
+
+  const handleScrollServices = (direction) => {
+    // Each card is ~400px + 24px gap. On mobile it's 85vw.
+    const isMobile = window.innerWidth < 768;
+    const cardWidth = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
+    window.scrollBy({
+      top: direction === 'right' ? cardWidth : -cardWidth,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -232,11 +242,21 @@ const Home = () => {
 
       {showServices && services.length > 0 && (
         <section ref={servicesRef} className='mt-16 mb-16 overflow-hidden'>
-          <div className='mb-12 flex flex-col items-center justify-center text-center px-6'>
-            <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
-              Expertise
-            </span>
-            <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Services</h2>
+          <div className='mb-12 flex items-end justify-between px-6 md:px-10'>
+            <div className='text-left'>
+              <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
+                Expertise
+              </span>
+              <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Services</h2>
+            </div>
+            <div className='hidden md:flex items-center gap-3'>
+              <button onClick={() => handleScrollServices('left')} className='group flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent)] focus:outline-none'>
+                <ChevronLeft className='h-5 w-5 text-[var(--ink)] transition-colors group-hover:text-white' />
+              </button>
+              <button onClick={() => handleScrollServices('right')} className='group flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent)] focus:outline-none'>
+                <ChevronRight className='h-5 w-5 text-[var(--ink)] transition-colors group-hover:text-white' />
+              </button>
+            </div>
           </div>
           
           <div className='pl-6 md:pl-10'>
