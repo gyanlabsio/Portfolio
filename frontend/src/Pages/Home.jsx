@@ -280,25 +280,28 @@ const Home = () => {
                           onComplete: () => setActiveDomain(domain)
                         });
                       }}
-                      className='group cursor-pointer relative flex h-64 flex-col justify-end overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
+                      className='group cursor-pointer flex h-64 flex-col justify-between rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-8 transition-all duration-700 ease-out hover:-translate-y-2 hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]'
                     >
-                      {coverImage && (
-                        <div className='absolute inset-0 z-0'>
-                          <div className='absolute inset-0 bg-gradient-to-t from-[var(--surface)] via-[var(--surface)]/80 to-transparent z-10' />
-                          <img src={coverImage} alt={domain} className='block w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110' />
+                      <div className='flex justify-between items-start'>
+                        {coverImage ? (
+                          <div className='h-16 w-16 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)]'>
+                            <img src={coverImage} alt={domain} className='block w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110' />
+                          </div>
+                        ) : (
+                          <div className='h-16 w-16 rounded-2xl border border-[var(--line)] bg-[var(--bg)]' />
+                        )}
+                        <div className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)]'>
+                          <ArrowRight className='h-5 w-5' />
                         </div>
-                      )}
+                      </div>
                       
-                      <div className='relative z-10 p-8'>
+                      <div>
                         <h3 className='mb-2 font-nevera text-2xl tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
                           {domain}
                         </h3>
                         <p className='text-sm text-[var(--ink-soft)]'>
                           {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
                         </p>
-                        <div className='mt-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)]'>
-                          <ArrowRight className='h-5 w-5' />
-                        </div>
                       </div>
                     </div>
                   );
