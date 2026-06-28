@@ -242,14 +242,14 @@ const Home = () => {
 
       {showServices && services.length > 0 && (
         <section ref={servicesRef} className='mt-16 mb-16 overflow-hidden'>
-          <div className='mb-12 flex items-end justify-between px-6 md:px-10'>
-            <div className='text-left'>
+          <div className='mb-12 relative flex items-center justify-center px-6 md:px-10'>
+            <div className='text-center'>
               <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
                 Expertise
               </span>
               <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Services</h2>
             </div>
-            <div className='hidden md:flex items-center gap-3'>
+            <div className='hidden md:flex items-center gap-3 absolute right-6 md:right-10'>
               <button onClick={() => handleScrollServices('left')} className='group flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent)] focus:outline-none'>
                 <ChevronLeft className='h-5 w-5 text-[var(--ink)] transition-colors group-hover:text-white' />
               </button>
