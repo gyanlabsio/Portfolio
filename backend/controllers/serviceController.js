@@ -72,3 +72,30 @@ exports.deleteService = async (req, res, next) => {
         next(error);
     }
 };
+
+// @desc    Reorder services (admin)
+// @route   PUT /api/services/reorder
+exports.reorderServices = async (req, res, next) => {
+    try {
+        const { items } = req.body;
+        
+        // Ensure items is an array
+        if (!Array.isArray(items)) {
+            return res.status(400).json({ success: false, message: 'Invalid data format. Expected an array.' });
+        }
+
+        // Bulk update the order
+        const bulkOps = items.map((item) => ({
+            updateOne: {
+                filter: { _id: item.id },
+                update: { order: item.order },
+            }
+        }));
+
+        await Service.bulkWrite(bulkOps);
+        
+        res.json({ success: true, message: 'Services reordered successfully' });
+    } catch (error) {
+        next(error);
+    }
+};
