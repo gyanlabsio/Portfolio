@@ -44,16 +44,25 @@ export const ModulesBarChart = () => {
   const { modulesData, loading } = useSelector((state) => state.charts);
 
   if (loading) return <div className="h-64 flex items-center justify-center">Loading chart...</div>;
-  if (!modulesData || modulesData.length === 0) return <div className="h-64 flex items-center justify-center text-gray-500">No data available</div>;
+  if (!modulesData || Object.keys(modulesData).length === 0) return <div className="h-64 flex items-center justify-center text-gray-500">No data available</div>;
 
   // Aggregate by module
-  const aggData = modulesData.reduce((acc, curr) => {
-    const mod = curr._id.module || 'UNKNOWN';
-    if (!acc[mod]) acc[mod] = { module: mod, count: 0 };
-    acc[mod].count += curr.count;
-    return acc;
-  }, {});
-  const data = Object.values(aggData);
+  let data = [];
+  if (Array.isArray(modulesData)) {
+    const aggData = modulesData.reduce((acc, curr) => {
+      const mod = curr._id?.module || 'UNKNOWN';
+      if (!acc[mod]) acc[mod] = { module: mod, count: 0 };
+      acc[mod].count += curr.count || 0;
+      return acc;
+    }, {});
+    data = Object.values(aggData);
+  } else {
+    data = Object.entries(modulesData).map(([module, metrics]) => {
+      const count = Object.values(metrics).reduce((sum, val) => sum + val, 0);
+      return { module: module.toUpperCase(), count };
+    });
+  }
+
 
   return (
     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
