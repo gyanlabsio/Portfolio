@@ -39,15 +39,15 @@ const DataTable = () => {
             {visitors.map((v, i) => (
               <tr key={v._id || i} className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
                 <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                  {v.realName || v.label || v._id}
+                  {v.userId?.name || v.visitorId}
                 </td>
                 <td className="px-6 py-4">
                   <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {v.visits}
+                    {v.totalSessions || 0}
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  {new Date(v.lastVisit).toLocaleString()}
+                  {v.lastSeen ? new Date(v.lastSeen).toLocaleString() : 'N/A'}
                 </td>
               </tr>
             ))}
