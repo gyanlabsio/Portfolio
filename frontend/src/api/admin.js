@@ -8,9 +8,10 @@ export const logout = () => api.post('/auth/logout');
 
 
 // Upload
-export const uploadImage = (file) => {
+export const uploadImage = (file, moduleName = 'PROJECT') => {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
+    formData.append('module', moduleName);
     return api.post('/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     });

@@ -31,6 +31,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const quotationRoutes = require('./routes/quotationRoutes');
 const proposalRoutes = require('./routes/proposalRoutes');
 const subscriberRoutes = require('./routes/subscriberRoutes');
+const designRoutes = require('./routes/designRoutes');
 
 const app = express();
 
@@ -141,6 +142,7 @@ app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/crm', crmRoutes);
 app.use('/api/trash', recycleBinRoutes);
 app.use('/api/tracking', trackingRoutes);
+app.use('/api/designs', designRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

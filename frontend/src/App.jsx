@@ -14,6 +14,8 @@ const Bio = lazy(() => import("./Pages/Bio"));
 const Readme = lazy(() => import("./Pages/Readme"));
 const Projects = lazy(() => import("./Pages/Projects"));
 const ProjectDetails = lazy(() => import("./Pages/ProjectDetails"));
+const Gallery = lazy(() => import("./Pages/Gallery"));
+const DesignDetails = lazy(() => import("./Pages/DesignDetails"));
 const Blog = lazy(() => import("./Pages/Blog"));
 const BlogPost = lazy(() => import("./Pages/BlogPost"));
 const Testimonials = lazy(() => import("./Pages/Testimonials"));
@@ -29,6 +31,7 @@ const Login = lazy(() => import("./Pages/admin/Login"));
 const AdminLayout = lazy(() => import("./Pages/admin/AdminLayout"));
 const Dashboard = lazy(() => import("./Pages/admin/Dashboard"));
 const ProjectsAdmin = lazy(() => import("./Pages/admin/ProjectsAdmin"));
+const DesignsAdmin = lazy(() => import("./Pages/admin/DesignsAdmin"));
 const BlogAdmin = lazy(() => import("./Pages/admin/BlogAdmin"));
 const ContactsAdmin = lazy(() => import("./Pages/admin/ContactsAdmin"));
 const ServicesAdmin = lazy(() => import("./Pages/admin/ServicesAdmin"));
@@ -71,6 +74,8 @@ const App = () => {
           <Route path="/readme" element={<Readme />} />
           <Route path="/Projects" element={<Projects />} />
           <Route path="/project/:slug" element={<ProjectDetails />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/gallery/:slug" element={<DesignDetails />} />
           <Route path="/Blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/Testimonials" element={<Testimonials />} />
@@ -91,6 +96,7 @@ const App = () => {
           >
             <Route index element={<Dashboard />} />
             <Route path="projects" element={<ProjectsAdmin />} />
+            <Route path="designs" element={<DesignsAdmin />} />
             <Route path="services" element={<ServicesAdmin />} />
             <Route path="blog" element={<BlogAdmin />} />
             <Route path="leads" element={<LeadsAdmin />} />

@@ -1,12 +1,13 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
-import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, MessageCircle, BarChart3, SearchCode, Receipt, Image, MailCheck, Trash2, Megaphone } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, MessageCircle, BarChart3, SearchCode, Receipt, Image, MailCheck, Trash2, Megaphone, PenTool } from 'lucide-react'
 import { useState } from 'react'
 import ThemeToggle from '../../components/ThemeToggle'
 
 const navItems = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
     { to: '/admin/projects', label: 'Projects', icon: FolderKanban },
+    { to: '/admin/designs', label: 'Design Gallery', icon: PenTool },
     { to: '/admin/services', label: 'Services', icon: Briefcase },
     { to: '/admin/blog', label: 'Blog Posts', icon: FileText },
     { to: '/admin/media', label: 'Media Library', icon: Image },
