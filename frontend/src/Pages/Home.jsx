@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight, ChevronLeft } from 'lucide-react'
+import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react'
 import SEO from '../components/SEO'
 import { getSettings } from '../api/settings'
 import { getServices } from '../api/service'
 import { getFeaturedTestimonials } from '../api/testimonial'
 import { getFeaturedProjects } from '../api/projects'
 import { getPosts } from '../api/blog'
+import { getFeaturedDesigns } from '../api/design'
+import { motion, AnimatePresence } from 'framer-motion'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
 import ShinyText from '../components/effects/ShinyText'
 import Loader from '../components/Loader'
+import GalleryLightbox from '../components/GalleryLightbox'
 
 const Home = () => {
   const [config, setConfig] = useState(null)
@@ -18,8 +21,14 @@ const Home = () => {
   const [testimonials, setTestimonials] = useState([])
   const [featuredProjects, setFeaturedProjects] = useState([])
   const [latestPosts, setLatestPosts] = useState([])
+  const [featuredDesigns, setFeaturedDesigns] = useState([])
   const [loading, setLoading] = useState(true)
-  const [activeDomain, setActiveDomain] = useState(null)
+  const [activeDomainIndex, setActiveDomainIndex] = useState(0)
+  const [expandedDomain, setExpandedDomain] = useState(null)
+
+  const [activeDesignIndex, setActiveDesignIndex] = useState(0)
+  const [isDesignsPaused, setIsDesignsPaused] = useState(false)
+  const [selectedDesign, setSelectedDesign] = useState(null)
 
   // Extract unique domains
   const domains = [...new Set(services.map(s => s.domain || 'Web Development'))]
@@ -27,12 +36,13 @@ const Home = () => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        const [configRes, servicesRes, testRes, projectsRes, postsRes] = await Promise.allSettled([
+        const [configRes, servicesRes, testRes, projectsRes, postsRes, designsRes] = await Promise.allSettled([
           getSettings(),
           getServices(),
           getFeaturedTestimonials(),
           getFeaturedProjects(),
           getPosts(),
+          getFeaturedDesigns(),
         ])
 
         if (configRes.status === 'fulfilled') setConfig(configRes.value.data.data)
@@ -40,6 +50,7 @@ const Home = () => {
         if (testRes.status === 'fulfilled') setTestimonials(testRes.value.data.data || [])
         if (projectsRes.status === 'fulfilled') setFeaturedProjects(projectsRes.value.data.data || [])
         if (postsRes.status === 'fulfilled') setLatestPosts((postsRes.value.data.data || []).slice(0, 3))
+        if (designsRes.status === 'fulfilled') setFeaturedDesigns(designsRes.value.data.data || [])
       } catch (err) {
         console.error('Failed to load home data', err)
       } finally {
@@ -48,6 +59,16 @@ const Home = () => {
     }
     fetchHomeData()
   }, [])
+
+  useEffect(() => {
+    if (featuredDesigns.length <= 1 || isDesignsPaused) return;
+    
+    const interval = setInterval(() => {
+      setActiveDesignIndex((prev) => (prev + 1) % featuredDesigns.length);
+    }, 3000); 
+    
+    return () => clearInterval(interval);
+  }, [featuredDesigns.length, isDesignsPaused]);
 
   const heroTitle = config?.siteTitle || 'GYANARANJAN DAS'
   const heroTagline = config?.tagline || 'Full-stack developer building digital products with strong visual identity.'
@@ -205,8 +226,8 @@ const Home = () => {
       {showServices && services.length > 0 && (
         <section className='mt-16 mb-16 overflow-hidden min-h-[400px]'>
           
-          {/* DOMAINS ACCORDION VIEW */}
-          <div className='px-6 md:px-10'>
+          {/* DOMAINS CAROUSEL VIEW */}
+          <div className='px-6 md:px-10 overflow-hidden'>
             <div className='mb-12 flex flex-col items-center justify-center text-center'>
               <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
                 Expertise
@@ -214,67 +235,165 @@ const Home = () => {
               <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Domains</h2>
             </div>
             
-            <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto'>
-              {domains.map(domain => {
+            <div className='relative h-[450px] flex items-center justify-center max-w-5xl mx-auto w-full'>
+              {domains.map((domain, index) => {
                 const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
-                const isActive = activeDomain === domain;
+                
+                // Calculate position relative to active index
+                let offset = index - activeDomainIndex;
+                if (offset < -Math.floor(domains.length / 2)) offset += domains.length;
+                if (offset > Math.floor(domains.length / 2)) offset -= domains.length;
+                
+                const isCenter = offset === 0;
+                const zIndex = 100 - Math.abs(offset);
+                const scale = isCenter ? 1 : Math.max(0.7, 1 - Math.abs(offset) * 0.15);
+                const x = offset * (window.innerWidth < 768 ? 60 : 150); // overlapping distance
+                const opacity = Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.25;
+
+                const isExpanded = expandedDomain === domain;
 
                 return (
-                  <div 
+                  <motion.div 
                     key={domain}
-                    onClick={() => setActiveDomain(isActive ? null : domain)}
-                    onMouseLeave={() => setActiveDomain(null)}
-                    className={`group cursor-pointer flex flex-col justify-start rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-all duration-500 ease-in-out hover:border-[var(--accent)]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden ${isActive ? 'col-span-full' : 'hover:-translate-y-2'}`}
+                    onClick={() => {
+                      if (!isCenter) setActiveDomainIndex(index);
+                    }}
+                    animate={{ x, scale, zIndex, opacity }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    className={`absolute cursor-pointer rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-2xl overflow-hidden w-[280px] sm:w-[350px] ${isCenter ? 'border-[var(--accent)]/50' : 'hover:border-[var(--line-strong)]'}`}
+                    style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
                   >
                     <div className='flex items-center justify-between gap-4'>
-                      <h3 className='font-nevera text-lg tracking-wide text-[var(--ink)] transition-colors duration-500 ease-out group-hover:text-[var(--accent)]'>
+                      <h3 className={`font-nevera text-xl tracking-wide transition-colors ${isCenter ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
                         {domain}
                       </h3>
-                      <div className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-all duration-500 group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] group-hover:text-white text-[var(--ink)] ${isActive ? 'rotate-90 bg-[var(--accent)] border-[var(--accent)] text-white' : ''}`}>
-                        <ArrowRight className='h-4 w-4' />
-                      </div>
+                      {isCenter && (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedDomain(isExpanded ? null : domain);
+                          }}
+                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--line)]'}`}
+                        >
+                          <ChevronDown className='h-4 w-4' />
+                        </button>
+                      )}
                     </div>
                     
                     <p className='mt-1 text-xs text-[var(--ink-soft)]'>
                       {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
                     </p>
 
-                    {/* EXPANDED SERVICES LIST */}
-                    <div className={`transition-all duration-700 ease-in-out transform ${isActive ? 'mt-8 max-h-[800px] opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-8'}`}>
-                      <div className="flex overflow-x-auto gap-6 pb-6 pt-2 snap-x snap-mandatory scrollbar-hide">
-                        {domainServices.map((service) => (
-                          <div 
-                            key={service._id} 
-                            className='w-[280px] md:w-[320px] shrink-0 snap-start relative flex flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] transition-all duration-500 hover:border-[var(--accent)]/50'
-                          >
-                            {service.thumbnail && (
-                              <div className='w-full h-40 overflow-hidden border-b border-[var(--line)] relative'>
-                                <div className='absolute inset-0 bg-gradient-to-t from-[var(--bg)] to-transparent z-10' />
-                                <img src={service.thumbnail} alt={service.title} className='block w-full h-full object-cover' />
-                              </div>
-                            )}
-                            
-                            <div className='flex flex-col flex-1 p-5 relative'>
-                              <h4 className='mb-2 font-nevera text-lg text-[var(--ink)]'>
-                                {service.title}
-                              </h4>
-                              
-                              <p className='text-xs leading-relaxed text-[var(--ink-soft)] line-clamp-4'>
-                                {service.description}
-                              </p>
-                            </div>
+                    <div 
+                      className={`mt-4 space-y-3 transition-all duration-500 ease-in-out scrollbar-hide ${isExpanded && isCenter ? 'opacity-100 max-h-[300px] overflow-y-auto' : 'opacity-0 max-h-0 overflow-hidden'}`}
+                      style={{ paddingRight: isExpanded ? '4px' : '0' }} // Prevent layout shift from hidden scrollbar area
+                    >
+                      {domainServices.map((service) => (
+                        <div key={service._id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 flex gap-3 items-start'>
+                          {service.thumbnail && (
+                            <img src={service.thumbnail} alt={service.title} className='w-12 h-12 rounded-lg object-cover border border-[var(--line)] shrink-0' />
+                          )}
+                          <div>
+                            <p className='font-semibold text-[var(--ink)] text-sm'>{service.title}</p>
+                            <p className='text-xs text-[var(--ink-soft)] line-clamp-2 mt-1'>{service.description}</p>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
-
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
+            
+            {/* Carousel Controls */}
+            {domains.length > 1 && (
+              <div className='mt-8 flex justify-center gap-4'>
+                <button 
+                  onClick={() => setActiveDomainIndex(prev => prev === 0 ? domains.length - 1 : prev - 1)}
+                  className='flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                >
+                  <ChevronLeft className='h-5 w-5' />
+                </button>
+                <button 
+                  onClick={() => setActiveDomainIndex(prev => prev === domains.length - 1 ? 0 : prev + 1)}
+                  className='flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                >
+                  <ChevronRight className='h-5 w-5' />
+                </button>
+              </div>
+            )}
           </div>
         </section>
       )}
+
+      {featuredDesigns.length > 0 && (
+        <section className='mt-16 mb-24 overflow-hidden'>
+          <div className='px-6 md:px-10 mb-10 flex items-center justify-between'>
+            <div>
+              <span className='mb-2 inline-flex items-center gap-2 rounded-full bg-[var(--accent-2)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent-2)]'>
+                Gallery
+              </span>
+              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Creative Works</h2>
+            </div>
+            <Link to='/gallery' className='focus-ring rounded-lg px-2 py-1 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>
+              View Gallery
+            </Link>
+          </div>
+          
+          <div 
+            className='relative h-[400px] md:h-[450px] flex items-center justify-center max-w-6xl mx-auto w-full'
+            onMouseEnter={() => setIsDesignsPaused(true)}
+            onMouseLeave={() => setIsDesignsPaused(false)}
+          >
+            {featuredDesigns.map((design, index) => {
+              let offset = index - activeDesignIndex;
+              if (offset < -Math.floor(featuredDesigns.length / 2)) offset += featuredDesigns.length;
+              if (offset > Math.floor(featuredDesigns.length / 2)) offset -= featuredDesigns.length;
+              
+              const isCenter = offset === 0;
+              const zIndex = 100 - Math.abs(offset);
+              const scale = isCenter ? 1 : Math.max(0.75, 1 - Math.abs(offset) * 0.1);
+              const x = offset * (window.innerWidth < 768 ? 80 : 200); 
+              const opacity = Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.2;
+
+              return (
+                <motion.div 
+                  key={design._id} 
+                  onClick={() => {
+                    if (isCenter) {
+                      setSelectedDesign(design);
+                    } else {
+                      setActiveDesignIndex(index);
+                    }
+                  }}
+                  animate={{ x, scale, zIndex, opacity }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                  className={`absolute cursor-pointer rounded-3xl overflow-hidden border border-[var(--line)] bg-[var(--surface)] transition-all duration-500 w-[280px] md:w-[400px] h-[350px] md:h-[420px] ${isCenter ? 'shadow-[0_20px_40px_rgba(0,0,0,0.25)] border-[var(--accent-2)]/50' : 'brightness-50'}`}
+                  style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
+                >
+                  <img src={design.thumbnail} alt={design.title} className={`w-full h-full object-cover transition-transform duration-700 ${isCenter ? 'hover:scale-105' : ''}`} />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#0a0d14]/90 via-[#0a0d14]/20 to-transparent transition-opacity duration-500 ${isCenter ? 'opacity-80' : 'opacity-40'}`} />
+                  
+                  <div className={`absolute bottom-0 left-0 right-0 p-6 transition-all duration-500 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                    <p className='mb-2 text-xs font-bold uppercase tracking-wider text-[var(--accent-2)]'>{design.category}</p>
+                    <h3 className='text-xl font-semibold text-white mb-2'>{design.title}</h3>
+                    <div className='inline-flex items-center gap-1 text-xs font-medium text-white/70'>
+                      View in Lightbox <ArrowUpRight className='h-3 w-3' />
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* LIGHTBOX FOR DESIGNS */}
+      <GalleryLightbox 
+        isOpen={!!selectedDesign}
+        design={selectedDesign}
+        onClose={() => setSelectedDesign(null)}
+      />
     </main>
   )
 }
