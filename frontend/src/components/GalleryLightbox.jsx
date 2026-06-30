@@ -53,12 +53,12 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-[#0a0d14]/90 p-4 backdrop-blur-xl md:p-8"
+                    className="fixed inset-0 z-[999] flex items-center justify-center bg-[#0a0d14]/90 p-4 backdrop-blur-xl md:p-8"
                 >
                     {/* Close Button */}
                     <button
                         onClick={onClose}
-                        className="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20"
+                        className="absolute right-4 top-4 z-[999] flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20"
                     >
                         <X className="h-5 w-5" />
                     </button>

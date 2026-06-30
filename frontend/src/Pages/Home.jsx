@@ -285,21 +285,24 @@ const Home = () => {
                       {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
                     </p>
 
-                    <div 
-                      className={`mt-4 space-y-3 transition-all duration-500 ease-in-out scrollbar-hide ${isExpanded && isCenter ? 'opacity-100 max-h-[300px] overflow-y-auto' : 'opacity-0 max-h-0 overflow-hidden'}`}
-                      style={{ paddingRight: isExpanded ? '4px' : '0' }} // Prevent layout shift from hidden scrollbar area
-                    >
-                      {domainServices.map((service) => (
-                        <div key={service._id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 flex gap-3 items-start'>
-                          {service.thumbnail && (
-                            <img src={service.thumbnail} alt={service.title} className='w-12 h-12 rounded-lg object-cover border border-[var(--line)] shrink-0' />
-                          )}
-                          <div>
-                            <p className='font-semibold text-[var(--ink)] text-sm'>{service.title}</p>
-                            <p className='text-xs text-[var(--ink-soft)] line-clamp-2 mt-1'>{service.description}</p>
+                    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded && isCenter ? 'max-h-[320px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div 
+                        className="pt-4 pb-2 space-y-3 max-h-[320px] overflow-y-auto pr-1"
+                        style={{ overscrollBehavior: 'contain' }}
+                        onWheel={(e) => e.stopPropagation()} // Prevent parent scrolling
+                      >
+                        {domainServices.map((service) => (
+                          <div key={service._id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 flex gap-3 items-start'>
+                            {service.thumbnail && (
+                              <img src={service.thumbnail} alt={service.title} className='w-12 h-12 rounded-lg object-cover border border-[var(--line)] shrink-0' />
+                            )}
+                            <div>
+                              <p className='font-semibold text-[var(--ink)] text-sm'>{service.title}</p>
+                              <p className='text-xs text-[var(--ink-soft)] line-clamp-2 mt-1'>{service.description}</p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 );
