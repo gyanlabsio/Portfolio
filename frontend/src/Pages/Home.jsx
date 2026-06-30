@@ -243,7 +243,7 @@ const Home = () => {
                 return (
                   <div 
                     key={domain}
-                    className={`relative rounded-3xl border transition-all duration-500 bg-[var(--surface)] p-6 overflow-hidden w-full max-w-[350px] ${isExpanded ? 'border-[var(--accent)]/50 shadow-2xl' : 'border-[var(--line)] shadow-lg hover:border-[var(--line-strong)]'}`}
+                    className={`relative rounded-3xl border transition-all duration-500 bg-[var(--surface)] p-6 overflow-hidden w-[calc(100vw-3rem)] sm:w-[350px] ${isExpanded ? 'border-[var(--accent)]/50 shadow-2xl' : 'border-[var(--line)] shadow-lg hover:border-[var(--line-strong)]'}`}
                   >
                     <div className='flex items-center justify-between gap-4'>
                       <h3 className={`font-nevera text-xl tracking-wide transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
