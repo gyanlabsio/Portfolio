@@ -8,6 +8,7 @@ import { getFeaturedTestimonials } from '../api/testimonial'
 import { getFeaturedProjects } from '../api/projects'
 import { getPosts } from '../api/blog'
 import { getFeaturedDesigns } from '../api/design'
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import SplitText from '../components/effects/SplitText'
 import BlurText from '../components/effects/BlurText'
