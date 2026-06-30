@@ -18,6 +18,7 @@ const DesignDetails = () => {
                 const { data } = await getDesign(slug);
                 setDesign(data.data);
             } catch (err) {
+                console.error('Error fetching design details:', err);
                 setError('Failed to load design details.');
             } finally {
                 setLoading(false);

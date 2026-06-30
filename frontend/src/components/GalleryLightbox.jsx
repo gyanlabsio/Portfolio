@@ -1,14 +1,17 @@
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const GalleryLightbox = ({ design, isOpen, onClose }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [prevDesignId, setPrevDesignId] = useState(null);
 
     // Reset index when design changes
-    useEffect(() => {
+    if (design && design._id !== prevDesignId) {
+        setPrevDesignId(design._id);
         setCurrentImageIndex(0);
-    }, [design]);
+    }
 
     // Close on escape key
     useEffect(() => {
