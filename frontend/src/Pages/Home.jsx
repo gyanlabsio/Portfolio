@@ -235,62 +235,34 @@ const Home = () => {
               </span>
               <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Domains</h2>
             </div>
-            
-            <div className='relative h-[450px] flex items-center justify-center max-w-5xl mx-auto w-full'>
-              {domains.map((domain, index) => {
+            <div className='flex flex-wrap justify-center items-start gap-6 max-w-6xl mx-auto'>
+              {domains.map((domain) => {
                 const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
-                
-                // Calculate position relative to active index
-                let offset = index - activeDomainIndex;
-                if (offset < -Math.floor(domains.length / 2)) offset += domains.length;
-                if (offset > Math.floor(domains.length / 2)) offset -= domains.length;
-                
-                const isCenter = offset === 0;
-                const zIndex = 100 - Math.abs(offset);
-                const scale = isCenter ? 1 : Math.max(0.7, 1 - Math.abs(offset) * 0.15);
-                const x = offset * (window.innerWidth < 768 ? 60 : 150); // overlapping distance
-                const opacity = Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.25;
-
                 const isExpanded = expandedDomain === domain;
 
                 return (
-                  <motion.div 
+                  <div 
                     key={domain}
-                    onClick={() => {
-                      if (!isCenter) setActiveDomainIndex(index);
-                    }}
-                    animate={{ x, scale, zIndex, opacity }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                    className={`absolute cursor-pointer rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-2xl overflow-hidden w-[280px] sm:w-[350px] ${isCenter ? 'border-[var(--accent)]/50' : 'hover:border-[var(--line-strong)]'}`}
-                    style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
+                    className={`relative rounded-3xl border transition-all duration-500 bg-[var(--surface)] p-6 overflow-hidden w-full max-w-[350px] ${isExpanded ? 'border-[var(--accent)]/50 shadow-2xl' : 'border-[var(--line)] shadow-lg hover:border-[var(--line-strong)]'}`}
                   >
                     <div className='flex items-center justify-between gap-4'>
-                      <h3 className={`font-nevera text-xl tracking-wide transition-colors ${isCenter ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
+                      <h3 className={`font-nevera text-xl tracking-wide transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
                         {domain}
                       </h3>
-                      {isCenter && (
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedDomain(isExpanded ? null : domain);
-                          }}
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--line)]'}`}
-                        >
-                          <ChevronDown className='h-4 w-4' />
-                        </button>
-                      )}
+                      <button 
+                        onClick={() => setExpandedDomain(isExpanded ? null : domain)}
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--line)]'}`}
+                      >
+                        <ChevronDown className='h-4 w-4' />
+                      </button>
                     </div>
                     
                     <p className='mt-1 text-xs text-[var(--ink-soft)]'>
                       {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
                     </p>
 
-                    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded && isCenter ? 'max-h-[320px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                      <div 
-                        className="pt-4 pb-2 space-y-3 max-h-[320px] overflow-y-auto pr-1"
-                        style={{ overscrollBehavior: 'contain' }}
-                        onWheel={(e) => e.stopPropagation()} // Prevent parent scrolling
-                      >
+                    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className="pt-4 pb-2 space-y-3">
                         {domainServices.map((service) => (
                           <div key={service._id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 flex gap-3 items-start'>
                             {service.thumbnail && (
@@ -298,34 +270,16 @@ const Home = () => {
                             )}
                             <div>
                               <p className='font-semibold text-[var(--ink)] text-sm'>{service.title}</p>
-                              <p className='text-xs text-[var(--ink-soft)] line-clamp-2 mt-1'>{service.description}</p>
+                              <p className='text-xs text-[var(--ink-soft)] line-clamp-3 mt-1'>{service.description}</p>
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
-            
-            {/* Carousel Controls */}
-            {domains.length > 1 && (
-              <div className='mt-8 flex justify-center gap-4'>
-                <button 
-                  onClick={() => setActiveDomainIndex(prev => prev === 0 ? domains.length - 1 : prev - 1)}
-                  className='flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
-                >
-                  <ChevronLeft className='h-5 w-5' />
-                </button>
-                <button 
-                  onClick={() => setActiveDomainIndex(prev => prev === domains.length - 1 ? 0 : prev + 1)}
-                  className='flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
-                >
-                  <ChevronRight className='h-5 w-5' />
-                </button>
-              </div>
-            )}
           </div>
         </section>
       )}
