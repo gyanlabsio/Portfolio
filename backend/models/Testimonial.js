@@ -18,7 +18,7 @@ const testimonialSchema = new mongoose.Schema({
         trim: true,
         maxlength: [100, 'Company name cannot exceed 100 characters'],
     },
-    avatar: {
+    image: {
         type: String, // URL only
         default: '',
     },

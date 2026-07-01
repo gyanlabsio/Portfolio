@@ -12,7 +12,7 @@ const TestimonialsAdmin = () => {
         clientRole: '',
         company: '',
         testimonial: '',
-        avatar: '',
+        image: '',
         rating: 5,
         status: 'PENDING',
         featured: false
@@ -40,7 +40,7 @@ const TestimonialsAdmin = () => {
                 clientRole: t.clientRole || '',
                 company: t.company || '',
                 testimonial: t.testimonial,
-                avatar: t.avatar || '',
+                image: t.image || '',
                 rating: t.rating || 5,
                 status: t.status,
                 featured: t.featured || false
@@ -48,7 +48,7 @@ const TestimonialsAdmin = () => {
         } else {
             setEditingId(null)
             setFormData({
-                clientName: '', clientRole: '', company: '', testimonial: '', avatar: '', rating: 5, status: 'PENDING', featured: false
+                clientName: '', clientRole: '', company: '', testimonial: '', image: '', rating: 5, status: 'PENDING', featured: false
             })
         }
         setIsFormOpen(true)
@@ -130,10 +130,10 @@ const TestimonialsAdmin = () => {
                             <div>
                                 <div className='flex items-start justify-between mb-4'>
                                     <div className='flex items-center gap-3'>
-                                        {t.avatar ? (
-                                            <img src={t.avatar} alt={t.clientName} className='h-10 w-10 rounded-none object-cover' />
+                                        {t.image ? (
+                                            <img src={t.image} alt={t.clientName} className='h-16 w-24 rounded-none object-cover' />
                                         ) : (
-                                            <div className='flex h-10 w-10 items-center justify-center rounded-none bg-[var(--surface)] font-nevera text-lg text-[var(--accent)]'>
+                                            <div className='flex h-16 w-24 items-center justify-center rounded-none bg-[var(--surface)] font-nevera text-lg text-[var(--accent)]'>
                                                 {t.clientName?.charAt(0) || 'C'}
                                             </div>
                                         )}
@@ -222,8 +222,8 @@ const TestimonialsAdmin = () => {
                             </div>
 
                             <div>
-                                <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Avatar URL</label>
-                                <input type='url' value={formData.avatar} onChange={e => setFormData({ ...formData, avatar: e.target.value })} className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                                <label className='mb-1.5 block text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>Feature Image URL</label>
+                                <input type='url' value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div className='grid grid-cols-2 gap-4'>

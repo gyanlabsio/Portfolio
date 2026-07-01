@@ -55,9 +55,9 @@ exports.submitTestimonial = async (req, res, next) => {
             status: 'PENDING',
             featured: false,
         };
-        // Don't allow public users to supply an avatar directly for security/abuse reasons.
-        // Admin can edit and add avatar later.
-        delete payload.avatar;
+        // Don't allow public users to supply an image directly for security/abuse reasons.
+        // Admin can edit and add image later.
+        delete payload.image;
 
         const testimonial = await Testimonial.create(payload);
         res.status(201).json({ success: true, message: 'Testimonial submitted successfully', data: testimonial });

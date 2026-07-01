@@ -279,10 +279,10 @@ const testimonialValidators = {
       .optional({ values: 'falsy' })
       .trim()
       .isLength({ max: 100 }).withMessage('Company cannot exceed 100 characters'),
-    body('avatar')
+    body('image')
       .optional({ values: 'falsy' })
       .trim()
-      .isURL().withMessage('Avatar must be a valid URL'),
+      .isURL().withMessage('Image must be a valid URL'),
     body('rating')
       .optional({ values: 'falsy' })
       .isInt({ min: 1, max: 5 }).withMessage('Rating must be an integer between 1 and 5'),
@@ -323,10 +323,10 @@ const testimonialValidators = {
       .optional({ values: 'falsy' })
       .trim()
       .isLength({ max: 100 }).withMessage('Company cannot exceed 100 characters'),
-    body('avatar')
+    body('image')
       .optional({ values: 'falsy' })
       .trim()
-      .isURL().withMessage('Avatar must be a valid URL'),
+      .isURL().withMessage('Image must be a valid URL'),
     body('rating')
       .optional({ values: 'falsy' })
       .isInt({ min: 1, max: 5 }).withMessage('Rating must be an integer between 1 and 5'),

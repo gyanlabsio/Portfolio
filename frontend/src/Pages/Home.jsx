@@ -15,7 +15,8 @@ import BlurText from '../components/effects/BlurText'
 import ShinyText from '../components/effects/ShinyText'
 import Loader from '../components/Loader'
 import GalleryLightbox from '../components/GalleryLightbox'
-
+import KineticCarousel from '../components/effects/KineticCarousel'
+import TestimonialInfiniteCard from '../components/effects/TestimonialInfiniteCard'
 const Home = () => {
   const [config, setConfig] = useState(null)
   const [services, setServices] = useState([])
@@ -29,7 +30,7 @@ const Home = () => {
   const [activeDesignIndex, setActiveDesignIndex] = useState(0)
   const [isDesignsPaused, setIsDesignsPaused] = useState(false)
   const [selectedDesign, setSelectedDesign] = useState(null)
-  const [openAboutDropdown, setOpenAboutDropdown] = useState(0)
+  const [openAboutDropdown, setOpenAboutDropdown] = useState(null)
 
   // Extract unique domains
   const domains = [...new Set(services.map(s => s.domain || 'Web Development'))]
@@ -164,7 +165,7 @@ const Home = () => {
         </section>
       )}
 
-      <section className='mb-40 grid gap-16 lg:grid-cols-2 border-t border-[var(--line)] pt-16'>
+      <section className='mb-40 grid gap-16 border-t border-[var(--line)] pt-16'>
         {showProjects && (
           <article>
             <div className='mb-8 flex items-center justify-between'>
@@ -175,74 +176,16 @@ const Home = () => {
             {loading ? (
               <Loader text="Loading highlighted projects..." />
             ) : featuredProjects.length > 0 ? (
-              <div className='flex flex-col gap-8'>
-                {featuredProjects.slice(0, 3).map((project) => (
-                  <Link key={project._id} to='/Projects' className='group block focus:outline-none'>
-                    <p className='text-xl font-bold text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>{project.title}</p>
-                    <p className='mt-2 text-base font-light leading-relaxed text-[var(--ink-soft)]'>{project.description}</p>
-                  </Link>
-                ))}
+              <div className='w-full mt-4'>
+                <KineticCarousel projects={featuredProjects.slice(0, 5)} />
               </div>
             ) : (
               <p className='text-[var(--ink-soft)] font-light'>New case studies are in progress. Check back shortly.</p>
             )}
           </article>
         )}
-
-        {showContent && (
-          <article>
-            <div className='mb-8 flex items-center justify-between'>
-              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Latest Writing</h2>
-              <Link to='/Blog' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>Read all</Link>
-            </div>
-
-            {loading ? (
-              <Loader text="Loading latest posts..." />
-            ) : latestPosts.length > 0 ? (
-              <div className='flex flex-col gap-8'>
-                {latestPosts.map((post) => (
-                  <Link key={post._id} to={`/blog/${post.slug}`} className='group block focus:outline-none'>
-                    <p className='text-xl font-bold text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>{post.title}</p>
-                    <p className='mt-2 line-clamp-2 text-base font-light text-[var(--ink-soft)] leading-relaxed'>{post.excerpt}</p>
-                    <p className='mt-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
-                      <Clock3 className='h-3 w-3' />
-                      {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <p className='text-[var(--ink-soft)] font-light'>Thought pieces are coming soon.</p>
-            )}
-          </article>
-        )}
       </section>
 
-      {showTestimonials && testimonials.length > 0 && (
-        <section className='mb-40 border-t border-[var(--line)] pt-16'>
-          <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Client Feedback</h2>
-          <div className='grid gap-12 md:grid-cols-2 lg:grid-cols-3'>
-            {testimonials.map(t => (
-              <div key={t._id} className='flex flex-col gap-6'>
-                <p className='text-lg font-light text-[var(--ink-soft)] leading-relaxed'>" {t.testimonial} "</p>
-                <div className='flex items-center gap-4'>
-                  {t.avatar ? (
-                    <img src={t.avatar} alt={t.clientName} className='h-12 w-12 rounded-none object-cover grayscale' />
-                  ) : (
-                    <div className='flex h-12 w-12 items-center justify-center rounded-none bg-[var(--line)] text-sm font-bold text-[var(--ink)]'>
-                      {t.clientName?.charAt(0) || 'C'}
-                    </div>
-                  )}
-                  <div>
-                    <p className='text-sm font-bold text-[var(--ink)]'>{t.clientName}</p>
-                    <p className='text-xs font-light text-[var(--ink-soft)] uppercase tracking-wider'>{t.clientRole}{t.clientRole && t.company && ' at '}{t.company}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       {showServices && services.length > 0 && (
         <section className='mb-40 border-t border-[var(--line)] pt-16'>
@@ -349,6 +292,42 @@ const Home = () => {
               )
             })}
           </div>
+        </section>
+      )}
+
+      {showContent && (
+        <section className='mb-40 border-t border-[var(--line)] pt-16'>
+          <article>
+            <div className='mb-8 flex items-center justify-between'>
+              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Latest Writing</h2>
+              <Link to='/Blog' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>Read all</Link>
+            </div>
+
+            {loading ? (
+              <Loader text="Loading latest posts..." />
+            ) : latestPosts.length > 0 ? (
+              <div className='flex flex-col gap-8'>
+                {latestPosts.map((post) => (
+                  <Link key={post._id} to={`/blog/${post.slug}`} className='group block focus:outline-none'>
+                    <p className='text-xl font-bold text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>{post.title}</p>
+                    <p className='mt-2 line-clamp-2 text-base font-light text-[var(--ink-soft)] leading-relaxed'>{post.excerpt}</p>
+                    <p className='mt-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+                      <Clock3 className='h-3 w-3' />
+                      {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className='text-[var(--ink-soft)] font-light'>Thought pieces are coming soon.</p>
+            )}
+          </article>
+        </section>
+      )}
+
+      {showTestimonials && testimonials.length > 0 && (
+        <section className='mb-40 pt-16'>
+          <TestimonialInfiniteCard testimonials={testimonials} />
         </section>
       )}
 

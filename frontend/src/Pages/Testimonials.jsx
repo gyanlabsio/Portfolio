@@ -86,9 +86,9 @@ const Testimonials = () => {
                       ))}
                     </div>
                     <p className='text-sm italic font-light leading-relaxed text-[var(--ink)]'>" {t.testimonial} "</p>
-                    <div className='mt-8 flex items-center gap-4 border-t border-[var(--line)] pt-6'>
-                      {t.avatar ? (
-                        <img src={t.avatar} alt={t.clientName} className='h-12 w-12 object-cover border border-[var(--line)]' />
+                    <div className='flex items-center gap-4'>
+                      {t.image ? (
+                        <img src={t.image} alt={t.clientName} className='h-16 w-24 object-cover border border-[var(--line)]' />
                       ) : (
                         <div className='flex h-12 w-12 items-center justify-center bg-[var(--ink)] text-sm font-bold uppercase tracking-widest text-white border border-[var(--ink)]'>
                           {t.clientName.charAt(0)}
