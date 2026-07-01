@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import { getGlobalSeo, getSeoBySlug } from '../api/seo';
+import { getGlobalSeo, getSeoBySlug, getSiteSettings } from '../api/seo';
 
 const SEO = ({ title, description, image, url, slug }) => {
     const location = useLocation();
     const [seoData, setSeoData] = useState(null);
+    const [siteSettings, setSiteSettings] = useState(null);
 
     useEffect(() => {
         const fetchSEO = async () => {
@@ -27,6 +28,15 @@ const SEO = ({ title, description, image, url, slug }) => {
                 if (data?.data) {
                     setSeoData(data.data);
                 }
+                // Fetch Site Settings
+                try {
+                    const { data: settingsData } = await getSiteSettings();
+                    if (settingsData?.data) {
+                        setSiteSettings(settingsData.data);
+                    }
+                } catch (e) {
+                    // Ignore settings error
+                }
             } catch (error) {
                 console.error("Failed to fetch SEO config", error);
             }
@@ -35,10 +45,24 @@ const SEO = ({ title, description, image, url, slug }) => {
         fetchSEO();
     }, [location.pathname, slug]);
 
-    const siteName = seoData?.siteName || 'Gyanaranjan Das — Portfolio';
+    const siteName = seoData?.siteName || 'Gyanaranjan Das';
+    const suffix = siteSettings?.globalTitleSuffix || ' — Portfolio';
     
-    // Fallback chain: API specific -> Props -> API Global -> Hardcoded
-    const finalTitle = seoData?.seoTitle || title ? `${title} | ${siteName}` : siteName;
+    // Priority: API specific title -> Prop title
+    const displayTitle = seoData?.seoTitle || title;
+    
+    // Determine the title
+    let finalTitle = `${siteName}${suffix}`;
+    if (seoData?.seoTitle) {
+        finalTitle = seoData.seoTitle;
+    } else if (displayTitle) {
+        if (displayTitle.toLowerCase() === 'home') {
+            finalTitle = `${siteName}${suffix}`;
+        } else {
+            finalTitle = `${displayTitle} | ${siteName}${suffix}`;
+        }
+    }
+    
     const finalDescription = seoData?.seoDescription || description || 'Full-Stack MERN Developer crafting immersive digital experiences.';
     const finalCanonicalUrl = seoData?.canonicalUrl || url || (typeof window !== 'undefined' ? window.location.href : null);
     const finalImage = seoData?.ogImage || image;
