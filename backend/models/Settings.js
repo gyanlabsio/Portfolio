@@ -42,6 +42,28 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    aboutMyWorkHeading: {
+        type: String,
+        trim: true,
+        default: 'ABOUT OUR COMPANY',
+    },
+    aboutMyWorkText: {
+        type: String,
+        trim: true,
+    },
+    aboutMyWorkDropdowns: {
+        type: [
+            {
+                title: String,
+                content: String
+            }
+        ],
+        default: [
+            { title: 'OUR MISSION', content: 'To deliver exceptional digital experiences.' },
+            { title: 'OUR VISION', content: 'To be the leading engineering partner for growth.' },
+            { title: 'OUR JOURNEY', content: 'Started as a solo developer, now partnering with global brands.' }
+        ]
+    },
     footerHeading: {
         type: String,
         trim: true,
@@ -113,7 +135,8 @@ const settingsSchema = new mongoose.Schema({
             services: true,
             testimonials: true,
             content: true,
-            contact: true
+            contact: true,
+            aboutMyWork: true
         }
     }
 }, {

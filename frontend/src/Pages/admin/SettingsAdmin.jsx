@@ -30,7 +30,13 @@ const SettingsAdmin = () => {
                     logoUrl: '', faviconUrl: '', resumeUrl: '',
                     availabilityStatus: 'AVAILABLE',
                     socialLinks: { github: '', linkedin: '', twitter: '', instagram: '' },
-                    homepageSections: { projects: true, services: true, testimonials: true, content: true, contact: true }
+                    homepageSections: { projects: true, services: true, testimonials: true, content: true, contact: true, aboutMyWork: true },
+                    aboutMyWorkHeading: 'ABOUT OUR COMPANY', aboutMyWorkText: '',
+                    aboutMyWorkDropdowns: [
+                        { title: 'OUR MISSION', content: 'To deliver exceptional digital experiences.' },
+                        { title: 'OUR VISION', content: 'To be the leading engineering partner for growth.' },
+                        { title: 'OUR JOURNEY', content: 'Started as a solo developer, now partnering with global brands.' }
+                    ]
                 })
             }
         } catch (error) {
@@ -75,6 +81,28 @@ const SettingsAdmin = () => {
             const newSkills = [...(prev.bioSkills || [])]
             newSkills[index] = { ...newSkills[index], [field]: value }
             return { ...prev, bioSkills: newSkills }
+        })
+    }
+
+    const handleAddDropdown = () => {
+        setSettings(prev => ({
+            ...prev,
+            aboutMyWorkDropdowns: [...(prev.aboutMyWorkDropdowns || []), { title: '', content: '' }]
+        }))
+    }
+
+    const handleRemoveDropdown = (index) => {
+        setSettings(prev => ({
+            ...prev,
+            aboutMyWorkDropdowns: prev.aboutMyWorkDropdowns.filter((_, i) => i !== index)
+        }))
+    }
+
+    const handleDropdownChange = (index, field, value) => {
+        setSettings(prev => {
+            const newDropdowns = [...(prev.aboutMyWorkDropdowns || [])]
+            newDropdowns[index] = { ...newDropdowns[index], [field]: value }
+            return { ...prev, aboutMyWorkDropdowns: newDropdowns }
         })
     }
 
@@ -217,6 +245,41 @@ const SettingsAdmin = () => {
                     </div>
                 </div>
 
+                {/* About My Work */}
+                <div className='glass-card rounded-2xl p-6'>
+                    <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><FileText className='h-5 w-5 text-[var(--accent)]' /> About My Work Section</h2>
+                    <div className='space-y-4'>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Heading</label>
+                            <input type='text' value={settings.aboutMyWorkHeading || ''} onChange={e => handleChange('aboutMyWorkHeading', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="ABOUT OUR COMPANY" />
+                        </div>
+                        <div>
+                            <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description Text</label>
+                            <textarea rows="4" value={settings.aboutMyWorkText || ''} onChange={e => handleChange('aboutMyWorkText', e.target.value)} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="At our studio, we're more than just developers..." />
+                        </div>
+                        
+                        <div className='pt-4 border-t border-[var(--line)] mt-4'>
+                            <div className='flex items-center justify-between mb-3'>
+                                <label className='block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Dropdowns (Right side)</label>
+                                <button type="button" onClick={handleAddDropdown} className='text-xs font-semibold text-[var(--accent)] hover:text-[var(--accent-2)] transition'>+ Add Dropdown</button>
+                            </div>
+                            <div className='space-y-4'>
+                                {(settings.aboutMyWorkDropdowns || []).map((dropdown, index) => (
+                                    <div key={index} className='flex gap-3 items-start p-3 border border-[var(--line)] rounded-xl bg-[var(--bg)] relative'>
+                                        <div className='flex-1 space-y-3'>
+                                            <input type='text' value={dropdown.title} onChange={e => handleDropdownChange(index, 'title', e.target.value)} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' placeholder="Dropdown Title (e.g. OUR MISSION)" />
+                                            <textarea rows="2" value={dropdown.content} onChange={e => handleDropdownChange(index, 'content', e.target.value)} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none' placeholder="Dropdown Content" />
+                                        </div>
+                                        <button type="button" onClick={() => handleRemoveDropdown(index)} className='p-2 text-[var(--ink-soft)] hover:text-red-500 transition rounded-xl bg-[var(--surface)] border border-[var(--line)]'>
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Media Links */}
                 <div className='glass-card rounded-2xl p-6'>
                     <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><LinkIcon className='h-5 w-5 text-[var(--accent)]' /> External Links & Media</h2>
@@ -254,7 +317,7 @@ const SettingsAdmin = () => {
                     <h2 className='font-nevera text-xl text-[var(--ink)] mb-4 flex items-center gap-2'><Layout className='h-5 w-5 text-[var(--accent)]' /> Homepage Sections</h2>
                     <p className='text-sm text-[var(--ink-soft)] mb-6'>Toggle these to dynamically show or hide sections on your frontend homepage.</p>
                     <div className='space-y-4'>
-                        {['projects', 'services', 'testimonials', 'content', 'contact'].map(section => (
+                        {['projects', 'services', 'testimonials', 'content', 'contact', 'aboutMyWork'].map(section => (
                             <label key={section} className='flex items-center justify-between cursor-pointer rounded-xl bg-[var(--surface)] p-3 hover:bg-[var(--bg-alt)] transition'>
                                 <span className='text-sm font-semibold text-[var(--ink)] capitalize'>{section}</span>
                                 <input 

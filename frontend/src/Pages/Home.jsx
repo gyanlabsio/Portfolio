@@ -30,6 +30,7 @@ const Home = () => {
   const [activeDesignIndex, setActiveDesignIndex] = useState(0)
   const [isDesignsPaused, setIsDesignsPaused] = useState(false)
   const [selectedDesign, setSelectedDesign] = useState(null)
+  const [openAboutDropdown, setOpenAboutDropdown] = useState(0)
 
   // Extract unique domains
   const domains = [...new Set(services.map(s => s.domain || 'Web Development'))]
@@ -143,6 +144,57 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {config?.homepageSections?.aboutMyWork !== false && config?.aboutMyWorkText && (
+        <section className='section-wrap mt-10 mb-10'>
+          <article className='glass-card surface-interactive rounded-3xl p-6 md:p-10'>
+            <div className='mb-10 text-center md:text-left'>
+              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl uppercase'>
+                <SplitText text={config.aboutMyWorkHeading || 'ABOUT OUR COMPANY'} delay={0.1} />
+              </h2>
+            </div>
+            <div className='flex flex-col md:flex-row gap-10 md:gap-16'>
+              <div className='md:w-1/2'>
+                <p className='text-base md:text-lg leading-relaxed text-[var(--ink-soft)] font-medium'>
+                  {config.aboutMyWorkText}
+                </p>
+              </div>
+              <div className='md:w-1/2 flex flex-col'>
+                {(config?.aboutMyWorkDropdowns || []).map((dropdown, idx) => (
+                  <div key={idx} className={`border-b border-[var(--line)] last:border-0 ${idx === 0 ? 'pt-0' : 'pt-5'} pb-5`}>
+                    <button 
+                      onClick={() => setOpenAboutDropdown(openAboutDropdown === idx ? null : idx)} 
+                      className='w-full flex items-center justify-between text-left focus:outline-none group'
+                    >
+                      <h3 className='text-sm md:text-base font-semibold tracking-widest uppercase text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>
+                        {dropdown.title}
+                      </h3>
+                      <div className={`transform transition-transform duration-300 ${openAboutDropdown === idx ? 'rotate-180' : ''}`}>
+                        <ChevronDown size={18} className='text-[var(--ink-soft)] group-hover:text-[var(--accent)] transition-colors' />
+                      </div>
+                    </button>
+                    <AnimatePresence>
+                      {openAboutDropdown === idx && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className='overflow-hidden'
+                        >
+                          <p className='pt-4 text-sm md:text-base text-[var(--ink-soft)] leading-relaxed'>
+                            {dropdown.content}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        </section>
+      )}
 
       <section className='section-wrap mt-10 grid gap-6 lg:grid-cols-2'>
         {showProjects && (
