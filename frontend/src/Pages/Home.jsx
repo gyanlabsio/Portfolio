@@ -83,90 +83,59 @@ const Home = () => {
   const showContent = config?.homepageSections?.content !== false;
 
   return (
-    <main className='pt-8 pb-16 md:pt-14'>
+    <main className='py-24 max-w-4xl mx-auto px-6'>
       <SEO title='Home' description='Full-stack portfolio with immersive interfaces, product thinking, and robust engineering.' />
 
-      <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[34px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[var(--accent)]/20 blur-3xl' />
-          <div className='pointer-events-none absolute -left-10 bottom-0 h-44 w-44 rounded-full bg-[var(--accent-2)]/20 blur-3xl' />
+      {/* HERO: Pure Typography & Whitespace */}
+      <section className='mb-40 flex flex-col items-start gap-8'>
+        <div className='inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+          {config?.heroBadge || 'Design + Engineering'}
+        </div>
 
-          <div className='relative grid gap-10 lg:grid-cols-[1.35fr_0.9fr]'>
-            <div className='space-y-6'>
-              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--ink-soft)]'>
-                <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
-                {config?.heroBadge || 'Design + Engineering'}
-              </div>
+        <h1 className='text-5xl font-black text-[var(--ink)] sm:text-6xl md:text-7xl tracking-tighter leading-tight'>
+          <SplitText text={heroTitle} delay={0.2} />
+        </h1>
 
-              <h1 className='display-title text-3xl text-[var(--ink)] sm:text-4xl md:text-5xl'>
-                <SplitText text={heroTitle} delay={0.2} />
-              </h1>
+        <p className='max-w-2xl text-xl font-light leading-relaxed text-[var(--ink-soft)] md:text-2xl'>
+          <BlurText text={heroTagline} delay={0.6} />
+        </p>
 
-              <p className='max-w-xl text-lg font-medium leading-relaxed text-[var(--ink)] md:text-xl'>
-                <BlurText text={heroTagline} delay={0.6} />
-              </p>
+        {heroDescription && (
+          <p className='max-w-xl text-base font-light leading-relaxed text-[var(--ink-soft)]'>
+            <BlurText text={heroDescription} delay={0.8} />
+          </p>
+        )}
 
-              {heroDescription && (
-                <p className='max-w-xl text-base leading-relaxed text-[var(--ink-soft)]'>
-                  <BlurText text={heroDescription} delay={0.8} />
-                </p>
-              )}
-
-              <div className='stagger-children flex flex-wrap gap-3'>
-                <Link to='/Projects' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white hover:brightness-110'>
-                  Explore Projects
-                  <ArrowUpRight className='h-4 w-4' />
-                </Link>
-                <Link to='/Contact' className='focus-ring button-pop inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--ink)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'>
-                  Start a Conversation
-                </Link>
-              </div>
-            </div>
-
-            <aside className='glass-card float-y surface-interactive rounded-3xl p-5 md:p-6'>
-              <p className='text-xs uppercase tracking-[0.2em] text-[var(--ink-soft)]'>
-                <ShinyText text="Now Building" speed={3} />
-              </p>
-              <p className='mt-3 text-lg font-semibold text-[var(--ink)]'>
-                Scalable web experiences with narrative UI, robust APIs, and polished admin tooling.
-              </p>
-              <div className='mt-6 grid grid-cols-2 gap-3 text-sm'>
-                <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
-                  <p className='text-2xl font-bold text-[var(--accent)]'>{featuredProjects.length || '--'}</p>
-                  <p className='ink-soft'>featured builds</p>
-                </div>
-                <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3'>
-                  <p className='text-2xl font-bold text-[var(--accent-2)]'>{latestPosts.length || '--'}</p>
-                  <p className='ink-soft'>latest insights</p>
-                </div>
-              </div>
-            </aside>
-          </div>
+        <div className='mt-8 flex gap-6'>
+          <Link to='/Projects' className='bg-[var(--accent)] text-white px-8 py-4 text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity'>
+            Explore Projects
+          </Link>
+          <Link to='/Contact' className='px-8 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] hover:text-[var(--ink-soft)] transition-colors'>
+            Start a Conversation
+          </Link>
         </div>
       </section>
 
       {config?.homepageSections?.aboutMyWork !== false && config?.aboutMyWorkText && (
-        <section className='section-wrap mt-10 mb-10'>
-          <article className='glass-card surface-interactive rounded-3xl p-6 md:p-10'>
-            <div className='mb-10 text-center md:text-left'>
-              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl uppercase'>
-                <SplitText text={config.aboutMyWorkHeading || 'ABOUT OUR COMPANY'} delay={0.1} />
+        <section className='mb-40 border-t border-[var(--line)] pt-16'>
+          <div className='grid md:grid-cols-2 gap-16'>
+            <div>
+              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>
+                {config.aboutMyWorkHeading || 'ABOUT MY WORK'}
               </h2>
             </div>
-            <div className='flex flex-col md:flex-row gap-10 md:gap-16'>
-              <div className='md:w-1/2'>
-                <p className='text-base md:text-lg leading-relaxed text-[var(--ink-soft)] font-medium'>
-                  {config.aboutMyWorkText}
-                </p>
+            <div className='flex flex-col gap-12'>
+              <div className='text-xl font-light text-[var(--ink-soft)] leading-relaxed'>
+                {config.aboutMyWorkText}
               </div>
-              <div className='md:w-1/2 flex flex-col'>
+              <div className='flex flex-col'>
                 {(config?.aboutMyWorkDropdowns || []).map((dropdown, idx) => (
-                  <div key={idx} className={`border-b border-[var(--line)] last:border-0 ${idx === 0 ? 'pt-0' : 'pt-5'} pb-5`}>
+                  <div key={idx} className={`border-b border-[var(--line)] last:border-0 ${idx === 0 ? 'pt-0' : 'pt-6'} pb-6`}>
                     <button 
                       onClick={() => setOpenAboutDropdown(openAboutDropdown === idx ? null : idx)} 
                       className='w-full flex items-center justify-between text-left focus:outline-none group'
                     >
-                      <h3 className='text-sm md:text-base font-semibold tracking-widest uppercase text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>
+                      <h3 className='text-sm font-bold tracking-widest uppercase text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>
                         {dropdown.title}
                       </h3>
                       <div className={`transform transition-transform duration-300 ${openAboutDropdown === idx ? 'rotate-180' : ''}`}>
@@ -182,7 +151,7 @@ const Home = () => {
                           transition={{ duration: 0.3 }}
                           className='overflow-hidden'
                         >
-                          <p className='pt-4 text-sm md:text-base text-[var(--ink-soft)] leading-relaxed'>
+                          <p className='pt-6 text-base font-light text-[var(--ink-soft)] leading-relaxed'>
                             {dropdown.content}
                           </p>
                         </motion.div>
@@ -192,51 +161,51 @@ const Home = () => {
                 ))}
               </div>
             </div>
-          </article>
+          </div>
         </section>
       )}
 
-      <section className='section-wrap mt-10 grid gap-6 lg:grid-cols-2'>
+      <section className='mb-40 grid gap-16 lg:grid-cols-2 border-t border-[var(--line)] pt-16'>
         {showProjects && (
-          <article className='glass-card surface-interactive rounded-3xl p-6 md:p-8'>
-            <div className='mb-4 flex items-center justify-between'>
-              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Featured Work</h2>
-              <Link to='/Projects' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>See all</Link>
+          <article>
+            <div className='mb-8 flex items-center justify-between'>
+              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Featured Work</h2>
+              <Link to='/Projects' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>See all</Link>
             </div>
 
             {loading ? (
               <Loader text="Loading highlighted projects..." />
             ) : featuredProjects.length > 0 ? (
-              <div className='space-y-3'>
+              <div className='flex flex-col gap-8'>
                 {featuredProjects.slice(0, 3).map((project) => (
-                  <Link key={project._id} to='/Projects' className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]'>
-                    <p className='text-base font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]'>{project.title}</p>
-                    <p className='mt-1 text-sm leading-relaxed text-[var(--ink-soft)]'>{project.description}</p>
+                  <Link key={project._id} to='/Projects' className='group block focus:outline-none'>
+                    <p className='text-xl font-bold text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>{project.title}</p>
+                    <p className='mt-2 text-base font-light leading-relaxed text-[var(--ink-soft)]'>{project.description}</p>
                   </Link>
                 ))}
               </div>
             ) : (
-              <p className='ink-soft'>New case studies are in progress. Check back shortly.</p>
+              <p className='text-[var(--ink-soft)] font-light'>New case studies are in progress. Check back shortly.</p>
             )}
           </article>
         )}
 
         {showContent && (
-          <article className='glass-card surface-interactive rounded-3xl p-6 md:p-8'>
-            <div className='mb-4 flex items-center justify-between'>
-              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Latest Writing</h2>
-              <Link to='/Blog' className='focus-ring rounded-lg px-1 py-0.5 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>Read all</Link>
+          <article>
+            <div className='mb-8 flex items-center justify-between'>
+              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Latest Writing</h2>
+              <Link to='/Blog' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>Read all</Link>
             </div>
 
             {loading ? (
               <Loader text="Loading latest posts..." />
             ) : latestPosts.length > 0 ? (
-              <div className='space-y-3'>
+              <div className='flex flex-col gap-8'>
                 {latestPosts.map((post) => (
-                  <Link key={post._id} to={`/blog/${post.slug}`} className='group surface-interactive focus-ring block rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-2)]'>
-                    <p className='text-base font-semibold text-[var(--ink)] group-hover:text-[var(--accent-2)]'>{post.title}</p>
-                    <p className='mt-1 line-clamp-2 text-sm text-[var(--ink-soft)]'>{post.excerpt}</p>
-                    <p className='mt-2 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink-soft)]'>
+                  <Link key={post._id} to={`/blog/${post.slug}`} className='group block focus:outline-none'>
+                    <p className='text-xl font-bold text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors'>{post.title}</p>
+                    <p className='mt-2 line-clamp-2 text-base font-light text-[var(--ink-soft)] leading-relaxed'>{post.excerpt}</p>
+                    <p className='mt-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
                       <Clock3 className='h-3 w-3' />
                       {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
@@ -244,30 +213,30 @@ const Home = () => {
                 ))}
               </div>
             ) : (
-              <p className='ink-soft'>Thought pieces are coming soon.</p>
+              <p className='text-[var(--ink-soft)] font-light'>Thought pieces are coming soon.</p>
             )}
           </article>
         )}
       </section>
 
       {showTestimonials && testimonials.length > 0 && (
-        <section className='section-wrap mt-10 enter-fade'>
-          <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl text-center mb-8'>Client Feedback</h2>
-          <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+        <section className='mb-40 border-t border-[var(--line)] pt-16'>
+          <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Client Feedback</h2>
+          <div className='grid gap-12 md:grid-cols-2 lg:grid-cols-3'>
             {testimonials.map(t => (
-              <div key={t._id} className='glass-card rounded-2xl p-6'>
-                <p className='text-sm text-[var(--ink)] italic mb-6'>"{t.testimonial}"</p>
-                <div className='flex items-center gap-3'>
+              <div key={t._id} className='flex flex-col gap-6'>
+                <p className='text-lg font-light text-[var(--ink-soft)] leading-relaxed'>" {t.testimonial} "</p>
+                <div className='flex items-center gap-4'>
                   {t.avatar ? (
-                    <img src={t.avatar} alt={t.clientName} className='h-10 w-10 rounded-full object-cover border border-[var(--line)]' />
+                    <img src={t.avatar} alt={t.clientName} className='h-12 w-12 rounded-none object-cover grayscale' />
                   ) : (
-                    <div className='flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] font-nevera text-lg text-[var(--accent)]'>
+                    <div className='flex h-12 w-12 items-center justify-center rounded-none bg-[var(--line)] text-sm font-bold text-[var(--ink)]'>
                       {t.clientName?.charAt(0) || 'C'}
                     </div>
                   )}
                   <div>
-                    <p className='text-sm font-semibold text-[var(--ink)]'>{t.clientName}</p>
-                    <p className='text-xs text-[var(--ink-soft)]'>{t.clientRole}{t.clientRole && t.company && ' at '}{t.company}</p>
+                    <p className='text-sm font-bold text-[var(--ink)]'>{t.clientName}</p>
+                    <p className='text-xs font-light text-[var(--ink-soft)] uppercase tracking-wider'>{t.clientRole}{t.clientRole && t.company && ' at '}{t.company}</p>
                   </div>
                 </div>
               </div>
@@ -277,75 +246,61 @@ const Home = () => {
       )}
 
       {showServices && services.length > 0 && (
-        <section className='mt-16 mb-16 overflow-hidden min-h-[400px]'>
-          
-          {/* DOMAINS CAROUSEL VIEW */}
-          <div className='px-6 md:px-10 overflow-hidden'>
-            <div className='mb-12 flex flex-col items-center justify-center text-center'>
-              <span className='mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent)]'>
-                Expertise
-              </span>
-              <h2 className='display-title text-4xl text-[var(--ink)] md:text-5xl'>My Domains</h2>
-            </div>
-            <div className='flex flex-wrap justify-center items-start gap-6 max-w-6xl mx-auto'>
-              {domains.map((domain) => {
-                const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
-                const isExpanded = expandedDomain === domain;
+        <section className='mb-40 border-t border-[var(--line)] pt-16'>
+          <div className='mb-12'>
+            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>My Domains</h2>
+          </div>
+          <div className='flex flex-col gap-6 max-w-4xl mx-auto'>
+            {domains.map((domain) => {
+              const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
+              const isExpanded = expandedDomain === domain;
 
-                return (
-                  <div 
-                    key={domain}
-                    className={`relative rounded-3xl border transition-all duration-500 bg-[var(--surface)] p-6 overflow-hidden w-[calc(100vw-3rem)] sm:w-[350px] ${isExpanded ? 'border-[var(--accent)]/50 shadow-2xl' : 'border-[var(--line)] shadow-lg hover:border-[var(--line-strong)]'}`}
-                  >
-                    <div className='flex items-center justify-between gap-4'>
-                      <h3 className={`font-nevera text-xl tracking-wide transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
-                        {domain}
-                      </h3>
+              return (
+                <div key={domain} className='border-b border-[var(--line)] pb-6 last:border-0'>
+                  <div className='flex items-center justify-between gap-4'>
+                    <h3 className={`text-2xl font-black uppercase tracking-tight transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--ink)]'}`}>
+                      {domain}
+                    </h3>
+                    <div className='flex items-center gap-4'>
+                      <p className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+                        {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
+                      </p>
                       <button 
                         onClick={() => setExpandedDomain(isExpanded ? null : domain)}
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--bg)] border border-[var(--line)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--line)]'}`}
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center border border-[var(--ink)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--ink)] hover:text-white'}`}
                       >
                         <ChevronDown className='h-4 w-4' />
                       </button>
                     </div>
-                    
-                    <p className='mt-1 text-xs text-[var(--ink-soft)]'>
-                      {domainServices.length} {domainServices.length === 1 ? 'Service' : 'Services'}
-                    </p>
+                  </div>
 
-                    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                      <div className="pt-4 pb-2 space-y-3">
-                        {domainServices.map((service) => (
-                          <div key={service._id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 flex gap-3 items-start'>
-                            {service.thumbnail && (
-                              <img src={service.thumbnail} alt={service.title} className='w-12 h-12 rounded-lg object-cover border border-[var(--line)] shrink-0' />
-                            )}
-                            <div>
-                              <p className='font-semibold text-[var(--ink)] text-sm'>{service.title}</p>
-                              <p className='text-xs text-[var(--ink-soft)] line-clamp-3 mt-1'>{service.description}</p>
-                            </div>
+                  <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[1200px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      {domainServices.map((service) => (
+                        <div key={service._id} className='flex gap-4 items-start'>
+                          {service.thumbnail && (
+                            <img src={service.thumbnail} alt={service.title} className='w-16 h-16 object-cover grayscale shrink-0' />
+                          )}
+                          <div>
+                            <p className='font-bold text-[var(--ink)] text-base uppercase tracking-tight'>{service.title}</p>
+                            <p className='text-sm font-light text-[var(--ink-soft)] leading-relaxed mt-2'>{service.description}</p>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
 
       {featuredDesigns.length > 0 && (
-        <section className='mt-16 mb-24 overflow-hidden'>
-          <div className='px-6 md:px-10 mb-10 flex items-center justify-between'>
-            <div>
-              <span className='mb-2 inline-flex items-center gap-2 rounded-full bg-[var(--accent-2)]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--accent-2)]'>
-                Gallery
-              </span>
-              <h2 className='display-title text-3xl text-[var(--ink)] md:text-4xl'>Creative Works</h2>
-            </div>
-            <Link to='/gallery' className='focus-ring rounded-lg px-2 py-1 text-sm font-semibold text-[var(--accent-2)] hover:brightness-110'>
+        <section className='mb-40 border-t border-[var(--line)] pt-16 overflow-hidden'>
+          <div className='mb-12 flex items-center justify-between'>
+            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Creative Works</h2>
+            <Link to='/gallery' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>
               View Gallery
             </Link>
           </div>

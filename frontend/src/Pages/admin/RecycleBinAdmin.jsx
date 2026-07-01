@@ -140,7 +140,7 @@ const RecycleBinAdmin = () => {
           <select
             value={selectedModule}
             onChange={(e) => setSelectedModule(e.target.value)}
-            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border rounded-none focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Modules</option>
             {modules.map(mod => (
@@ -149,7 +149,7 @@ const RecycleBinAdmin = () => {
           </select>
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-none hover:bg-gray-50 transition-colors"
           >
             <Download size={20} />
             Export
@@ -158,20 +158,20 @@ const RecycleBinAdmin = () => {
       </div>
 
       {selectedIds.length > 0 && (
-        <div className="bg-blue-50 p-4 rounded-lg flex items-center justify-between border border-blue-100">
+        <div className="bg-blue-50 p-4 rounded-none flex items-center justify-between border border-blue-100">
           <span className="text-blue-800 font-medium">{selectedIds.length} items selected</span>
           <div className="flex gap-3">
             <button
               onClick={handleBulkRestore}
               disabled={isActionLoading}
-              className="px-4 py-2 bg-white text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors"
+              className="px-4 py-2 bg-white text-blue-600 border border-blue-200 rounded-none hover:bg-blue-50 transition-colors"
             >
               Restore Selected
             </button>
             <button
               onClick={handleBulkDelete}
               disabled={isActionLoading}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="px-4 py-2 bg-red-600 text-white rounded-none hover:bg-red-700 transition-colors"
             >
               Delete Permanently
             </button>
@@ -179,10 +179,10 @@ const RecycleBinAdmin = () => {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border overflow-hidden p-6">
+      <div className="bg-white rounded-none  border overflow-hidden p-6">
         {loading ? (
           <div className="flex justify-center p-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-none h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         ) : items.length === 0 ? (
           <div className="text-center p-12 text-gray-500">

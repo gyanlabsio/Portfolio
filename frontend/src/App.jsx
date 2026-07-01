@@ -10,7 +10,7 @@ import useVisitorTracking from "./hooks/useVisitorTracking";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./Pages/Home"));
-const Bio = lazy(() => import("./Pages/Bio"));
+const About = lazy(() => import("./Pages/About"));
 const Readme = lazy(() => import("./Pages/Readme"));
 const Projects = lazy(() => import("./Pages/Projects"));
 const ProjectDetails = lazy(() => import("./Pages/ProjectDetails"));
@@ -50,7 +50,7 @@ const RecycleBinAdmin = lazy(() => import("./Pages/admin/RecycleBinAdmin"));
 // Loading fallback
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-[#FF0000] border-t-transparent rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-2 border-[#FF0000] border-t-transparent rounded-none animate-spin"></div>
   </div>
 );
 
@@ -70,7 +70,7 @@ const App = () => {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Bio" element={<Bio />} />
+          <Route path="/about" element={<About />} />
           <Route path="/readme" element={<Readme />} />
           <Route path="/Projects" element={<Projects />} />
           <Route path="/project/:slug" element={<ProjectDetails />} />

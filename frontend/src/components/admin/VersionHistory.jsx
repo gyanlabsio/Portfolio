@@ -43,7 +43,7 @@ const VersionHistory = ({ contentId, onRollbackSuccess }) => {
     };
 
     return (
-        <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 space-y-4">
+        <div className="rounded-none border border-[var(--line)] bg-[var(--surface)] p-5 space-y-4">
             <div className="flex items-center gap-2 border-b border-[var(--line)] pb-3">
                 <History className="h-5 w-5 text-[var(--accent)]" />
                 <h3 className="font-semibold text-[var(--ink)]">Version History</h3>
@@ -58,12 +58,12 @@ const VersionHistory = ({ contentId, onRollbackSuccess }) => {
             ) : (
                 <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
                     {versions.map((ver) => (
-                        <div key={ver._id} className="rounded-lg border border-[var(--line)] bg-[var(--bg)] p-3 text-xs space-y-2 hover:border-[var(--accent-2)] transition">
+                        <div key={ver._id} className="rounded-none border border-[var(--line)] bg-[var(--bg)] p-3 text-xs space-y-2 hover:border-[var(--accent-2)] transition">
                             <div className="flex items-center justify-between font-semibold text-[var(--ink)]">
                                 <span>Version #{ver.versionNumber}</span>
                                 <button 
                                     onClick={() => handleRollback(ver._id)}
-                                    className="rounded-full bg-[var(--accent)]/10 px-2 py-0.5 font-bold text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition"
+                                    className="rounded-none bg-[var(--accent)]/10 px-2 py-0.5 font-bold text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition"
                                 >
                                     Restore
                                 </button>

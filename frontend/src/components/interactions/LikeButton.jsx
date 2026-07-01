@@ -37,7 +37,7 @@ const LikeButton = ({ initialLikesCount, initialIsLiked, onToggleLike }) => {
     return (
         <button 
             onClick={handleLike}
-            className="flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--accent)] group"
+            className="flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--accent)] group"
         >
             <div className="relative flex items-center justify-center w-6 h-6">
                 <Heart 

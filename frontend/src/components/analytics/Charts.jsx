@@ -12,7 +12,7 @@ export const TimeSeriesLineChart = () => {
   if (!timeSeriesData || timeSeriesData.length === 0) return <div className="h-64 flex items-center justify-center text-gray-500">No data available</div>;
 
   return (
-    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-6 rounded-none  border border-gray-100 dark:border-gray-700">
       <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Activity Overview</h3>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
@@ -65,7 +65,7 @@ export const ModulesBarChart = () => {
 
 
   return (
-    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-6 rounded-none  border border-gray-100 dark:border-gray-700">
       <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Module Popularity</h3>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">

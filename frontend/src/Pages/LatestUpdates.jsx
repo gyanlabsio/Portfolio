@@ -59,7 +59,7 @@ const LatestUpdates = () => {
 
         {/* Left Side - Image with Red Vibe tint (on top on mobile) */}
         <div className='w-full sm:w-[320px] lg:w-[320px] shrink-0 mx-auto lg:mx-0 updates-image-container'>
-          <div className='relative overflow-hidden rounded-2xl border border-white/10 h-[380px] sm:h-[450px] lg:h-[520px] group'>
+          <div className='relative overflow-hidden rounded-none border border-white/10 h-[380px] sm:h-[450px] lg:h-[520px] group'>
 
             {/* Base Red Image */}
             <img src={updateImage}
@@ -96,8 +96,8 @@ const LatestUpdates = () => {
           <div className='flex flex-col gap-5'>
 
             {/* Card 1 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+            <div className='flex items-center gap-5 p-3 rounded-none bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-none bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
                 <Rocket className='w-5 h-5 text-[var(--accent)]' />
               </div>
               <p className='font-manrope regular text-sm md:text-base text-[var(--ink-soft)]'>
@@ -106,8 +106,8 @@ const LatestUpdates = () => {
             </div>
 
             {/* Card 2 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+            <div className='flex items-center gap-5 p-3 rounded-none bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-none bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
                 <MonitorSmartphone className='w-5 h-5 text-[var(--accent)]' />
               </div>
               <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>
@@ -116,8 +116,8 @@ const LatestUpdates = () => {
             </div>
 
             {/* Card 3 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+            <div className='flex items-center gap-5 p-3 rounded-none bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-none bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
                 <Layers className='w-5 h-5 text-[var(--accent)]' />
               </div>
               <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>
@@ -126,8 +126,8 @@ const LatestUpdates = () => {
             </div>
 
             {/* Card 4 */}
-            <div className='flex items-center gap-5 p-3 rounded-full bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
-              <div className='w-12 h-12 rounded-full bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
+            <div className='flex items-center gap-5 p-3 rounded-none bg-[var(--surface)] border border-[var(--line)] hover:border-[var(--accent)]/50 transition-colors cursor-pointer'>
+              <div className='w-12 h-12 rounded-none bg-[var(--accent)]/20 flex items-center justify-center shrink-0 border border-[var(--accent)]/30'>
                 <Code className='w-5 h-5 text-[var(--accent)]' />
               </div>
               <p className='font-manrope text-sm md:text-base text-[var(--ink-soft)]'>

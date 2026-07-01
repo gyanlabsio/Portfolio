@@ -55,12 +55,12 @@ const Testimonials = () => {
     <main className='pb-16 pt-8 md:pt-12'>
       <SEO title='Testimonials' description='Read what clients and collaborators have to say about working with me.' />
 
-      <section className='section-wrap enter-fade'>
-        <div className='mb-10 text-center'>
-          <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>
+      <section className='enter-fade max-w-7xl mx-auto px-6 md:px-10 lg:px-16'>
+        <div className='mb-16 border-b border-[var(--line)] pb-12'>
+          <h1 className='text-6xl font-black uppercase tracking-tighter text-[var(--ink)] sm:text-7xl lg:text-8xl'>
             <SplitText text='Client Feedback' delay={0.2} />
           </h1>
-          <div className='mt-3 mx-auto max-w-xl text-[var(--ink-soft)]'>
+          <div className='mt-6 max-w-xl text-sm font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
             <BlurText text='Stories and experiences from the people I have collaborated with.' delay={0.6} />
           </div>
         </div>
@@ -71,32 +71,32 @@ const Testimonials = () => {
             {loading ? (
               <Loader text="Loading testimonials..." />
             ) : testimonials.length === 0 ? (
-              <div className='glass-card rounded-[30px] p-8 text-center'>
-                <MessageSquareText className='mx-auto h-8 w-8 text-[var(--accent-2)]' />
-                <p className='mt-4 text-lg font-semibold text-[var(--ink)]'>No Testimonials Yet</p>
-                <p className='mt-2 text-[var(--ink-soft)]'>Be the first to share your experience!</p>
+              <div className='p-8 text-center border border-[var(--line)] bg-[var(--bg)]'>
+                <MessageSquareText className='mx-auto h-8 w-8 text-[var(--ink)]' />
+                <p className='mt-4 text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>No Testimonials Yet</p>
+                <p className='mt-2 text-sm font-light text-[var(--ink-soft)]'>Be the first to share your experience!</p>
               </div>
             ) : (
               <div className='grid gap-6 sm:grid-cols-2'>
                 {testimonials.map(t => (
-                  <article key={t._id} className='glass-card rounded-[24px] p-6'>
-                    <div className='flex items-center gap-1 mb-4'>
+                  <article key={t._id} className='p-8 border border-[var(--line)] bg-[var(--bg)] transition-colors hover:border-[var(--ink)]'>
+                    <div className='flex items-center gap-1 mb-6'>
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`h-4 w-4 ${i < (t.rating || 5) ? 'fill-[var(--accent-2)] text-[var(--accent-2)]' : 'text-[var(--line)]'}`} />
+                        <Star key={i} className={`h-4 w-4 ${i < (t.rating || 5) ? 'fill-[var(--ink)] text-[var(--ink)]' : 'text-[var(--line)]'}`} />
                       ))}
                     </div>
-                    <p className='text-sm italic leading-relaxed text-[var(--ink)]'>"{t.testimonial}"</p>
-                    <div className='mt-6 flex items-center gap-3 border-t border-[var(--line)] pt-4'>
+                    <p className='text-sm italic font-light leading-relaxed text-[var(--ink)]'>" {t.testimonial} "</p>
+                    <div className='mt-8 flex items-center gap-4 border-t border-[var(--line)] pt-6'>
                       {t.avatar ? (
-                        <img src={t.avatar} alt={t.clientName} className='h-10 w-10 rounded-full object-cover border border-[var(--line)]' />
+                        <img src={t.avatar} alt={t.clientName} className='h-12 w-12 object-cover border border-[var(--line)]' />
                       ) : (
-                        <div className='flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] font-nevera text-lg text-[var(--accent)] border border-[var(--line)]'>
+                        <div className='flex h-12 w-12 items-center justify-center bg-[var(--ink)] text-sm font-bold uppercase tracking-widest text-white border border-[var(--ink)]'>
                           {t.clientName.charAt(0)}
                         </div>
                       )}
                       <div>
-                        <p className='text-sm font-semibold text-[var(--ink)]'>{t.clientName}</p>
-                        <p className='text-xs text-[var(--ink-soft)]'>
+                        <p className='text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>{t.clientName}</p>
+                        <p className='mt-1 text-xs font-light text-[var(--ink-soft)]'>
                           {t.clientRole}{t.clientRole && t.company && ' @ '}{t.company}
                         </p>
                       </div>
@@ -108,14 +108,14 @@ const Testimonials = () => {
           </div>
 
           {/* Submission Form */}
-          <aside className='h-fit sticky top-24'>
-            <div className='glass-card rounded-[30px] p-6 md:p-8'>
-              <h2 className='text-xl font-semibold text-[var(--ink)]'>Add Your Testimonial</h2>
-              <p className='mt-2 mb-6 text-sm text-[var(--ink-soft)]'>
+          <aside className='h-fit lg:sticky lg:top-24'>
+            <div className='p-8 border border-[var(--line)] bg-[var(--bg)]'>
+              <h2 className='text-xl font-black uppercase tracking-tighter text-[var(--ink)]'>Add Your Testimonial</h2>
+              <p className='mt-4 mb-8 text-sm font-light text-[var(--ink-soft)]'>
                 Have we worked together? I would love to hear your feedback on our collaboration.
               </p>
 
-              <form onSubmit={handleSubmit} className='space-y-4'>
+              <form onSubmit={handleSubmit} className='space-y-6'>
                 <div>
                   <label htmlFor='clientName' className='sr-only'>Your Name</label>
                   <input
@@ -126,7 +126,7 @@ const Testimonials = () => {
                     onChange={handleChange}
                     placeholder='Your Name'
                     required
-                    className='w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none'
+                    className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors'
                   />
                 </div>
                 <div className='grid grid-cols-2 gap-4'>
@@ -139,7 +139,7 @@ const Testimonials = () => {
                       value={formData.clientRole}
                       onChange={handleChange}
                       placeholder='Role (e.g. CEO)'
-                      className='w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none'
+                      className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors'
                     />
                   </div>
                   <div>
@@ -151,7 +151,7 @@ const Testimonials = () => {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder='Company'
-                      className='w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none'
+                      className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors'
                     />
                   </div>
                 </div>
@@ -165,18 +165,18 @@ const Testimonials = () => {
                     placeholder='Your feedback...'
                     required
                     rows={4}
-                    className='w-full resize-none rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent-2)]/50 focus:outline-none'
+                    className='w-full resize-none border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors'
                   />
                 </div>
                 <button
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-60'
+                  className='w-full border border-[var(--ink)] bg-[var(--ink)] px-6 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)] disabled:opacity-60'
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
                 </button>
                 {status && (
-                  <p className={`text-sm text-center ${status.type === 'success' ? 'text-emerald-600' : 'text-red-600'}`}>
+                  <p className={`text-xs font-bold uppercase tracking-widest mt-4 text-center ${status.type === 'success' ? 'text-[var(--ink)]' : 'text-red-600'}`}>
                     {status.message}
                   </p>
                 )}

@@ -14,14 +14,14 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
     };
 
     return (
-        <div ref={setNodeRef} style={style} className='glass-card flex flex-col justify-between rounded-2xl p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
+        <div ref={setNodeRef} style={style} className=' flex flex-col justify-between rounded-none p-5 transition hover:border-[var(--accent)]/30 bg-[var(--bg)] z-10'>
             <div>
                 <div className='flex items-start justify-end'>
                     <div className='flex items-center gap-2'>
-                        <span className="rounded-full bg-[var(--surface)] border border-[var(--line)] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--ink)]">
+                        <span className="rounded-none bg-[var(--surface)] border border-[var(--line)] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--ink)]">
                             {service.domain}
                         </span>
-                        <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
+                        <span className={`rounded-none px-2.5 py-0.5 text-[10px] font-bold tracking-wider ${service.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
                             {service.status}
                         </span>
                         <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[var(--ink-soft)] hover:text-[var(--ink)]">
@@ -30,7 +30,7 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
                     </div>
                 </div>
                 {service.thumbnail && (
-                    <div className="mt-4 w-full overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)]">
+                    <div className="mt-4 w-full overflow-hidden rounded-none border border-[var(--line)] bg-[var(--surface)]">
                         <img src={service.thumbnail} alt={service.title} className="block w-full h-auto transition hover:scale-105" />
                     </div>
                 )}
@@ -38,10 +38,10 @@ const SortableServiceCard = ({ service, handleOpenForm, handleDelete }) => {
                 <p className='mt-2 line-clamp-3 text-sm text-[var(--ink-soft)]'>{service.description}</p>
             </div>
             <div className='mt-6 flex items-center justify-end gap-2 border-t border-[var(--line)] pt-4'>
-                <button onClick={(e) => { e.stopPropagation(); handleOpenForm(service); }} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)] z-20 relative'>
+                <button onClick={(e) => { e.stopPropagation(); handleOpenForm(service); }} className='rounded-none p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)] z-20 relative'>
                     <Edit2 className='h-4 w-4' />
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); handleDelete(service._id); }} className='rounded-lg p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--accent)] z-20 relative'>
+                <button onClick={(e) => { e.stopPropagation(); handleDelete(service._id); }} className='rounded-none p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--accent)] z-20 relative'>
                     <Trash2 className='h-4 w-4' />
                 </button>
             </div>
@@ -151,22 +151,22 @@ const ServicesAdmin = () => {
 
     return (
         <div className='space-y-6'>
-            <div className='glass-card flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 md:p-6'>
+            <div className=' flex flex-wrap items-center justify-between gap-4 rounded-none p-5 md:p-6'>
                 <div>
                     <h1 className='font-nevera text-3xl tracking-[0.08em] text-[var(--ink)]'>Services</h1>
                     <p className='mt-1 text-sm text-[var(--ink-soft)]'>Manage your portfolio services and offerings.</p>
                 </div>
-                <button onClick={() => handleOpenForm()} className='focus-ring button-pop flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-2)]'>
+                <button onClick={() => handleOpenForm()} className=' button-pop flex items-center gap-2 rounded-none bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-2)]'>
                     <Plus className='h-4 w-4' /> Add Service
                 </button>
             </div>
 
             {loading ? (
-                <div className='glass-card rounded-2xl py-14'>
-                    <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
+                <div className=' rounded-none py-14'>
+                    <div className='mx-auto h-8 w-8 animate-spin rounded-none border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
                 </div>
             ) : services.length === 0 ? (
-                <div className='glass-card rounded-2xl py-16 text-center'>
+                <div className=' rounded-none py-16 text-center'>
                     <Briefcase className='mx-auto h-8 w-8 text-[var(--accent-2)]' />
                     <p className='mt-2 text-[var(--ink-soft)]'>No services added yet.</p>
                 </div>
@@ -189,10 +189,10 @@ const ServicesAdmin = () => {
 
             {isFormOpen && (
                 <div className='fixed inset-0 z-50 flex items-center justify-center bg-[#111827]/40 p-4 backdrop-blur-sm'>
-                    <div className='glass-card w-full max-w-lg rounded-3xl p-6'>
+                    <div className=' w-full max-w-lg rounded-none p-6'>
                         <div className='mb-6 flex items-center justify-between'>
                             <h2 className='font-nevera text-2xl text-[var(--ink)]'>{editingService ? 'Edit Service' : 'New Service'}</h2>
-                            <button onClick={handleCloseForm} className='rounded-full p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
+                            <button onClick={handleCloseForm} className='rounded-none p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
                                 <X className='h-5 w-5' />
                             </button>
                         </div>
@@ -200,35 +200,35 @@ const ServicesAdmin = () => {
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Title</label>
-                                <input required type='text' value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                                <input required type='text' value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Domain / Category *</label>
-                                <input type='text' required value={formData.domain} onChange={e => setFormData({ ...formData, domain: e.target.value })} placeholder="e.g. Web Development, AI Automation" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                                <input type='text' required value={formData.domain} onChange={e => setFormData({ ...formData, domain: e.target.value })} placeholder="e.g. Web Development, AI Automation" className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
                             
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Description *</label>
-                                <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                                <textarea required rows='3' value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Thumbnail URL (Optional)</label>
-                                <input type='url' value={formData.thumbnail} onChange={e => setFormData({ ...formData, thumbnail: e.target.value })} placeholder="Paste image link from Media Gallery" className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
+                                <input type='url' value={formData.thumbnail} onChange={e => setFormData({ ...formData, thumbnail: e.target.value })} placeholder="Paste image link from Media Gallery" className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none' />
                             </div>
 
                             <div>
                                 <label className='mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Status</label>
-                                <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
+                                <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none'>
                                     <option value="ACTIVE">ACTIVE</option>
                                     <option value="DRAFT">DRAFT</option>
                                 </select>
                             </div>
 
                             <div className='mt-6 flex justify-end gap-3'>
-                                <button type='button' onClick={handleCloseForm} className='rounded-xl border border-[var(--line)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'>Cancel</button>
-                                <button type='submit' className='rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[var(--accent-2)]'>{editingService ? 'Save Changes' : 'Create Service'}</button>
+                                <button type='button' onClick={handleCloseForm} className='rounded-none border border-[var(--line)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'>Cancel</button>
+                                <button type='submit' className='rounded-none bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[var(--accent-2)]'>{editingService ? 'Save Changes' : 'Create Service'}</button>
                             </div>
                         </form>
                     </div>

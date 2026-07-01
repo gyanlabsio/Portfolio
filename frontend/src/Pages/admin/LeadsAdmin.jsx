@@ -168,7 +168,7 @@ const LeadsAdmin = () => {
     return (
         <div className='enter-fade space-y-6 relative min-h-[85vh]'>
             {/* Top Header */}
-            <div className='glass-card flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 md:p-6'>
+            <div className=' flex flex-wrap items-center justify-between gap-4 rounded-none p-5 md:p-6'>
                 <div>
                     <h1 className='display-title text-3xl text-[var(--ink)] sm:text-4xl'>Leads &amp; CRM</h1>
                     <p className='mt-1 text-sm text-[var(--ink-soft)]'>Manage customers, track sales pipelines, and follow up on deals.</p>
@@ -183,25 +183,25 @@ const LeadsAdmin = () => {
                     />
                     <button 
                         onClick={() => fileInputRef.current?.click()} 
-                        className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
+                        className=' button-pop inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
                     >
                         <Upload className='h-4 w-4' /> Import CSV
                     </button>
                     <button 
                         onClick={handleExport} 
-                        className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
+                        className=' button-pop inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
                     >
                         <Download className='h-4 w-4' /> Export
                     </button>
                     <button 
                         onClick={() => setShowCreateModal(true)} 
-                        className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:brightness-110'
+                        className=' button-pop inline-flex items-center gap-2 rounded-none bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:brightness-110'
                     >
                         <Plus className='h-4 w-4' /> Add Lead
                     </button>
                     <button 
                         onClick={fetchAllLeads} 
-                        className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
+                        className=' button-pop inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:text-[var(--ink)]'
                     >
                         <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                     </button>
@@ -210,22 +210,22 @@ const LeadsAdmin = () => {
 
             {/* Quick Stats Grid */}
             <div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
-                <div className='glass-card p-5 rounded-2xl flex items-center gap-4'>
-                    <div className='h-12 w-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center'><DollarSign className='h-6 w-6' /></div>
+                <div className=' p-5 rounded-none flex items-center gap-4'>
+                    <div className='h-12 w-12 rounded-none bg-blue-500/10 text-blue-500 flex items-center justify-center'><DollarSign className='h-6 w-6' /></div>
                     <div>
                         <p className='text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wider'>Pipeline Value</p>
                         <h4 className='text-xl font-bold text-[var(--ink)]'>${stats.totalPipelineValue.toLocaleString()}</h4>
                     </div>
                 </div>
-                <div className='glass-card p-5 rounded-2xl flex items-center gap-4'>
-                    <div className='h-12 w-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center'><Percent className='h-6 w-6' /></div>
+                <div className=' p-5 rounded-none flex items-center gap-4'>
+                    <div className='h-12 w-12 rounded-none bg-emerald-500/10 text-emerald-500 flex items-center justify-center'><Percent className='h-6 w-6' /></div>
                     <div>
                         <p className='text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wider'>Closed Win Rate</p>
                         <h4 className='text-xl font-bold text-[var(--ink)]'>{stats.winRate}%</h4>
                     </div>
                 </div>
-                <div className='glass-card p-5 rounded-2xl flex items-center gap-4'>
-                    <div className='h-12 w-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center'><Target className='h-6 w-6' /></div>
+                <div className=' p-5 rounded-none flex items-center gap-4'>
+                    <div className='h-12 w-12 rounded-none bg-purple-500/10 text-purple-500 flex items-center justify-center'><Target className='h-6 w-6' /></div>
                     <div>
                         <p className='text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wider'>Average Deal Size</p>
                         <h4 className='text-xl font-bold text-[var(--ink)]'>${parseFloat(stats.averageDealSize).toLocaleString()}</h4>
@@ -252,7 +252,7 @@ const LeadsAdmin = () => {
             {/* Tab Contents */}
             {loading ? (
                 <div className='flex h-[40vh] items-center justify-center'>
-                    <div className='h-8 w-8 animate-spin rounded-full border-4 border-[var(--accent)]/30 border-t-[var(--accent)]' />
+                    <div className='h-8 w-8 animate-spin rounded-none border-4 border-[var(--accent)]/30 border-t-[var(--accent)]' />
                 </div>
             ) : activeTab === 'pipeline' ? (
                 /* PIPELINE BOARD */
@@ -260,21 +260,21 @@ const LeadsAdmin = () => {
                     {PIPELINE_STAGES.map(stage => {
                         const stageLeads = leads.filter(l => l.status === stage.key)
                         return (
-                            <div key={stage.key} className='glass-card p-3 rounded-2xl bg-[var(--surface)] border border-[var(--line)] space-y-4'>
+                            <div key={stage.key} className=' p-3 rounded-none bg-[var(--surface)] border border-[var(--line)] space-y-4'>
                                 <div className={`flex items-center justify-between border-b pb-2 ${stage.color.split(' ')[0]}`}>
                                     <h3 className='font-bold text-xs uppercase tracking-wider'>{stage.label}</h3>
-                                    <span className='rounded-full bg-black/10 px-2 py-0.5 text-[10px] font-bold text-[var(--ink-soft)]'>{stageLeads.length}</span>
+                                    <span className='rounded-none bg-black/10 px-2 py-0.5 text-[10px] font-bold text-[var(--ink-soft)]'>{stageLeads.length}</span>
                                 </div>
 
                                 <div className='space-y-3 max-h-[60vh] overflow-y-auto pr-1'>
                                     {stageLeads.length === 0 ? (
-                                        <p className='text-[10px] text-[var(--ink-soft)] text-center py-4 border border-dashed border-[var(--line)] rounded-xl'>No deals here</p>
+                                        <p className='text-[10px] text-[var(--ink-soft)] text-center py-4 border border-dashed border-[var(--line)] rounded-none'>No deals here</p>
                                     ) : (
                                         stageLeads.map(lead => (
                                             <div 
                                                 key={lead._id}
                                                 onClick={() => setSelectedLead(lead)}
-                                                className='group rounded-xl border border-[var(--line)] bg-[var(--bg)] p-3 space-y-2 hover:border-[var(--accent-2)] transition cursor-pointer relative'
+                                                className='group rounded-none border border-[var(--line)] bg-[var(--bg)] p-3 space-y-2 hover:border-[var(--accent-2)] transition cursor-pointer relative'
                                             >
                                                 <div className='flex items-start justify-between min-w-0'>
                                                     <h4 className='font-semibold text-xs text-[var(--ink)] truncate group-hover:text-[var(--accent)] pr-4'>{lead.name}</h4>
@@ -297,7 +297,7 @@ const LeadsAdmin = () => {
                 </div>
             ) : (
                 /* LEADS LIST (TABLE VIEW) */
-                <div className='glass-card rounded-[24px] overflow-hidden border border-[var(--line)] bg-[var(--surface)]'>
+                <div className=' rounded-none overflow-hidden border border-[var(--line)] bg-[var(--surface)]'>
                     <div className='overflow-x-auto'>
                         <table className='w-full border-collapse text-left text-xs'>
                             <thead>
@@ -337,7 +337,7 @@ const LeadsAdmin = () => {
                                                     value={lead.status}
                                                     onClick={(e) => e.stopPropagation()}
                                                     onChange={(e) => handleStageChange(lead._id, e.target.value)}
-                                                    className='rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-[10px] font-semibold focus:outline-none'
+                                                    className='rounded-none border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-[10px] font-semibold focus:outline-none'
                                                 >
                                                     <option value="NEW">New</option>
                                                     <option value="CONTACTED">Contacted</option>
@@ -349,7 +349,7 @@ const LeadsAdmin = () => {
                                             <td className='p-4 text-right' onClick={(e) => e.stopPropagation()}>
                                                 <button 
                                                     onClick={(e) => handleDeleteLead(lead._id, e)}
-                                                    className='rounded-lg border border-red-500/20 bg-red-500/5 p-1.5 text-red-500 hover:bg-red-500/10 transition'
+                                                    className='rounded-none border border-red-500/20 bg-red-500/5 p-1.5 text-red-500 hover:bg-red-500/10 transition'
                                                 >
                                                     <Trash2 className='h-3.5 w-3.5' />
                                                 </button>
@@ -378,29 +378,29 @@ const LeadsAdmin = () => {
             {/* Create Lead Modal */}
             {showCreateModal && (
                 <div className='fixed inset-0 z-50 flex items-center justify-center bg-[#111827]/45 p-4 backdrop-blur-sm'>
-                    <div className='glass-card enter-fade w-full max-w-lg rounded-[24px] p-6 space-y-4'>
+                    <div className=' enter-fade w-full max-w-lg rounded-none p-6 space-y-4'>
                         <h3 className='font-bold text-lg text-[var(--ink)] border-b border-[var(--line)] pb-3'>Add New Lead</h3>
                         <form onSubmit={handleCreateLead} className='space-y-4 text-xs'>
                             <div className='grid grid-cols-2 gap-3'>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Name *</label>
-                                    <input type='text' required value={newLeadForm.name} onChange={(e) => setNewLeadForm(p => ({ ...p, name: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
+                                    <input type='text' required value={newLeadForm.name} onChange={(e) => setNewLeadForm(p => ({ ...p, name: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Email *</label>
-                                    <input type='email' required value={newLeadForm.email} onChange={(e) => setNewLeadForm(p => ({ ...p, email: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
+                                    <input type='email' required value={newLeadForm.email} onChange={(e) => setNewLeadForm(p => ({ ...p, email: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Phone</label>
-                                    <input type='text' value={newLeadForm.phone} onChange={(e) => setNewLeadForm(p => ({ ...p, phone: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
+                                    <input type='text' value={newLeadForm.phone} onChange={(e) => setNewLeadForm(p => ({ ...p, phone: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Company</label>
-                                    <input type='text' value={newLeadForm.company} onChange={(e) => setNewLeadForm(p => ({ ...p, company: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
+                                    <input type='text' value={newLeadForm.company} onChange={(e) => setNewLeadForm(p => ({ ...p, company: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
                                 </div>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Project Type</label>
-                                    <select value={newLeadForm.projectType} onChange={(e) => setNewLeadForm(p => ({ ...p, projectType: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none'>
+                                    <select value={newLeadForm.projectType} onChange={(e) => setNewLeadForm(p => ({ ...p, projectType: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none'>
                                         <option value="WEB_APP">Web App</option>
                                         <option value="SAAS">SaaS</option>
                                         <option value="DASHBOARD">Dashboard</option>
@@ -411,18 +411,18 @@ const LeadsAdmin = () => {
                                 </div>
                                 <div>
                                     <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Deal Value ($)</label>
-                                    <input type='number' min='0' value={newLeadForm.dealValue} onChange={(e) => setNewLeadForm(p => ({ ...p, dealValue: parseFloat(e.target.value) || 0 }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
+                                    <input type='number' min='0' value={newLeadForm.dealValue} onChange={(e) => setNewLeadForm(p => ({ ...p, dealValue: parseFloat(e.target.value) || 0 }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none' />
                                 </div>
                             </div>
 
                             <div>
                                 <label className='mb-1 block font-semibold text-[var(--ink-soft)]'>Notes</label>
-                                <textarea rows='3' value={newLeadForm.notes} onChange={(e) => setNewLeadForm(p => ({ ...p, notes: e.target.value }))} className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none resize-none' />
+                                <textarea rows='3' value={newLeadForm.notes} onChange={(e) => setNewLeadForm(p => ({ ...p, notes: e.target.value }))} className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--ink)] focus:outline-none resize-none' />
                             </div>
 
                             <div className='flex justify-end gap-2 pt-2 border-t border-[var(--line)]'>
-                                <button type='button' onClick={() => setShowCreateModal(false)} className='rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-[var(--ink-soft)] hover:text-[var(--ink)]'>Cancel</button>
-                                <button type='submit' className='rounded-lg bg-[var(--accent)] px-4 py-2 text-white hover:brightness-110'>Save Lead</button>
+                                <button type='button' onClick={() => setShowCreateModal(false)} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-[var(--ink-soft)] hover:text-[var(--ink)]'>Cancel</button>
+                                <button type='submit' className='rounded-none bg-[var(--accent)] px-4 py-2 text-white hover:brightness-110'>Save Lead</button>
                             </div>
                         </form>
                     </div>

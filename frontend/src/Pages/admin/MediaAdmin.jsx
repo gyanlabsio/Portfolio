@@ -130,7 +130,7 @@ const MediaAdmin = () => {
                     {selectedFiles.length > 0 && (
                         <button 
                             onClick={handleBulkDelete}
-                            className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20'
+                            className=' button-pop inline-flex items-center gap-2 rounded-none bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20'
                         >
                             <Trash2 className='h-4 w-4' /> Delete Selected ({selectedFiles.length})
                         </button>
@@ -139,13 +139,13 @@ const MediaAdmin = () => {
                         type="text" 
                         value={uploadFolder} 
                         onChange={(e) => setUploadFolder(e.target.value)} 
-                        className='w-32 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'
+                        className='w-32 rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'
                         placeholder='Folder (e.g. root)'
                     />
                     <select 
                         value={uploadModule} 
                         onChange={(e) => setUploadModule(e.target.value)} 
-                        className='rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none cursor-pointer'
+                        className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none cursor-pointer'
                     >
                         <option value="PROJECT">Project</option>
                         <option value="CONTENT">Content (Blog)</option>
@@ -154,9 +154,9 @@ const MediaAdmin = () => {
                         <option value="GENERAL">General</option>
                     </select>
 
-                    <label className='flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-110'>
+                    <label className='flex cursor-pointer items-center gap-2 rounded-none bg-[var(--accent)] px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-110'>
                         {uploading ? (
-                            <div className='h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white' />
+                            <div className='h-4 w-4 animate-spin rounded-none border-2 border-white/30 border-t-white' />
                         ) : (
                             <Upload className='h-4 w-4' />
                         )}
@@ -167,7 +167,7 @@ const MediaAdmin = () => {
             </div>
 
             {message && (
-                <div className={`p-4 rounded-xl text-sm font-semibold border ${message.includes('successfully') ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500'}`}>
+                <div className={`p-4 rounded-none text-sm font-semibold border ${message.includes('successfully') ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500'}`}>
                     {message}
                 </div>
             )}
@@ -186,7 +186,7 @@ const MediaAdmin = () => {
                     </label>
                 </div>
             </div>
-            <div className='glass-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center'>
+            <div className=' flex flex-col gap-4 p-4 sm:flex-row sm:items-center'>
                 <div className='relative flex-1'>
                     <Search className='absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-soft)]' />
                     <input 
@@ -194,7 +194,7 @@ const MediaAdmin = () => {
                         placeholder='Search files by original filename...' 
                         value={search}
                         onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
-                        className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] py-2.5 pl-10 pr-4 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'
+                        className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] py-2.5 pl-10 pr-4 text-sm text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none'
                     />
                 </div>
                 
@@ -202,7 +202,7 @@ const MediaAdmin = () => {
                     <select 
                         value={selectedModule} 
                         onChange={(e) => { setSelectedModule(e.target.value); setCurrentPage(1); }}
-                        className='rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:outline-none'
+                        className='rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:outline-none'
                     >
                         <option value="">All Categories</option>
                         <option value="PROJECT">Projects</option>
@@ -216,10 +216,10 @@ const MediaAdmin = () => {
             {/* Grid display */}
             {loading ? (
                 <div className='flex h-[40vh] items-center justify-center'>
-                    <div className='h-8 w-8 animate-spin rounded-full border-4 border-[var(--accent)]/30 border-t-[var(--accent)]' />
+                    <div className='h-8 w-8 animate-spin rounded-none border-4 border-[var(--accent)]/30 border-t-[var(--accent)]' />
                 </div>
             ) : files.length === 0 ? (
-                <div className='flex h-[40vh] flex-col items-center justify-center border border-dashed border-[var(--line)] rounded-3xl p-8 text-center'>
+                <div className='flex h-[40vh] flex-col items-center justify-center border border-dashed border-[var(--line)] rounded-none p-8 text-center'>
                     <FolderOpen className='h-12 w-12 text-[var(--ink-soft)] mb-2' />
                     <p className='text-[var(--ink-soft)] font-medium'>No assets found matching your criteria.</p>
                 </div>
@@ -227,7 +227,7 @@ const MediaAdmin = () => {
                 <>
                     <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
                         {files.map(file => (
-                            <div key={file._id} className='group glass-card overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent-2)] transition'>
+                            <div key={file._id} className='group  overflow-hidden rounded-none border border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent-2)] transition'>
                                 <div className='relative aspect-video w-full bg-[var(--bg-alt)] flex items-center justify-center overflow-hidden border-b border-[var(--line)]'>
                                     {file.fileType === 'IMAGE' ? (
                                         <img src={file.url} alt={file.originalName} className='h-full w-full object-cover group-hover:scale-105 transition duration-500' />
@@ -238,11 +238,11 @@ const MediaAdmin = () => {
                                         </div>
                                     )}
                                     <div className='absolute left-3 top-3 flex flex-col gap-1'>
-                                        <span className='rounded-full bg-black/60 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider shadow-sm'>
+                                        <span className='rounded-none bg-black/60 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider '>
                                             {file.module}
                                         </span>
                                         {file.folder && file.folder !== 'root' && (
-                                            <span className='rounded-full bg-[var(--accent)]/90 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider shadow-sm flex items-center gap-1'>
+                                            <span className='rounded-none bg-[var(--accent)]/90 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider  flex items-center gap-1'>
                                                 <FolderOpen className='h-3 w-3' /> {file.folder}
                                             </span>
                                         )}
@@ -252,7 +252,7 @@ const MediaAdmin = () => {
                                             type="checkbox" 
                                             checked={selectedFiles.includes(file._id)}
                                             onChange={() => toggleSelection(file._id)}
-                                            className='h-5 w-5 rounded border-[var(--line)] text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer shadow-sm'
+                                            className='h-5 w-5 rounded border-[var(--line)] text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer '
                                         />
                                     </div>
                                 </div>
@@ -265,14 +265,14 @@ const MediaAdmin = () => {
                                     <div className='flex gap-2'>
                                         <button 
                                             onClick={() => handleCopy(file.url, file._id)}
-                                            className='flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface)] py-1.5 text-xs font-semibold text-[var(--ink-soft)] hover:text-[var(--accent)] transition'
+                                            className='flex-1 inline-flex items-center justify-center gap-1.5 rounded-none border border-[var(--line)] bg-[var(--surface)] py-1.5 text-xs font-semibold text-[var(--ink-soft)] hover:text-[var(--accent)] transition'
                                         >
                                             {copiedId === file._id ? <Check className='h-3.5 w-3.5 text-emerald-500' /> : <Copy className='h-3.5 w-3.5' />}
                                             {copiedId === file._id ? 'Copied' : 'Copy URL'}
                                         </button>
                                         <button 
                                             onClick={() => handleDelete(file._id)}
-                                            className='inline-flex items-center justify-center rounded-lg border border-red-500/20 bg-red-500/5 p-1.5 text-red-500 hover:bg-red-500/10 transition'
+                                            className='inline-flex items-center justify-center rounded-none border border-red-500/20 bg-red-500/5 p-1.5 text-red-500 hover:bg-red-500/10 transition'
                                         >
                                             <Trash2 className='h-3.5 w-3.5' />
                                         </button>
@@ -289,7 +289,7 @@ const MediaAdmin = () => {
                                 <button
                                     key={idx}
                                     onClick={() => setCurrentPage(idx + 1)}
-                                    className={`h-8 w-8 rounded-lg text-xs font-semibold border transition ${
+                                    className={`h-8 w-8 rounded-none text-xs font-semibold border transition ${
                                         currentPage === idx + 1 
                                         ? 'bg-[var(--accent)] border-[var(--accent)] text-white' 
                                         : 'bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--ink)]'

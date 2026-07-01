@@ -41,7 +41,7 @@ const AdminLayout = () => {
             <button
                 type='button'
                 onClick={() => setOpen((prev) => !prev)}
-                className='focus-ring button-pop fixed right-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink)] shadow-sm md:hidden'
+                className=' button-pop fixed right-4 top-4 z-50 inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink)]  md:hidden'
             >
                 <PanelRightClose className='h-4 w-4' />
                 Menu
@@ -50,7 +50,7 @@ const AdminLayout = () => {
             {open && <div className='fixed inset-0 z-40 bg-[#111827]/30 backdrop-blur-sm md:hidden' onClick={() => setOpen(false)} />}
 
             <aside className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-[var(--line)] bg-[var(--bg-alt)]/95 p-4 backdrop-blur-sm transition-transform md:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className='glass-card enter-fade flex h-full flex-col rounded-2xl p-3'>
+                <div className=' enter-fade flex h-full flex-col rounded-none p-3'>
                     <div className='border-b border-[var(--line)] p-4'>
                         <h1 className='font-nevera text-lg tracking-[0.14em] text-[var(--accent)]'>CMS PANEL</h1>
                         <p className='mt-1 text-xs text-[var(--ink-soft)]'>{admin?.email}</p>
@@ -62,7 +62,7 @@ const AdminLayout = () => {
                                 key={item.to}
                                 to={item.to}
                                 onClick={() => setOpen(false)}
-                                className={`focus-ring button-pop flex items-center gap-3 rounded-xl border px-3 py-3 text-sm font-semibold ${isActive(item.to, item.exact)
+                                className={` button-pop flex items-center gap-3 rounded-none border px-3 py-3 text-sm font-semibold ${isActive(item.to, item.exact)
                                     ? 'border-[var(--accent)]/35 bg-[var(--accent)] text-white'
                                     : 'border-transparent text-[var(--ink-soft)] hover:border-[var(--line)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'
                                     }`}
@@ -78,12 +78,12 @@ const AdminLayout = () => {
                             <span className='text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Theme</span>
                             <ThemeToggle />
                         </div>
-                        <Link to='/' onClick={() => setOpen(false)} className='focus-ring button-pop flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
+                        <Link to='/' onClick={() => setOpen(false)} className=' button-pop flex items-center gap-3 rounded-none px-3 py-3 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
                             <Home className='h-4 w-4' /> View Site
                         </Link>
                         <button
                             onClick={logoutAdmin}
-                            className='focus-ring button-pop flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)]'
+                            className=' button-pop flex w-full items-center gap-3 rounded-none px-3 py-3 text-left text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)]'
                         >
                             <LogOut className='h-4 w-4' /> Logout
                         </button>

@@ -28,25 +28,21 @@ const Projects = () => {
     <main className='pb-16 pt-8 md:pt-12'>
       <SEO title='Projects' description='Featured projects built with modern web technologies and product intent.' />
 
-      <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full bg-[var(--accent-2)]/20 blur-3xl' />
-          <div className='pointer-events-none absolute -right-14 bottom-0 h-44 w-44 rounded-full bg-[var(--accent)]/20 blur-3xl' />
-
-          <div className='relative flex flex-wrap items-center justify-between gap-4'>
+      <section className='mb-24 border-b border-[var(--line)] pb-16'>
+        <div className='px-6 md:px-10 lg:px-16'>
+          <div className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
             <div>
-              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-soft)]'>
-                <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
+              <p className='mb-4 text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>
                 Case Studies
-              </div>
-              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>
+              </p>
+              <h1 className='text-6xl font-black uppercase tracking-tighter text-[var(--ink)] md:text-8xl'>
                 <SplitText text='Projects' delay={0.2} />
               </h1>
             </div>
 
-            <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>
-              <p className='font-semibold text-[var(--ink)]'>{projects.length || 0} builds</p>
-              <p>crafted and shipped</p>
+            <div className='text-sm font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+              <p className='text-[var(--ink)]'>{projects.length || 0} builds</p>
+              <p>shipped</p>
             </div>
           </div>
         </div>
@@ -60,7 +56,7 @@ const Projects = () => {
         )}
 
         {!loading && projects.length === 0 && (
-          <div className='glass-card rounded-3xl p-10 text-center'>
+          <div className=' rounded-none p-10 text-center'>
             <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
             <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>Coming Soon</h3>
             <p className='mx-auto mt-3 max-w-lg text-[var(--ink-soft)]'>
@@ -70,69 +66,44 @@ const Projects = () => {
         )}
 
         {!loading && projects.length > 0 && (
-          <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-16 px-6 md:px-10 lg:px-16'>
             {projects.map((project) => (
               <Link
                 to={`/project/${project.slug}`}
                 key={project._id}
-                className='glass-card group block enter-fade rounded-3xl p-4 md:p-5 hover:border-[var(--accent)] transition-colors'
+                className='group block focus:outline-none'
               >
-                {project.coverImage && (
-                  <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
-                    <img
-                      src={project.coverImage}
-                      alt={project.title}
-                      className='h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]'
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-[#111a2e99] to-transparent' />
-                  </div>
-                )}
-
-                <div className='mt-4 space-y-4'>
-                  <h3 className='display-title text-2xl text-[var(--ink)] group-hover:text-[var(--accent)]'>
-                    {project.title}
-                  </h3>
-
-                  <p className='line-clamp-3 text-sm leading-relaxed text-[var(--ink-soft)]'>
-                    {project.description}
-                  </p>
-
-                  {project.techStack && project.techStack.length > 0 && (
-                    <div className='flex flex-wrap gap-2'>
-                      {project.techStack.slice(0, 4).map((tech) => (
-                        <span
-                          key={tech}
-                          className='inline-flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold text-[var(--ink)]'
-                        >
-                          <Layers3 className='h-3 w-3 text-[var(--accent-2)]' />
-                          {tech}
-                        </span>
-                      ))}
+                <div className='grid lg:grid-cols-2 gap-8 lg:gap-16 items-center'>
+                  {project.coverImage && (
+                    <div className='relative w-full overflow-hidden border border-[var(--line)]'>
+                      <img
+                        src={project.coverImage}
+                        alt={project.title}
+                        className='w-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105'
+                      />
                     </div>
                   )}
 
-                  <div className='flex gap-3 pt-2'>
-                    {project.githubLink && (
-                      <a
-                        href={project.githubLink}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
-                        aria-label={`Open ${project.title} on GitHub`}
-                      >
-                        <Github className='w-4 h-4' />
-                      </a>
-                    )}
-                    {project.liveLink && (
-                      <a
-                        href={project.liveLink}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)]'
-                        aria-label={`Open live demo of ${project.title}`}
-                      >
-                        <ExternalLink className='w-4 h-4' />
-                      </a>
+                  <div className='flex flex-col gap-6'>
+                    <h3 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors md:text-5xl'>
+                      {project.title}
+                    </h3>
+
+                    <p className='text-base font-light leading-relaxed text-[var(--ink-soft)] max-w-xl'>
+                      {project.description}
+                    </p>
+
+                    {project.techStack && project.techStack.length > 0 && (
+                      <div className='flex flex-wrap gap-2'>
+                        {project.techStack.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className='border border-[var(--line)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--ink)]'
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>

@@ -22,7 +22,7 @@ const DataTable = () => {
   if (loading) return <div className="p-6 text-center text-gray-500">Loading visitors...</div>;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-none  border border-gray-100 dark:border-gray-700 overflow-hidden">
       <div className="p-6 border-b border-gray-100 dark:border-gray-700">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white">Recent Top Visitors</h3>
       </div>
@@ -30,7 +30,7 @@ const DataTable = () => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700/50 dark:text-gray-300">
             <tr>
-              <th scope="col" className="px-6 py-3 rounded-tl-lg">Visitor Label</th>
+              <th scope="col" className="px-6 py-3 rounded-none">Visitor Label</th>
               <th scope="col" className="px-6 py-3">Total Visits</th>
               <th scope="col" className="px-6 py-3">Last Visit</th>
             </tr>

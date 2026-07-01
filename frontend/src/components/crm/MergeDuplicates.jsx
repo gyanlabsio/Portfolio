@@ -22,7 +22,7 @@ const MergeDuplicates = () => {
   if (loading) return <div>Loading duplicates...</div>;
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-none ">
       <h2 className="text-xl font-bold mb-6">Duplicate Detection</h2>
       
       <h3 className="font-semibold text-gray-700 dark:text-gray-300 mb-4">Email Duplicates</h3>
@@ -31,7 +31,7 @@ const MergeDuplicates = () => {
       ) : (
         <div className="space-y-4 mb-8">
           {duplicates.emailDuplicates.map((dup, i) => (
-            <div key={i} className="p-4 border rounded-lg dark:border-gray-700">
+            <div key={i} className="p-4 border rounded-none dark:border-gray-700">
               <span className="font-medium">{dup._id}</span> ({dup.count} contacts)
               <button className="ml-4 text-blue-600 hover:underline">Review & Merge</button>
             </div>
@@ -45,7 +45,7 @@ const MergeDuplicates = () => {
       ) : (
         <div className="space-y-4">
           {duplicates.phoneDuplicates.map((dup, i) => (
-            <div key={i} className="p-4 border rounded-lg dark:border-gray-700">
+            <div key={i} className="p-4 border rounded-none dark:border-gray-700">
               <span className="font-medium">{dup._id}</span> ({dup.count} contacts)
               <button className="ml-4 text-blue-600 hover:underline">Review & Merge</button>
             </div>

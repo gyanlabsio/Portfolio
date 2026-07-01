@@ -24,6 +24,54 @@ const settingsSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    aboutHeroHeading: {
+        type: String,
+        trim: true,
+        default: 'WHERE DESIGN MEETS ENGINEERING',
+    },
+    aboutHeroSubheading: {
+        type: String,
+        trim: true,
+        default: 'GET TO KNOW ME CLOSELY',
+    },
+    aboutHeroBrandName: {
+        type: String,
+        trim: true,
+        default: 'GYANARANJAN',
+    },
+    aboutHeroImages: {
+        type: [String],
+        default: [],
+    },
+    aboutStatsHeading: {
+        type: String,
+        trim: true,
+        default: 'OUR IMPACT IN NUMBERS',
+    },
+    aboutStatsSubheading: {
+        type: String,
+        trim: true,
+        default: 'BUT WHY US?',
+    },
+    aboutStatsImage: {
+        type: String,
+        trim: true,
+    },
+    aboutStats: {
+        type: [
+            {
+                value: String,
+                label: String,
+                description: String,
+            }
+        ],
+        default: [
+            { value: '48+', label: 'SUCCESSFUL PROJECTS', description: 'Delivering impactful digital solutions that combine creativity, precision, and innovation.' },
+            { value: '35+', label: 'SATISFIED CLIENTS', description: 'Building long-term partnerships through trust, design excellence, and a commitment to crafting experiences.' },
+            { value: '62%', label: 'AVG. INCREASE IN SALES', description: 'Helping businesses achieve measurable growth through strategic design, seamless functionality.' },
+            { value: '45%', label: 'COST EFFICIENCY', description: 'Optimizing resources and development processes to ensure maximum value, high performance.' }
+        ]
+    },
     bioText: {
         type: String,
         trim: true,

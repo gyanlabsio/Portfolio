@@ -3,7 +3,7 @@ import { Mail, Phone, Building, MoreVertical } from 'lucide-react';
 
 const CrmTable = ({ contacts, onSelectContact }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-none  border border-gray-100 dark:border-gray-700 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700/50 dark:text-gray-300">
@@ -24,7 +24,7 @@ const CrmTable = ({ contacts, onSelectContact }) => {
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold mr-3">
+                    <div className="w-10 h-10 rounded-none bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold mr-3">
                       {contact.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -58,7 +58,7 @@ const CrmTable = ({ contacts, onSelectContact }) => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium 
+                  <span className={`px-2.5 py-1 rounded-none text-xs font-medium 
                     ${contact.lifecycleStage === 'CUSTOMER' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
                       contact.lifecycleStage === 'SQL' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300' :
                       'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'}`}>

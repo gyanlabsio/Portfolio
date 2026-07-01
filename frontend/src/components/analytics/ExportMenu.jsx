@@ -41,14 +41,14 @@ const ExportMenu = () => {
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors"
+        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-none flex items-center space-x-2 transition-colors"
       >
         <span>Export</span>
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-none  border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
           <ul className="py-1 text-sm text-gray-700 dark:text-gray-300">
             <li>
               <button 

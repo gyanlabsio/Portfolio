@@ -8,12 +8,12 @@ const TermsConditions = () => {
             <SEO title="Terms and Conditions - Gyanaranjan Das" description="Terms and Conditions for Gyanaranjan Das portfolio and services." />
             
             <div className='section-wrap'>
-                <Link to='/' className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)] mb-5'>
+                <Link to='/' className='inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--ink)] transition hover:border-[var(--accent-2)] hover:text-[var(--accent-2)] mb-5'>
                     <ArrowLeft className='h-3.5 w-3.5' />
                     Back to Home
                 </Link>
 
-                <div className='glass-card rounded-[30px] p-6 md:p-10'>
+                <div className=' rounded-none p-6 md:p-10'>
                     <h1 className='display-title text-3xl leading-tight text-[var(--ink)] sm:text-5xl mb-4'>Terms and Conditions</h1>
                     <p className='text-sm text-[var(--ink-soft)] mb-8'>Effective Date: June 8, 2026 | Last Updated: June 8, 2026</p>
 

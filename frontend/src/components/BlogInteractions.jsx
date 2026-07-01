@@ -85,7 +85,7 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                     className="flex items-center gap-2 group transition"
                     title={isLiked ? "Unlike" : "Like"}
                 >
-                    <div className={`p-3 rounded-full transition-all duration-300 ${isLiked ? 'bg-red-500/10' : 'bg-[var(--surface)] group-hover:bg-red-500/10'}`}>
+                    <div className={`p-3 rounded-none transition-all duration-300 ${isLiked ? 'bg-red-500/10' : 'bg-[var(--surface)] group-hover:bg-red-500/10'}`}>
                         <Heart 
                             className={`h-6 w-6 transition-all duration-300 ${isLiked ? 'fill-red-500 text-red-500 scale-110' : 'text-[var(--ink-soft)] group-hover:text-red-500 active:scale-95'}`} 
                         />
@@ -96,14 +96,14 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                 </button>
 
                 <div className="flex items-center gap-2 text-[var(--ink-soft)]">
-                    <div className="p-3 rounded-full bg-[var(--surface)]">
+                    <div className="p-3 rounded-none bg-[var(--surface)]">
                         <MessageSquare className="h-6 w-6" />
                     </div>
                     <span className="font-semibold text-lg">{comments.length}</span>
                 </div>
             </div>
 
-            <div className="glass-card rounded-3xl p-6 md:p-8">
+            <div className=" rounded-none p-6 md:p-8">
                 <h3 className="font-nevera text-2xl text-[var(--ink)] mb-6">Comments</h3>
                 
                 <form onSubmit={handleCommentSubmit} className="mb-10 space-y-4">
@@ -115,7 +115,7 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                             onChange={(e) => setAuthorName(e.target.value)}
                             required
                             maxLength={50}
-                            className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none"
+                            className="w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-3 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none"
                         />
                     </div>
                     <div className="relative">
@@ -126,12 +126,12 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                             required
                             rows="3"
                             maxLength={500}
-                            className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3 pr-12 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none"
+                            className="w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-3 pr-12 text-sm text-[var(--ink)] focus:border-[var(--accent-2)] focus:outline-none resize-none"
                         />
                         <button 
                             type="submit" 
                             disabled={isSubmitting || !newComment.trim() || !authorName.trim()}
-                            className="absolute bottom-3 right-3 p-2 rounded-lg bg-[var(--accent)] text-white hover:bg-[var(--accent-2)] disabled:opacity-50 disabled:cursor-not-allowed transition"
+                            className="absolute bottom-3 right-3 p-2 rounded-none bg-[var(--accent)] text-white hover:bg-[var(--accent-2)] disabled:opacity-50 disabled:cursor-not-allowed transition"
                         >
                             <Send className="h-4 w-4" />
                         </button>
@@ -146,7 +146,7 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                 <div className="space-y-6">
                     {loadingComments ? (
                         <div className="animate-pulse flex space-x-4">
-                            <div className="rounded-full bg-[var(--surface)] h-10 w-10"></div>
+                            <div className="rounded-none bg-[var(--surface)] h-10 w-10"></div>
                             <div className="flex-1 space-y-2 py-1">
                                 <div className="h-3 bg-[var(--surface)] rounded w-1/4"></div>
                                 <div className="h-3 bg-[var(--surface)] rounded w-3/4"></div>
@@ -155,7 +155,7 @@ const BlogInteractions = ({ postId, initialLikes = [] }) => {
                     ) : comments.length > 0 ? (
                         comments.map(comment => (
                             <div key={comment._id} className="flex gap-4">
-                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center font-nevera text-lg">
+                                <div className="flex-shrink-0 h-10 w-10 rounded-none bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center font-nevera text-lg">
                                     {comment.authorName.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1">

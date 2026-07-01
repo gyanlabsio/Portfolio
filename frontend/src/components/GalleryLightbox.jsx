@@ -58,14 +58,14 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                     {/* Close Button */}
                     <button
                         onClick={onClose}
-                        className="absolute right-4 top-4 z-[999] flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20"
+                        className="absolute right-4 top-4 z-[999] flex h-10 w-10 items-center justify-center rounded-none bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20"
                     >
                         <X className="h-5 w-5" />
                     </button>
 
                     <div
                         onClick={(e) => e.stopPropagation()}
-                        className="relative flex h-full max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-[#161b22] border border-white/10 shadow-2xl md:flex-row"
+                        className="relative flex h-full max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-none bg-[#161b22] border border-white/10  md:flex-row"
                     >
                         {/* Image Viewer */}
                         <div className="relative flex flex-1 items-center justify-center bg-black/50 overflow-hidden">
@@ -86,17 +86,17 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                 <>
                                     <button
                                         onClick={handlePrev}
-                                        className="absolute left-4 top-1/2 flex -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition hover:bg-black/80"
+                                        className="absolute left-4 top-1/2 flex -translate-y-1/2 h-10 w-10 items-center justify-center rounded-none bg-black/50 text-white backdrop-blur-md transition hover:bg-black/80"
                                     >
                                         <ChevronLeft className="h-6 w-6" />
                                     </button>
                                     <button
                                         onClick={handleNext}
-                                        className="absolute right-4 top-1/2 flex -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition hover:bg-black/80"
+                                        className="absolute right-4 top-1/2 flex -translate-y-1/2 h-10 w-10 items-center justify-center rounded-none bg-black/50 text-white backdrop-blur-md transition hover:bg-black/80"
                                     >
                                         <ChevronRight className="h-6 w-6" />
                                     </button>
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-xs text-white/70 backdrop-blur-md">
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-none bg-black/50 px-3 py-1 text-xs text-white/70 backdrop-blur-md">
                                         {currentImageIndex + 1} / {images.length}
                                     </div>
                                 </>
@@ -105,7 +105,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
 
                         {/* Sidebar Info */}
                         <div className="w-full shrink-0 overflow-y-auto border-t border-white/10 bg-[#161b22] p-6 md:w-[350px] md:border-l md:border-t-0 lg:w-[400px]">
-                            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#22d3ee]">
+                            <div className="mb-4 inline-flex items-center gap-2 rounded-none border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#22d3ee]">
                                 {design.category}
                             </div>
                             <h2 className="mb-2 font-nevera text-2xl tracking-wide text-white md:text-3xl">
@@ -123,7 +123,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                 </div>
                             )}
 
-                            <div className="space-y-4 rounded-2xl bg-black/30 p-5">
+                            <div className="space-y-4 rounded-none bg-black/30 p-5">
                                 {design.client && (
                                     <div>
                                         <p className="text-xs font-semibold uppercase text-white/50">Client</p>
@@ -141,7 +141,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                         <p className="text-xs font-semibold uppercase text-white/50">Tools</p>
                                         <div className="mt-1 flex flex-wrap gap-2">
                                             {design.tools.map((tool) => (
-                                                <span key={tool} className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/80">
+                                                <span key={tool} className="rounded-none border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/80">
                                                     {tool}
                                                 </span>
                                             ))}
@@ -161,7 +161,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                     href={design.externalUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff5a43] py-3 text-sm font-semibold text-white transition hover:brightness-110"
+                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-none bg-[#ff5a43] py-3 text-sm font-semibold text-white transition hover:brightness-110"
                                 >
                                     View Live <ExternalLink className="h-4 w-4" />
                                 </a>

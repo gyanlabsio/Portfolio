@@ -24,7 +24,7 @@ const CommentSection = ({ comments, commentsLoading, onAddComment, commentStatus
             </div>
 
             {/* Comment Form */}
-            <form onSubmit={handleSubmit} className="mb-10 glass-card p-6 rounded-[24px]">
+            <form onSubmit={handleSubmit} className="mb-10  p-6 rounded-none">
                 <h4 className="font-semibold text-[var(--ink)] mb-4">Leave a thought</h4>
                 <div className="space-y-4">
                     <input 
@@ -33,7 +33,7 @@ const CommentSection = ({ comments, commentsLoading, onAddComment, commentStatus
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none"
+                        className="w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none"
                     />
                     <textarea 
                         placeholder="Your Comment" 
@@ -41,7 +41,7 @@ const CommentSection = ({ comments, commentsLoading, onAddComment, commentStatus
                         onChange={(e) => setText(e.target.value)}
                         required
                         rows={3}
-                        className="w-full resize-none rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none"
+                        className="w-full resize-none rounded-none border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none"
                     />
                     
                     <div className="flex items-center justify-between">
@@ -57,7 +57,7 @@ const CommentSection = ({ comments, commentsLoading, onAddComment, commentStatus
                         <button 
                             type="submit" 
                             disabled={commentStatus === 'loading' || !name.trim() || !text.trim()}
-                            className="rounded-full bg-[var(--accent)] px-6 py-2.5 text-sm font-bold tracking-wide text-white transition hover:brightness-110 disabled:opacity-50"
+                            className="rounded-none bg-[var(--accent)] px-6 py-2.5 text-sm font-bold tracking-wide text-white transition hover:brightness-110 disabled:opacity-50"
                         >
                             {commentStatus === 'loading' ? 'Posting...' : 'Post Comment'}
                         </button>
@@ -69,17 +69,17 @@ const CommentSection = ({ comments, commentsLoading, onAddComment, commentStatus
             <div className="space-y-6">
                 {commentsLoading ? (
                     <div className="flex justify-center py-8">
-                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]"></div>
+                        <div className="h-6 w-6 animate-spin rounded-none border-2 border-[var(--accent)]/30 border-t-[var(--accent)]"></div>
                     </div>
                 ) : comments.length === 0 ? (
-                    <div className="text-center py-8 border border-dashed border-[var(--line)] rounded-3xl">
+                    <div className="text-center py-8 border border-dashed border-[var(--line)] rounded-none">
                         <p className="text-[var(--ink-soft)]">No comments yet. Be the first to share your thoughts!</p>
                     </div>
                 ) : (
                     comments.map(comment => (
-                        <div key={comment._id} className="group flex gap-4 p-5 rounded-[24px] border border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent-2)] transition-colors">
+                        <div key={comment._id} className="group flex gap-4 p-5 rounded-none border border-[var(--line)] bg-[var(--surface)] hover:border-[var(--accent-2)] transition-colors">
                             <div className="shrink-0">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/10 text-[var(--accent)]">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-none bg-[var(--accent)]/10 text-[var(--accent)]">
                                     <User className="h-5 w-5" />
                                 </div>
                             </div>

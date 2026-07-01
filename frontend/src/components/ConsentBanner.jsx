@@ -20,7 +20,7 @@ const ConsentBanner = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900 text-white p-4 md:p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900 text-white p-4 md:p-6  flex flex-col md:flex-row items-center justify-between gap-4">
       <div className="flex-1 max-w-4xl">
         <h3 className="font-semibold mb-1">We value your privacy</h3>
         <p className="text-sm text-gray-300">
@@ -30,13 +30,13 @@ const ConsentBanner = () => {
       <div className="flex gap-3 shrink-0">
         <button
           onClick={() => handleConsent('denied')}
-          className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors border border-gray-700"
+          className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-none transition-colors border border-gray-700"
         >
           Decline Optional
         </button>
         <button
           onClick={() => handleConsent('granted')}
-          className="px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+          className="px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-none transition-colors"
         >
           Accept All
         </button>

@@ -47,12 +47,12 @@ const CommentsAdmin = () => {
 
     return (
         <div className='space-y-6'>
-            <div className='glass-card flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 md:p-6'>
+            <div className=' flex flex-wrap items-center justify-between gap-4 rounded-none p-5 md:p-6'>
                 <div>
                     <h1 className='font-nevera text-3xl tracking-[0.08em] text-[var(--ink)] flex items-center gap-3'>
                         Comments
                         {pendingCount > 0 && (
-                            <span className="text-xs font-semibold bg-yellow-500/20 text-yellow-600 px-3 py-1 rounded-full font-sans tracking-normal">
+                            <span className="text-xs font-semibold bg-yellow-500/20 text-yellow-600 px-3 py-1 rounded-none font-sans tracking-normal">
                                 {pendingCount} Pending
                             </span>
                         )}
@@ -62,27 +62,27 @@ const CommentsAdmin = () => {
             </div>
 
             {loading ? (
-                <div className='glass-card rounded-2xl py-14'>
-                    <div className='mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
+                <div className=' rounded-none py-14'>
+                    <div className='mx-auto h-8 w-8 animate-spin rounded-none border-2 border-[var(--accent)]/30 border-t-[var(--accent)]'></div>
                 </div>
             ) : comments.length === 0 ? (
-                <div className='glass-card rounded-2xl py-16 text-center'>
+                <div className=' rounded-none py-16 text-center'>
                     <MessageSquare className='mx-auto h-8 w-8 text-[var(--accent-2)]' />
                     <p className='mt-2 text-[var(--ink-soft)]'>No comments have been posted yet.</p>
                 </div>
             ) : (
                 <div className='space-y-4'>
                     {comments.map(c => (
-                        <div key={c._id} className={`glass-card rounded-2xl p-5 transition hover:border-[var(--accent)]/30 ${c.status === 'PENDING' ? 'border-yellow-500/30 bg-yellow-500/5' : ''}`}>
+                        <div key={c._id} className={` rounded-none p-5 transition hover:border-[var(--accent)]/30 ${c.status === 'PENDING' ? 'border-yellow-500/30 bg-yellow-500/5' : ''}`}>
                             <div className='flex items-start justify-between mb-3'>
                                 <div className='flex items-center gap-3'>
-                                    <div className='flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] font-nevera text-lg text-[var(--accent)]'>
+                                    <div className='flex h-10 w-10 items-center justify-center rounded-none bg-[var(--surface)] font-nevera text-lg text-[var(--accent)]'>
                                         {c.authorName.charAt(0).toUpperCase()}
                                     </div>
                                     <div>
                                         <h3 className='font-semibold text-[var(--ink)]'>
                                             {c.authorName}
-                                            <span className={`ml-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                            <span className={`ml-2 text-[10px] font-bold px-2 py-0.5 rounded-none ${
                                                 c.status === 'APPROVED' ? 'bg-green-500/10 text-green-500' :
                                                 c.status === 'REJECTED' ? 'bg-red-500/10 text-red-500' :
                                                 'bg-yellow-500/10 text-yellow-500'
@@ -108,7 +108,7 @@ const CommentsAdmin = () => {
                                         <button 
                                             onClick={() => handleUpdateStatus(c._id, 'APPROVED')} 
                                             title="Approve"
-                                            className='rounded-lg p-2 text-green-500 hover:bg-green-500/10 transition'
+                                            className='rounded-none p-2 text-green-500 hover:bg-green-500/10 transition'
                                         >
                                             <CheckCircle2 className='h-5 w-5' />
                                         </button>
@@ -117,7 +117,7 @@ const CommentsAdmin = () => {
                                         <button 
                                             onClick={() => handleUpdateStatus(c._id, 'REJECTED')} 
                                             title="Reject"
-                                            className='rounded-lg p-2 text-yellow-500 hover:bg-yellow-500/10 transition'
+                                            className='rounded-none p-2 text-yellow-500 hover:bg-yellow-500/10 transition'
                                         >
                                             <XCircle className='h-5 w-5' />
                                         </button>
@@ -125,7 +125,7 @@ const CommentsAdmin = () => {
                                     <button 
                                         onClick={() => handleDelete(c._id)} 
                                         title="Delete"
-                                        className='rounded-lg p-2 text-red-500 hover:bg-red-500/10 transition'
+                                        className='rounded-none p-2 text-red-500 hover:bg-red-500/10 transition'
                                     >
                                         <Trash2 className='h-5 w-5' />
                                     </button>

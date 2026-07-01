@@ -1,19 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@font-face {
-  font-family: 'Nevera';
-  src: url('/fontsource-converted/Nevera-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 @theme {
-  --font-nevera: 'Nevera', sans-serif;
   --font-manrope: 'Manrope', sans-serif;
-  --font-wix: 'Wix Madefor Text', sans-serif;
-  --font-reross: 'reross-quadratic', sans-serif;
   
   --color-bg: var(--bg);
   --color-bg-alt: var(--bg-alt);
@@ -23,8 +13,6 @@
   --color-card: var(--card);
   --color-surface: var(--surface);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
-  --color-accent-3: var(--accent-3);
   --color-ring: var(--ring);
 }
 
@@ -35,11 +23,9 @@
   --ink-soft: #4f5a67;
   --line: rgba(18, 23, 32, 0.15);
   --card: rgba(255, 255, 255, 0.78);
-  --surface: rgba(255, 255, 255, 0.7);
+  --surface: #f6f5f1;
   --accent: #ef3e2f;
-  --accent-2: #0c7fa3;
-  --accent-3: #f3a712;
-  --ring: rgba(12, 127, 163, 0.35);
+  --ring: rgba(239, 62, 47, 0.35);
 }
 
 .dark {
@@ -49,11 +35,9 @@
   --ink-soft: #8b949e;
   --line: rgba(255, 255, 255, 0.1);
   --card: rgba(22, 27, 34, 0.6);
-  --surface: rgba(22, 27, 34, 0.5);
+  --surface: #0a0d14;
   --accent: #ff5a43;
-  --accent-2: #22d3ee;
-  --accent-3: #f3a712;
-  --ring: rgba(34, 211, 238, 0.4);
+  --ring: rgba(255, 90, 67, 0.4);
 }
 
 @layer base {
@@ -71,13 +55,9 @@
     margin: 0;
     color: var(--ink);
     font-family: var(--font-manrope);
-    background:
-      radial-gradient(circle at 10% 10%, rgba(12, 127, 163, 0.16), transparent 32%),
-      radial-gradient(circle at 88% 12%, rgba(239, 62, 47, 0.18), transparent 30%),
-      radial-gradient(circle at 50% 85%, rgba(18, 23, 32, 0.08), transparent 35%),
-      linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
-    background-attachment: fixed;
+    background: var(--bg);
     text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
   }
 
   a {
@@ -97,24 +77,8 @@
     isolation: isolate;
   }
 
-  .page-shell::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 30px 30px;
-    mask-image: radial-gradient(circle at center, black 18%, transparent 85%);
-    opacity: 0.35;
-    z-index: -2;
-  }
-
   .glass-card {
-    background: var(--card);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    box-shadow: 0 18px 60px rgba(18, 23, 32, 0.14);
-    backdrop-filter: blur(10px);
-    transition: transform 240ms cubic-bezier(0.2, 0.65, 0.2, 1), box-shadow 240ms cubic-bezier(0.2, 0.65, 0.2, 1), border-color 240ms ease;
+    background: var(--bg);
   }
 
   .grain-overlay {
@@ -128,9 +92,9 @@
   }
 
   .display-title {
-    font-family: var(--font-nevera);
-    letter-spacing: 0.04em;
-    line-height: 0.95;
+    font-family: var(--font-manrope);
+    letter-spacing: -0.02em;
+    line-height: 1;
   }
 
   .section-wrap {
@@ -139,13 +103,7 @@
   }
 
   .surface-interactive {
-    transition: transform 220ms cubic-bezier(0.2, 0.65, 0.2, 1), box-shadow 220ms cubic-bezier(0.2, 0.65, 0.2, 1), border-color 220ms ease, background-color 220ms ease;
-    will-change: transform;
-  }
-
-  .surface-interactive:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px rgba(18, 23, 32, 0.16);
+    transition: none;
   }
 
   .surface-interactive:active {

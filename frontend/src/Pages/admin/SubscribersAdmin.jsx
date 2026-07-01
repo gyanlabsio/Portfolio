@@ -178,7 +178,7 @@ const SubscribersAdmin = () => {
             <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
                 {/* Left Panel: Subscribers List */}
                 <div className='space-y-4 lg:col-span-1'>
-                    <div className='glass-card rounded-2xl p-5 space-y-4'>
+                    <div className=' rounded-none p-5 space-y-4'>
                         <div className='flex items-center justify-between border-b border-[var(--line)] pb-3'>
                             <h2 className='font-semibold text-lg text-[var(--ink)]'>Subscribers ({activeCount})</h2>
                             <button onClick={fetchSubscribers} className='text-[var(--ink-soft)] hover:text-[var(--accent)]'>
@@ -188,14 +188,14 @@ const SubscribersAdmin = () => {
 
                         {loading ? (
                             <div className='flex justify-center py-8'>
-                                <div className='h-6 w-6 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
+                                <div className='h-6 w-6 animate-spin rounded-none border-2 border-[var(--accent)]/30 border-t-[var(--accent)]' />
                             </div>
                         ) : subscribers.length === 0 ? (
                             <p className='text-xs text-[var(--ink-soft)] text-center py-6'>No subscribers yet.</p>
                         ) : (
                             <div className='space-y-2 max-h-[500px] overflow-y-auto pr-1'>
                                 {subscribers.map(sub => (
-                                    <div key={sub._id} className='flex items-center justify-between p-3 rounded-xl border border-[var(--line)] bg-[var(--bg)] text-xs'>
+                                    <div key={sub._id} className='flex items-center justify-between p-3 rounded-none border border-[var(--line)] bg-[var(--bg)] text-xs'>
                                         <div className='min-w-0 flex-1 space-y-0.5'>
                                             <p className='font-medium text-[var(--ink)] truncate'>{sub.email}</p>
                                             <p className={`font-bold ${sub.status === 'SUBSCRIBED' ? 'text-emerald-500' : 'text-[var(--ink-soft)]'}`}>
@@ -204,7 +204,7 @@ const SubscribersAdmin = () => {
                                         </div>
                                         <button 
                                             onClick={() => handleDelete(sub._id)}
-                                            className='p-1.5 text-[var(--ink-soft)] hover:text-red-500 transition rounded-lg border border-[var(--line)] bg-[var(--surface)]'
+                                            className='p-1.5 text-[var(--ink-soft)] hover:text-red-500 transition rounded-none border border-[var(--line)] bg-[var(--surface)]'
                                         >
                                             <Trash2 className='h-3.5 w-3.5' />
                                         </button>
@@ -218,13 +218,13 @@ const SubscribersAdmin = () => {
                 {/* Right Panel: Template Builder & Broadcast */}
                 <div className='lg:col-span-2 space-y-6'>
                     {statusMessage && (
-                        <div className={`p-4 rounded-xl text-sm font-semibold flex items-start gap-2 border ${statusType === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500'}`}>
+                        <div className={`p-4 rounded-none text-sm font-semibold flex items-start gap-2 border ${statusType === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500'}`}>
                             {statusType === 'success' ? <CheckCircle2 className='h-5 w-5 shrink-0' /> : <AlertCircle className='h-5 w-5 shrink-0' />}
                             <span>{statusMessage}</span>
                         </div>
                     )}
 
-                    <div className='glass-card rounded-[24px] p-6 space-y-6'>
+                    <div className=' rounded-none p-6 space-y-6'>
                         <h2 className='font-semibold text-xl text-[var(--ink)] border-b border-[var(--line)] pb-3'>Interactive Template Builder</h2>
 
                         <div className='grid gap-6 md:grid-cols-2'>
@@ -238,7 +238,7 @@ const SubscribersAdmin = () => {
                                             placeholder='e.g., Weekly Roundup #5' 
                                             value={subject}
                                             onChange={(e) => setSubject(e.target.value)}
-                                            className='w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--accent)]'
+                                            className='w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-2.5 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--accent)]'
                                         />
                                     </div>
 
@@ -249,7 +249,7 @@ const SubscribersAdmin = () => {
                                                 type='color' 
                                                 value={themeColor}
                                                 onChange={(e) => setThemeColor(e.target.value)}
-                                                className='h-8 w-8 cursor-pointer rounded-lg border-0 bg-transparent'
+                                                className='h-8 w-8 cursor-pointer rounded-none border-0 bg-transparent'
                                             />
                                             <span className='text-xs font-mono text-[var(--ink-soft)] uppercase'>{themeColor}</span>
                                         </div>
@@ -259,17 +259,17 @@ const SubscribersAdmin = () => {
                                 <div className='border-t border-[var(--line)] pt-4 space-y-3'>
                                     <label className='block text-sm font-semibold text-[var(--ink)]'>Compose Blocks</label>
                                     <div className='flex flex-wrap gap-2'>
-                                        <button onClick={() => addBlock('header')} className='rounded-lg bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Header</button>
-                                        <button onClick={() => addBlock('text')} className='rounded-lg bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Text Block</button>
-                                        <button onClick={() => addBlock('button')} className='rounded-lg bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Button</button>
-                                        <button onClick={() => addBlock('image')} className='rounded-lg bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Image</button>
-                                        <button onClick={() => addBlock('spacer')} className='rounded-lg bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Spacer</button>
+                                        <button onClick={() => addBlock('header')} className='rounded-none bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Header</button>
+                                        <button onClick={() => addBlock('text')} className='rounded-none bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Text Block</button>
+                                        <button onClick={() => addBlock('button')} className='rounded-none bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Button</button>
+                                        <button onClick={() => addBlock('image')} className='rounded-none bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Image</button>
+                                        <button onClick={() => addBlock('spacer')} className='rounded-none bg-[var(--bg)] border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--ink)] hover:border-[var(--accent)] transition'>+ Spacer</button>
                                     </div>
                                 </div>
 
                                 <div className='space-y-4 max-h-[350px] overflow-y-auto pr-1'>
                                     {blocks.map((block, idx) => (
-                                        <div key={block.id} className='rounded-xl border border-[var(--line)] bg-[var(--bg)] p-4 space-y-3 relative group'>
+                                        <div key={block.id} className='rounded-none border border-[var(--line)] bg-[var(--bg)] p-4 space-y-3 relative group'>
                                             <div className='flex items-center justify-between border-b border-[var(--line)] pb-2'>
                                                 <span className='text-xs font-bold uppercase tracking-wider text-[var(--accent)]'>{block.type} Block</span>
                                                 <div className='flex items-center gap-1.5'>
@@ -286,14 +286,14 @@ const SubscribersAdmin = () => {
                                                         placeholder='Header Title' 
                                                         value={block.title} 
                                                         onChange={(e) => updateBlock(block.id, { title: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
                                                     />
                                                     <input 
                                                         type='url' 
                                                         placeholder='Logo Image URL (optional)' 
                                                         value={block.logoUrl} 
                                                         onChange={(e) => updateBlock(block.id, { logoUrl: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
                                                     />
                                                 </div>
                                             )}
@@ -305,7 +305,7 @@ const SubscribersAdmin = () => {
                                                         placeholder='HTML / Raw text allowed...'
                                                         value={block.content} 
                                                         onChange={(e) => updateBlock(block.id, { content: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none font-mono'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none font-mono'
                                                     />
                                                 </div>
                                             )}
@@ -317,14 +317,14 @@ const SubscribersAdmin = () => {
                                                         placeholder='Button Label' 
                                                         value={block.label} 
                                                         onChange={(e) => updateBlock(block.id, { label: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
                                                     />
                                                     <input 
                                                         type='url' 
                                                         placeholder='Target Link (https://...)' 
                                                         value={block.url} 
                                                         onChange={(e) => updateBlock(block.id, { url: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
                                                     />
                                                 </div>
                                             )}
@@ -336,7 +336,7 @@ const SubscribersAdmin = () => {
                                                         placeholder='Image URL (https://...)' 
                                                         value={block.imageUrl} 
                                                         onChange={(e) => updateBlock(block.id, { imageUrl: e.target.value })}
-                                                        className='w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
+                                                        className='w-full rounded-none border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1.5 text-[var(--ink)] focus:outline-none'
                                                     />
                                                 </div>
                                             )}
@@ -349,7 +349,7 @@ const SubscribersAdmin = () => {
                                                         placeholder='20' 
                                                         value={block.height} 
                                                         onChange={(e) => updateBlock(block.id, { height: e.target.value })}
-                                                        className='w-20 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-2 py-1 text-[var(--ink)] focus:outline-none'
+                                                        className='w-20 rounded-none border border-[var(--line)] bg-[var(--surface)] px-2 py-1 text-[var(--ink)] focus:outline-none'
                                                     />
                                                 </div>
                                             )}
@@ -359,12 +359,12 @@ const SubscribersAdmin = () => {
                             </div>
 
                             {/* Live Preview Display */}
-                            <div className='rounded-xl border border-[var(--line)] bg-[var(--bg-alt)] p-4 flex flex-col'>
+                            <div className='rounded-none border border-[var(--line)] bg-[var(--bg-alt)] p-4 flex flex-col'>
                                 <span className='text-xs font-bold uppercase tracking-wider text-[var(--ink-soft)] mb-3 flex items-center gap-1'>
                                     <Eye className='h-3.5 w-3.5' /> Live Email Preview
                                 </span>
                                 
-                                <div className='flex-1 overflow-y-auto max-h-[500px] border border-[var(--line)] rounded-xl bg-[#f1f5f9] p-4 flex items-center justify-center'>
+                                <div className='flex-1 overflow-y-auto max-h-[500px] border border-[var(--line)] rounded-none bg-[#f1f5f9] p-4 flex items-center justify-center'>
                                     <div 
                                         className='w-full'
                                         dangerouslySetInnerHTML={{ __html: renderPreviewHtml() }} 
@@ -378,10 +378,10 @@ const SubscribersAdmin = () => {
                             <button 
                                 onClick={handleBroadcast}
                                 disabled={broadcasting || activeCount === 0 || !subject.trim()}
-                                className='focus-ring button-pop inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-bold text-white hover:brightness-110 disabled:opacity-50'
+                                className=' button-pop inline-flex items-center gap-2 rounded-none bg-[var(--accent)] px-6 py-3 text-sm font-bold text-white hover:brightness-110 disabled:opacity-50'
                             >
                                 {broadcasting ? (
-                                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white' />
+                                    <div className='h-4 w-4 animate-spin rounded-none border-2 border-white/30 border-t-white' />
                                 ) : (
                                     <Send className='h-4 w-4' />
                                 )}

@@ -46,23 +46,23 @@ const ContactsAdmin = () => {
         <div className="flex items-center space-x-3">
           <button 
             onClick={() => setActiveTab('list')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'list' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
+            className={`px-4 py-2 rounded-none text-sm font-medium transition-colors ${activeTab === 'list' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
           >
             All Contacts
           </button>
           <button 
             onClick={() => setActiveTab('import')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'import' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
+            className={`px-4 py-2 rounded-none text-sm font-medium transition-colors ${activeTab === 'import' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
           >
             Import
           </button>
           <button 
             onClick={() => setActiveTab('duplicates')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'duplicates' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
+            className={`px-4 py-2 rounded-none text-sm font-medium transition-colors ${activeTab === 'duplicates' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50'}`}
           >
             Find Duplicates
           </button>
-          <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-sm">
+          <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-none text-sm font-medium hover:bg-blue-700 ">
             <Plus className="w-4 h-4 mr-2" />
             Add Contact
           </button>
@@ -77,15 +77,15 @@ const ContactsAdmin = () => {
               <input 
                 type="text" 
                 placeholder="Search contacts..." 
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                className="w-full pl-10 pr-4 py-2.5 rounded-none border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
               />
             </div>
             <div className="flex gap-3">
-              <button className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50">
+              <button className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-none text-gray-700 dark:text-gray-300 hover:bg-gray-50">
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
               </button>
-              <button className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50">
+              <button className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-none text-gray-700 dark:text-gray-300 hover:bg-gray-50">
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </button>

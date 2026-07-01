@@ -26,8 +26,8 @@ const NewsletterSubscribe = () => {
     };
 
     return (
-        <div className="glass-card rounded-[32px] p-8 border border-[var(--line)] bg-[var(--surface)] shadow-sm space-y-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent)]/10 text-[var(--accent)]">
+        <div className=" rounded-none p-8 border border-[var(--line)] bg-[var(--surface)]  space-y-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[var(--accent)]/10 text-[var(--accent)]">
                 <Mail className="h-6 w-6" />
             </div>
 
@@ -41,7 +41,7 @@ const NewsletterSubscribe = () => {
             </div>
 
             {status === 'success' ? (
-                <div className="flex items-start gap-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-emerald-500 text-sm">
+                <div className="flex items-start gap-3 rounded-none bg-emerald-500/10 border border-emerald-500/20 p-4 text-emerald-500 text-sm">
                     <CheckCircle2 className="h-5 w-5 shrink-0 mt-0.5" />
                     <span>{message}</span>
                 </div>
@@ -55,12 +55,12 @@ const NewsletterSubscribe = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             disabled={status === 'loading'}
-                            className="w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 pr-12 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none transition"
+                            className="w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 pr-12 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] focus:outline-none transition"
                         />
                         <button
                             type="submit"
                             disabled={status === 'loading' || !email}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-[var(--accent)] text-white hover:brightness-110 disabled:opacity-50 transition"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-none bg-[var(--accent)] text-white hover:brightness-110 disabled:opacity-50 transition"
                         >
                             <ArrowRight className="h-4 w-4" />
                         </button>

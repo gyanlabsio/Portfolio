@@ -29,7 +29,7 @@ const VisitorAnalytics = () => {
       label: 'Visitor Identity',
       render: (_, row) => (
         <div className="flex items-center gap-3">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${row.isIdentified ? 'bg-blue-600' : 'bg-gray-400'}`}>
+          <div className={`w-8 h-8 rounded-none flex items-center justify-center text-white font-bold ${row.isIdentified ? 'bg-blue-600' : 'bg-gray-400'}`}>
             {row.isIdentified ? (row.userId?.name?.charAt(0) || 'U') : 'A'}
           </div>
           <div>
@@ -42,7 +42,7 @@ const VisitorAnalytics = () => {
     { 
       key: 'role', 
       label: 'Role',
-      render: (_, row) => row.isIdentified ? <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">{row.userId?.role}</span> : <span className="text-gray-400">N/A</span>
+      render: (_, row) => row.isIdentified ? <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-none">{row.userId?.role}</span> : <span className="text-gray-400">N/A</span>
     },
     { key: 'totalSessions', label: 'Total Sessions', sortable: true },
     { 
@@ -72,12 +72,12 @@ const VisitorAnalytics = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border">
+      <div className="flex justify-between items-center bg-white p-4 rounded-none  border">
         <h2 className="text-lg font-semibold text-gray-800">Visitor Tracking</h2>
         <select 
           value={filters.type} 
           onChange={(e) => dispatch(setVisitorFilter(e.target.value))}
-          className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 border rounded-none focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">All Visitors</option>
           <option value="identified">Identified Users</option>
@@ -85,10 +85,10 @@ const VisitorAnalytics = () => {
         </select>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border overflow-hidden p-6">
+      <div className="bg-white rounded-none  border overflow-hidden p-6">
         {loading ? (
           <div className="flex justify-center p-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-none h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         ) : (
           <div className="cursor-pointer">
@@ -132,23 +132,23 @@ const VisitorAnalytics = () => {
       {isDrawerOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-30" onClick={closeDrawer}></div>
-          <div className="absolute inset-y-0 right-0 w-full max-w-xl bg-white shadow-xl transform transition-transform">
+          <div className="absolute inset-y-0 right-0 w-full max-w-xl bg-white  transform transition-transform">
             <div className="h-full flex flex-col">
               <div className="p-6 border-b flex justify-between items-center bg-gray-50">
                 <h2 className="text-xl font-bold">Visitor Profile</h2>
-                <button onClick={closeDrawer} className="p-2 hover:bg-gray-200 rounded-full">
+                <button onClick={closeDrawer} className="p-2 hover:bg-gray-200 rounded-none">
                   <X size={24} />
                 </button>
               </div>
               
               <div className="flex-1 overflow-y-auto p-6">
                 {selectedVisitor.loading ? (
-                   <div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
+                   <div className="flex justify-center p-8"><div className="animate-spin rounded-none h-8 w-8 border-b-2 border-blue-600"></div></div>
                 ) : selectedVisitor.profile ? (
                   <div className="space-y-8">
                     {/* Identity Block */}
-                    <div className="flex items-center gap-4 bg-blue-50 p-6 rounded-xl border border-blue-100">
-                      <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold ${selectedVisitor.profile.isIdentified ? 'bg-blue-600' : 'bg-gray-400'}`}>
+                    <div className="flex items-center gap-4 bg-blue-50 p-6 rounded-none border border-blue-100">
+                      <div className={`w-16 h-16 rounded-none flex items-center justify-center text-white text-2xl font-bold ${selectedVisitor.profile.isIdentified ? 'bg-blue-600' : 'bg-gray-400'}`}>
                         {selectedVisitor.profile.isIdentified ? (selectedVisitor.profile.userId?.name?.charAt(0) || 'U') : 'A'}
                       </div>
                       <div>
@@ -159,11 +159,11 @@ const VisitorAnalytics = () => {
 
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-gray-50 p-4 rounded-lg border">
+                      <div className="bg-gray-50 p-4 rounded-none border">
                         <div className="text-sm text-gray-500">Total Sessions</div>
                         <div className="text-2xl font-semibold">{selectedVisitor.profile.totalSessions}</div>
                       </div>
-                      <div className="bg-gray-50 p-4 rounded-lg border">
+                      <div className="bg-gray-50 p-4 rounded-none border">
                         <div className="text-sm text-gray-500">First Seen</div>
                         <div className="text-xl font-semibold">{new Date(selectedVisitor.profile.firstSeen).toLocaleDateString()}</div>
                       </div>
@@ -176,7 +176,7 @@ const VisitorAnalytics = () => {
                         {selectedVisitor.timeline.map((event, i) => (
                           <div key={i} className="flex gap-4">
                             <div className="flex flex-col items-center">
-                              <div className="w-3 h-3 bg-blue-500 rounded-full mt-1"></div>
+                              <div className="w-3 h-3 bg-blue-500 rounded-none mt-1"></div>
                               {i !== selectedVisitor.timeline.length - 1 && <div className="w-0.5 h-full bg-gray-200 my-1"></div>}
                             </div>
                             <div className="pb-4">

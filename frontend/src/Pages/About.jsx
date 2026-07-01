@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { getSiteConfig } from '../api/admin'
-import aboutImage from '../assets/ChatGPT Image Mar 2, 2026, 09_55_22 PM.png'
+import { useEffect, useState } from 'react'
+import SEO from '../components/SEO'
+import { getSettings } from '../api/settings'
+import SplitText from '../components/effects/SplitText'
+import BlurText from '../components/effects/BlurText'
+import Loader from '../components/Loader'
+import { ArrowUpRight } from 'lucide-react'
 
 const About = () => {
   const [config, setConfig] = useState(null)
@@ -13,10 +13,10 @@ const About = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const { data } = await getSiteConfig()
+        const { data } = await getSettings()
         setConfig(data.data)
       } catch (err) {
-        console.error('Failed to load site config in About', err)
+        console.error('Failed to load site config in Bio', err)
       } finally {
         setLoading(false)
       }
@@ -24,113 +24,120 @@ const About = () => {
     fetchConfig()
   }, [])
 
-  // GSAP Animations
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.about-section',
-        start: 'top 75%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse'
-      }
-    })
+  if (loading) {
+    return (
+      <main className="min-h-screen pt-24 pb-16 flex items-center justify-center">
+        <Loader text="Loading..." />
+      </main>
+    )
+  }
 
-    // Animate text column (left)
-    tl.from('.about-text-col > p, .about-text-col > div', {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out'
-    })
-
-    // About Header Reveal Animation
-    gsap.from('.about-header-char', {
-      scrollTrigger: {
-        trigger: '.about-section',
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      },
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.05,
-      ease: 'power4.out',
-      clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)'
-    })
-
-    // Animate image column (right)
-    tl.from('.about-image-col', {
-      x: 50,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    }, "-=0.6") // Overlap with text animation
-  }, [])
+  // Fallbacks
+  const heroHeading = config?.aboutHeroHeading || 'WHERE DESIGN MEETS ENGINEERING'
+  const heroSubheading = config?.aboutHeroSubheading || 'GET TO KNOW ME CLOSELY'
+  const heroBrandName = config?.aboutHeroBrandName || 'GYANARANJAN'
+  
+  const statsHeading = config?.aboutStatsHeading || 'MY IMPACT IN NUMBERS'
+  const statsSubheading = config?.aboutStatsSubheading || 'BUT WHY US?'
+  const statsImage = config?.aboutStatsImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3'
+  
+  const stats = (config?.aboutStats && config.aboutStats.length > 0) ? config.aboutStats : [
+    { value: '48+', label: 'SUCCESSFUL PROJECTS', description: 'Delivering impactful digital solutions that combine creativity, precision, and innovation.' },
+    { value: '35+', label: 'SATISFIED CLIENTS', description: 'Building long-term partnerships through trust, design excellence, and a commitment to crafting experiences.' },
+    { value: '62%', label: 'AVG. INCREASE IN SALES', description: 'Helping businesses achieve measurable growth through strategic design, seamless functionality.' },
+    { value: '45%', label: 'COST EFFICIENCY', description: 'Optimizing resources and development processes to ensure maximum value, high performance.' }
+  ]
 
   return (
-    <section className='min-h-screen text-white flex items-center justify-center py-24 about-section overflow-hidden'>
-      <div className='max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-x-12 xl:gap-x-24 gap-y-10 lg:gap-y-16 px-6 md:px-12 items-center'>
+    <main className='pb-16 pt-8 md:pt-12'>
+      <SEO title='About' description='Get to know us closely. Turning visualization into reality.' />
 
-        {/* Left Side - Text (appears below image on mobile) */}
-        <div className='flex flex-col justify-center space-y-8 z-10 lg:pr-10 order-2 lg:order-1 about-text-col'>
-
-          {/* Subtle line background effect could go here behind the text if needed later */}
-
-          <h1 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-nevera regular text-[#FF0000] tracking-tighter leading-none mt-4 -ml-1 md:-ml-2 overflow-hidden py-2'>
-            {"ABOUT".split("").map((char, index) => (
-              <span
-                key={index}
-                className="inline-block about-header-char"
-                style={{ clipPath: 'polygon(0 100%, 100% 100%, 100% 0, 0 0)' }}
-              >
-                {char}
-              </span>
-            ))}
-          </h1>
-
-          <p className={`font-manrope font-extralight text-lg md:text-xl text-gray-300 leading-relaxed max-w-xl transition-opacity duration-300 ${loading ? 'opacity-50' : 'opacity-100'}`}>
-            {loading ? "Loading..." : (config?.aboutText || "Gyanaranjan Das, a full-stack developer based in India, crafts immersive digital experiences that blend clean architecture with striking design. His work transforms complex problems into seamless, high-performance web applications that connect users with technology.")}
-          </p>
-
-          <div className='pt-6'>
-            <Link to='/Bio'
-              className='text-[#FF0000] hover:text-white transition-colors duration-500 relative text-xl  tracking-wide group pb-1 font-reross quadratic regular inline-block'>
-              Find Out More
-              <span className='absolute left-0 bottom-0 w-full h-[2px] bg-[#FF0000] transition-all duration-500 group-hover:w-0'></span>
-            </Link>
+      {/* Hero Section */}
+      <section className='section-wrap enter-fade mb-16 md:mb-24'>
+        <div className='flex flex-col gap-6 md:gap-8'>
+          <div className='flex items-center gap-4'>
+            <div className='h-[1px] w-12 bg-[var(--accent)]'></div>
+            <p className='text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent)]'>
+              {heroSubheading}
+            </p>
+          </div>
+          
+          <div className='max-w-4xl'>
+            <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1]'>
+              <SplitText text={heroHeading} delay={0.2} />
+            </h1>
+          </div>
+          
+          {/* Bento Images Grid */}
+          <div className='mt-8 grid h-[400px] gap-4 md:h-[500px] md:grid-cols-3'>
+            <div className='group relative hidden overflow-hidden rounded-none md:block'>
+              <img 
+                src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=1200&ixlib=rb-4.0.3" 
+                alt="Workspace" 
+                className='h-full w-full object-cover transition duration-700 group-hover:scale-105'
+              />
+            </div>
+            <div className='group relative col-span-2 overflow-hidden rounded-none md:col-span-1'>
+              <img 
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200&ixlib=rb-4.0.3" 
+                alt="Team working" 
+                className='h-full w-full object-cover transition duration-700 group-hover:scale-105'
+              />
+              {/* Brand Name Overlay */}
+              <div className='absolute inset-0 flex items-center justify-center bg-[var(--ink)]/40 group-hover:bg-[var(--ink)]/80 transition-colors duration-500'>
+                <div className='border-2 border-white px-8 py-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500'>
+                  <span className='text-xl font-black tracking-widest text-white uppercase'>{heroBrandName}</span>
+                </div>
+              </div>
+            </div>
+            <div className='group relative hidden overflow-hidden rounded-none md:block'>
+              <img 
+                src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=1200&ixlib=rb-4.0.3" 
+                alt="Design details" 
+                className='h-full w-full object-cover transition duration-700 group-hover:scale-105'
+              />
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Right Side - Image with Red Vibe tint & Accent Block (appears on top on mobile) */}
-        <div className='relative w-full aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden order-1 lg:order-2 group about-image-col'>
-          <div className='absolute top-0 left-6 md:left-12 w-16 h-20 bg-[#f4ebd0] z-40 flex items-center justify-center'>
-            <div className='w-8 h-8 rounded-full bg-black'></div>
+      {/* Impact in Numbers Section */}
+      <section className='mb-40 border-t border-[var(--line)] pt-16 enter-fade-up delay-200'>
+        <div className='px-6 md:px-10 lg:px-16'>
+          <div className='grid gap-12 lg:grid-cols-2 lg:gap-20'>
+            {/* Left side: Heading & Image */}
+            <div className='flex flex-col gap-8'>
+              <div>
+                <p className='mb-4 text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>{statsSubheading}</p>
+                <h2 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] sm:text-5xl lg:text-6xl'>{statsHeading}</h2>
+              </div>
+              
+              <div className='group relative mt-auto h-[400px] overflow-hidden rounded-none border border-[var(--line)]'>
+                <img 
+                  src={statsImage} 
+                  alt="Impact" 
+                  className='h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105'
+                />
+              </div>
+            </div>
+            
+            {/* Right side: Stats Grid */}
+            <div className='grid gap-8 sm:grid-cols-2 lg:pt-16'>
+              {stats.map((stat, idx) => (
+                <div key={idx} className='flex flex-col gap-3 border-l border-[var(--ink)] pl-6'>
+                  <div className='text-5xl font-black tracking-tighter text-[var(--ink)] lg:text-6xl'>{stat.value}</div>
+                  <div className='text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>{stat.label}</div>
+                  <p className='text-sm font-light leading-relaxed text-[var(--ink-soft)]'>
+                    {stat.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-
-          {/* Base Red Image */}
-          <img src={config?.aboutImage || aboutImage}
-            alt="Portrait"
-            className='absolute inset-0 w-full h-full object-cover grayscale brightness-75 z-10'
-          />
-          {/* Red Tint Overlay matching reference */}
-          <div className='absolute inset-0 bg-[#FF0000] mix-blend-multiply opacity-95 pointer-events-none z-20'></div>
-
-          {/* Full Color Image Reveal - Clipped to bottom right by default, expands to full on hover */}
-          <div className='absolute inset-0 z-30 transition-all duration-700 ease-in-out [clip-path:polygon(100%_100%,100%_100%,100%_100%,100%_100%)] group-hover:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)]'>
-            <img src={config?.aboutImage || aboutImage}
-              alt="Portrait original"
-              className='absolute inset-0 w-full h-full object-cover'
-            />
-          </div>
-
-          {/* Subtle gradient to deepen shadows at the edge blending into black */}
-          <div className='absolute inset-0 bg-gradient-to-l from-black/60 to-transparent pointer-events-none z-40'></div>
-
         </div>
+      </section>
 
-      </div>
-    </section>
+    </main>
   )
 }
 

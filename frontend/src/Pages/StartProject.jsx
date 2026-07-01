@@ -89,15 +89,15 @@ const StartProject = () => {
     return (
       <main className='min-h-[80vh] flex items-center justify-center pt-8 pb-16 md:pt-14'>
         <SEO title='Request Received' description='Your project request has been successfully submitted.' />
-        <div className='glass-card max-w-lg w-full rounded-3xl p-10 text-center enter-fade'>
-          <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--accent)]/10 text-[var(--accent)]'>
-            <CheckCircle2 className='h-10 w-10' />
+        <div className='max-w-lg w-full p-10 text-center enter-fade border border-[var(--line)] bg-[var(--bg)]'>
+          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center border-2 border-[var(--ink)] text-[var(--ink)]'>
+            <CheckCircle2 className='h-8 w-8' />
           </div>
-          <h1 className='font-nevera text-3xl tracking-wide text-[var(--ink)] mb-4'>Request Received!</h1>
-          <p className='text-[var(--ink-soft)] leading-relaxed mb-8'>
+          <h1 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] mb-4'>Request Received!</h1>
+          <p className='text-sm font-light uppercase tracking-widest text-[var(--ink-soft)] leading-relaxed mb-8'>
             Thank you for reaching out, {formData.name.split(' ')[0]}. I've received your project details and will review them shortly. Expect to hear back from me within 24-48 hours to discuss the next steps!
           </p>
-          <button onClick={() => window.location.href = '/'} className='rounded-full bg-[var(--surface)] border border-[var(--line)] px-6 py-3 text-sm font-semibold text-[var(--ink)] hover:border-[var(--accent)] transition'>
+          <button onClick={() => window.location.href = '/'} className='border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)]'>
             Return Home
           </button>
         </div>
@@ -109,31 +109,31 @@ const StartProject = () => {
     <main className='pt-8 pb-16 md:pt-14'>
       <SEO title='Start a Project' description='Tell me about your project and lets build something amazing together.' />
 
-      <section className='section-wrap enter-fade max-w-3xl mx-auto'>
-        <div className='mb-10 text-center'>
-          <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--ink-soft)] mb-4'>
-            <Rocket className='h-3.5 w-3.5 text-[var(--accent)]' />
+      <section className='enter-fade max-w-4xl mx-auto px-6 md:px-10 lg:px-16'>
+        <div className='mb-16 text-center border-b border-[var(--line)] pb-12'>
+          <div className='inline-flex items-center gap-2 border border-[var(--ink)] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--ink)] mb-6'>
+            <Rocket className='h-3.5 w-3.5' />
             Let's Build
           </div>
-          <h1 className='display-title text-4xl text-[var(--ink)] sm:text-5xl'>
+          <h1 className='text-6xl font-black uppercase tracking-tighter text-[var(--ink)] sm:text-7xl lg:text-8xl'>
             <SplitText text='Start a Project' delay={0.2} />
           </h1>
-          <div className='mt-3 mx-auto max-w-xl text-[var(--ink-soft)]'>
+          <div className='mt-6 mx-auto max-w-xl text-sm font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
             <BlurText text='Tell me about what you want to build, and I will help you bring it to life.' delay={0.6} />
           </div>
         </div>
 
-        <div className='glass-card rounded-[34px] p-6 md:p-10'>
+        <div className='p-6 md:p-10 border border-[var(--line)] bg-[var(--bg)]'>
           {/* Progress Bar */}
-          <div className='mb-8'>
-            <div className='flex justify-between text-xs font-semibold text-[var(--ink-soft)] mb-2'>
-              <span className={step >= 1 ? 'text-[var(--accent)]' : ''}>1. Basics</span>
-              <span className={step >= 2 ? 'text-[var(--accent)]' : ''}>2. Scope</span>
-              <span className={step >= 3 ? 'text-[var(--accent)]' : ''}>3. Details</span>
+          <div className='mb-12'>
+            <div className='flex justify-between text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] mb-4'>
+              <span className={step >= 1 ? 'text-[var(--ink)]' : ''}>1. Basics</span>
+              <span className={step >= 2 ? 'text-[var(--ink)]' : ''}>2. Scope</span>
+              <span className={step >= 3 ? 'text-[var(--ink)]' : ''}>3. Details</span>
             </div>
-            <div className='h-2 w-full rounded-full bg-[var(--bg-alt)] overflow-hidden'>
+            <div className='h-1 w-full bg-[var(--line)] overflow-hidden'>
               <div 
-                className='h-full bg-[var(--accent)] transition-all duration-500 ease-out' 
+                className='h-full bg-[var(--ink)] transition-all duration-500 ease-out' 
                 style={{ width: `${(step / 3) * 100}%` }}
               />
             </div>
@@ -141,60 +141,60 @@ const StartProject = () => {
 
           <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); nextStep(); }}>
             {step === 1 && (
-              <div className='space-y-5 enter-fade'>
-                <h2 className='text-2xl font-semibold text-[var(--ink)] mb-6'>Let's start with the basics.</h2>
-                <div className='grid gap-5 md:grid-cols-2'>
+              <div className='space-y-8 enter-fade'>
+                <h2 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] mb-8'>Let's start with the basics.</h2>
+                <div className='grid gap-6 md:grid-cols-2'>
                   <div>
-                    <label className='mb-2 block text-sm font-medium text-[var(--ink-soft)]'>Full Name *</label>
-                    <input required type='text' name='name' value={formData.name} onChange={handleChange} className='w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none transition' placeholder='Jane Doe' />
+                    <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Full Name *</label>
+                    <input required type='text' name='name' value={formData.name} onChange={handleChange} className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors' placeholder='Jane Doe' />
                   </div>
                   <div>
-                    <label className='mb-2 block text-sm font-medium text-[var(--ink-soft)]'>Email Address *</label>
-                    <input required type='email' name='email' value={formData.email} onChange={handleChange} className='w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none transition' placeholder='jane@example.com' />
+                    <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Email Address *</label>
+                    <input required type='email' name='email' value={formData.email} onChange={handleChange} className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors' placeholder='jane@example.com' />
                   </div>
                   <div>
-                    <label className='mb-2 block text-sm font-medium text-[var(--ink-soft)]'>Company (Optional)</label>
-                    <input type='text' name='company' value={formData.company} onChange={handleChange} className='w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none transition' placeholder='Acme Inc.' />
+                    <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Company (Optional)</label>
+                    <input type='text' name='company' value={formData.company} onChange={handleChange} className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors' placeholder='Acme Inc.' />
                   </div>
                   <div>
-                    <label className='mb-2 block text-sm font-medium text-[var(--ink-soft)]'>Phone (Optional)</label>
-                    <input type='tel' name='phone' value={formData.phone} onChange={handleChange} className='w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none transition' placeholder='+1 (555) 000-0000' />
+                    <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Phone (Optional)</label>
+                    <input type='tel' name='phone' value={formData.phone} onChange={handleChange} className='w-full border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors' placeholder='+1 (555) 000-0000' />
                   </div>
                 </div>
               </div>
             )}
 
             {step === 2 && (
-              <div className='space-y-6 enter-fade'>
-                <h2 className='text-2xl font-semibold text-[var(--ink)] mb-6'>What are we building?</h2>
+              <div className='space-y-8 enter-fade'>
+                <h2 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] mb-8'>What are we building?</h2>
                 
                 <div>
-                  <label className='mb-3 block text-sm font-medium text-[var(--ink-soft)]'>Project Type *</label>
+                  <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Project Type *</label>
                   <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
                     {PROJECT_TYPES.map(pt => (
                       <button 
                         key={pt.value} 
                         type="button"
                         onClick={() => handleSelect('projectType', pt.value)}
-                        className={`rounded-2xl border p-4 text-left transition ${formData.projectType === pt.value ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--accent-2)]'}`}
+                        className={`border px-4 py-4 text-center transition-colors ${formData.projectType === pt.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
-                        <span className='block text-sm font-semibold'>{pt.label}</span>
+                        <span className='block text-xs font-bold uppercase tracking-widest'>{pt.label}</span>
                       </button>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className='mb-3 block text-sm font-medium text-[var(--ink-soft)]'>Estimated Budget *</label>
+                  <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Estimated Budget *</label>
                   <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
                     {BUDGETS.map(b => (
                       <button 
                         key={b.value} 
                         type="button"
                         onClick={() => handleSelect('budget', b.value)}
-                        className={`rounded-2xl border p-4 text-center transition ${formData.budget === b.value ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--accent-2)]'}`}
+                        className={`border px-4 py-4 text-center transition-colors ${formData.budget === b.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
-                        <span className='block text-sm font-semibold'>{b.label}</span>
+                        <span className='block text-xs font-bold uppercase tracking-widest'>{b.label}</span>
                       </button>
                     ))}
                   </div>
@@ -203,31 +203,31 @@ const StartProject = () => {
             )}
 
             {step === 3 && (
-              <div className='space-y-6 enter-fade'>
-                <h2 className='text-2xl font-semibold text-[var(--ink)] mb-6'>The final details.</h2>
+              <div className='space-y-8 enter-fade'>
+                <h2 className='text-4xl font-black uppercase tracking-tighter text-[var(--ink)] mb-8'>The final details.</h2>
                 
                 <div>
-                  <label className='mb-2 block text-sm font-medium text-[var(--ink-soft)]'>Project Details *</label>
+                  <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>Project Details *</label>
                   <textarea 
                     required 
                     rows={5} 
                     name='notes' 
                     value={formData.notes} 
                     onChange={handleChange} 
-                    className='w-full resize-none rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none transition' 
+                    className='w-full resize-none border border-[var(--line)] bg-[var(--bg)] px-4 py-4 text-sm font-bold uppercase tracking-widest text-[var(--ink)] placeholder:text-[var(--ink-soft)] focus:border-[var(--ink)] focus:outline-none transition-colors' 
                     placeholder='Describe your project, timeline, and any specific requirements or links...' 
                   />
                 </div>
 
                 <div>
-                  <label className='mb-3 block text-sm font-medium text-[var(--ink-soft)]'>How did you find me? (Optional)</label>
+                  <label className='mb-3 block text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>How did you find me? (Optional)</label>
                   <div className='flex flex-wrap gap-3'>
                     {SOURCES.map(s => (
                       <button 
                         key={s.value} 
                         type="button"
                         onClick={() => handleSelect('source', s.value)}
-                        className={`rounded-full border px-4 py-2 text-sm transition ${formData.source === s.value ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:bg-[var(--surface)]'}`}
+                        className={`border px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors ${formData.source === s.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
                         {s.label}
                       </button>
@@ -236,15 +236,15 @@ const StartProject = () => {
                 </div>
 
                 {status === 'error' && (
-                  <p className='text-red-500 text-sm mt-4'>There was an error submitting your request. Please ensure all required fields are filled out.</p>
+                  <p className='text-red-600 text-xs font-bold uppercase tracking-widest mt-4'>There was an error submitting your request. Please ensure all required fields are filled out.</p>
                 )}
               </div>
             )}
 
             {/* Navigation Buttons */}
-            <div className='mt-10 flex items-center justify-between border-t border-[var(--line)] pt-6'>
+            <div className='mt-12 flex items-center justify-between border-t border-[var(--line)] pt-8'>
               {step > 1 ? (
-                <button type='button' onClick={prevStep} className='rounded-full border border-[var(--line)] bg-[var(--surface)] px-6 py-3 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--bg-alt)] transition'>
+                <button type='button' onClick={prevStep} className='border border-[var(--line)] bg-[var(--bg)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[var(--ink)] hover:border-[var(--ink)] transition-colors'>
                   Back
                 </button>
               ) : <div></div>}
@@ -252,7 +252,7 @@ const StartProject = () => {
               <button 
                 type='submit' 
                 disabled={isSubmitting || (step === 2 && (!formData.projectType || !formData.budget))}
-                className='inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-50'
+                className='inline-flex items-center gap-2 border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)] disabled:opacity-50'
               >
                 {step === 3 ? (isSubmitting ? 'Submitting...' : 'Send Request') : 'Continue'}
                 {step < 3 && <ArrowRight className='h-4 w-4' />}

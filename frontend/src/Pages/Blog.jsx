@@ -45,46 +45,41 @@ const Blog = () => {
     <main className='pb-16 pt-8 md:pt-12'>
       <SEO title='Blog' description='Thoughts on web development, design systems, and product architecture.' />
 
-      <section className='section-wrap enter-fade'>
-        <div className='relative overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] md:p-10'>
-          <div className='pointer-events-none absolute -left-12 top-0 h-44 w-44 rounded-full bg-[var(--accent-3)]/16 blur-3xl' />
-          <div className='pointer-events-none absolute -right-12 bottom-0 h-44 w-44 rounded-full bg-[var(--accent-2)]/18 blur-3xl' />
-
-          <div className='relative flex flex-wrap items-center justify-between gap-4'>
+      <section className='mb-24 border-b border-[var(--line)] pb-16'>
+        <div className='px-6 md:px-10 lg:px-16'>
+          <div className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
             <div>
-              <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-soft)]'>
-                <NotebookTabs className='h-3.5 w-3.5 text-[var(--accent-2)]' />
+              <p className='mb-4 text-xs font-bold uppercase tracking-widest text-[var(--ink)]'>
                 Writing &amp; Ideas
-              </div>
-              <h1 className='display-title mt-3 text-4xl text-[var(--ink)] sm:text-6xl'>
+              </p>
+              <h1 className='text-6xl font-black uppercase tracking-tighter text-[var(--ink)] md:text-8xl'>
                 <SplitText text='Blog' delay={0.2} />
               </h1>
-              <div className='mt-2 max-w-2xl text-sm uppercase tracking-[0.11em] text-[var(--ink-soft)]'>
+              <div className='mt-2 max-w-2xl text-sm font-bold uppercase tracking-[0.11em] text-[var(--ink-soft)]'>
                 <BlurText text='Notes on architecture, interfaces, and building things that ship.' delay={0.8} />
               </div>
             </div>
-            <div className='rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink-soft)]'>
-              <p className='font-semibold text-[var(--ink)]'>{posts.length || 0} posts</p>
-              <p>currently published</p>
+            <div className='text-sm font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+              <p className='text-[var(--ink)]'>{posts.length || 0} posts</p>
+              <p>published</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Filter Tabs ── */}
-      <section className='section-wrap mt-6'>
-        <div className='flex items-center gap-2 overflow-x-auto'>
+      <section className='px-6 md:px-10 lg:px-16 mb-16'>
+        <div className='flex items-center gap-2 overflow-x-auto pb-4'>
           {FILTERS.map((f) => (
             <button
               key={f.key}
               onClick={() => handleFilterChange(f.key)}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 ${
+              className={`inline-flex items-center gap-1.5 border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${
                 activeFilter === f.key
-                  ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]'
-                  : 'border-[var(--line)] bg-[var(--surface)] text-[var(--ink-soft)] hover:border-[var(--accent-2)] hover:text-[var(--accent-2)]'
+                  ? 'border-[var(--ink)] bg-[var(--ink)] text-white'
+                  : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink-soft)] hover:bg-[var(--ink)] hover:text-white hover:border-[var(--ink)]'
               }`}
             >
-              {f.key === 'case_study' && <BookOpenCheck className='h-3.5 w-3.5' />}
               {f.label}
             </button>
           ))}
@@ -99,7 +94,7 @@ const Blog = () => {
         )}
 
         {!loading && posts.length === 0 && (
-          <div className='glass-card rounded-3xl p-10 text-center'>
+          <div className=' rounded-none p-10 text-center'>
             <Code2 className='mx-auto h-12 w-12 text-[var(--accent)]' />
             <h3 className='display-title mt-4 text-3xl text-[var(--ink)]'>
               {activeFilter === 'case_study' ? 'No Case Studies Yet' : activeFilter === 'article' ? 'No Articles Yet' : activeFilter === 'blog' ? 'No Blogs Yet' : 'Coming Soon'}
@@ -117,70 +112,45 @@ const Blog = () => {
         )}
 
         {!loading && posts.length > 0 && (
-          <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-12 px-6 md:px-10 lg:px-16 lg:grid-cols-2 lg:gap-20'>
             {posts.map((post) => (
               <Link
                 key={post._id}
                 to={`/blog/${post.slug}`}
-                className='glass-card group enter-fade block rounded-3xl p-4 md:p-5'
+                className='group block focus:outline-none'
               >
                 {post.coverImage && (
-                  <div className='relative overflow-hidden rounded-2xl border border-[var(--line)]'>
+                  <div className='relative overflow-hidden border border-[var(--line)] mb-6'>
                     <img
                       src={post.coverImage}
                       alt={post.title}
-                      className='h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]'
+                      className='h-[400px] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105'
                     />
-                    <div className='absolute inset-0 bg-gradient-to-t from-[#10182899] to-transparent' />
                     {post.type === 'CASE_STUDY' && (
-                      <span className='absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-[#0c7fa3]/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm'>
-                        <BookOpenCheck className='h-3 w-3' /> Case Study
-                      </span>
-                    )}
-                    {post.featured && (
-                      <span className={`absolute ${post.type === 'CASE_STUDY' ? 'left-3 top-10' : 'left-3 top-3'} inline-flex items-center gap-1 rounded-full border border-yellow-500/30 bg-yellow-500/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm`}>
-                        Featured
+                      <span className='absolute left-4 top-4 border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-md'>
+                        Case Study
                       </span>
                     )}
                   </div>
                 )}
 
-                <div className='mt-4 space-y-3'>
-                  <div className='flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)]'>
-                    <span className='inline-flex items-center gap-1'>
-                      <Calendar className='w-3.5 h-3.5' />
+                <div className='flex flex-col gap-4'>
+                  <div className='flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+                    <span>
                       {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
-                    {post.readingTime && <span>&bull; ~{post.readingTime} min read</span>}
-                    {post.type === 'CASE_STUDY' && !post.coverImage && (
-                      <span className='ml-auto inline-flex items-center gap-1 rounded-full border border-[var(--accent-2)]/20 bg-[var(--accent-2)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--accent-2)]'>
-                        <BookOpenCheck className='h-3 w-3' /> Case Study
-                      </span>
-                    )}
+                    {post.readingTime && <span>&bull; {post.readingTime} min read</span>}
                   </div>
 
-                  <h3 className='display-title text-2xl leading-snug text-[var(--ink)] group-hover:text-[var(--accent-2)]'>
+                  <h3 className='text-3xl font-black uppercase tracking-tighter text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors md:text-4xl'>
                     {post.title}
                   </h3>
 
-                  <p className='line-clamp-3 text-sm leading-relaxed text-[var(--ink-soft)]'>
+                  <p className='text-base font-light leading-relaxed text-[var(--ink-soft)]'>
                     {post.excerpt}
                   </p>
 
-                  {post.tags && post.tags.length > 0 && (
-                    <div className='flex flex-wrap gap-2'>
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className='inline-flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-2.5 py-1 text-xs font-semibold text-[var(--ink)]'
-                        >
-                          <Tag className='w-2.5 h-2.5' /> {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className='flex items-center gap-1 pt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] transition-all duration-300 group-hover:gap-2'>
+                  <div className='flex items-center gap-1 pt-2 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-all duration-300 group-hover:gap-2'>
                     Read More <ArrowRight className='h-3.5 w-3.5' />
                   </div>
                 </div>

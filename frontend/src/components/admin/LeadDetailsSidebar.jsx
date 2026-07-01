@@ -114,17 +114,17 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
         }
     }
 
-    const inputClass = 'w-full rounded-lg border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-xs text-[var(--ink)] focus:outline-none focus:border-[var(--accent)]'
+    const inputClass = 'w-full rounded-none border border-[var(--line)] bg-[var(--bg)] px-3 py-1.5 text-xs text-[var(--ink)] focus:outline-none focus:border-[var(--accent)]'
 
     return (
-        <div className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-[var(--bg-alt)] border-l border-[var(--line)] shadow-2xl flex flex-col backdrop-blur-sm">
+        <div className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-[var(--bg-alt)] border-l border-[var(--line)]  flex flex-col backdrop-blur-sm">
             {/* Header */}
             <div className="p-4 border-b border-[var(--line)] flex items-center justify-between bg-[var(--surface)]">
                 <div>
                     <h3 className="font-semibold text-lg text-[var(--ink)]">{editForm.name}</h3>
                     <p className="text-xs text-[var(--ink-soft)]">{editForm.company || 'Individual Lead'}</p>
                 </div>
-                <button onClick={onClose} className="p-2 hover:bg-[var(--line)]/50 rounded-full transition">
+                <button onClick={onClose} className="p-2 hover:bg-[var(--line)]/50 rounded-none transition">
                     <X className="h-5 w-5" />
                 </button>
             </div>
@@ -133,7 +133,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
             <div className="flex-1 overflow-y-auto p-5 space-y-6">
                 
                 {/* 1. Edit Profile Form */}
-                <form onSubmit={handleFormSubmit} className="glass-card p-4 rounded-xl space-y-4">
+                <form onSubmit={handleFormSubmit} className=" p-4 rounded-none space-y-4">
                     <h4 className="font-bold text-sm text-[var(--ink)] border-b border-[var(--line)] pb-2 flex items-center gap-1.5">
                         <Building className="h-4 w-4 text-[var(--accent)]" /> Profile Details
                     </h4>
@@ -198,14 +198,14 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                     </div>
 
                     <div className="flex justify-end pt-1">
-                        <button type="submit" className="rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white hover:brightness-110">
+                        <button type="submit" className="rounded-none bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white hover:brightness-110">
                             Save Profile
                         </button>
                     </div>
                 </form>
 
                 {/* 2. Tasks & Follow-ups */}
-                <div className="glass-card p-4 rounded-xl space-y-4">
+                <div className=" p-4 rounded-none space-y-4">
                     <h4 className="font-bold text-sm text-[var(--ink)] border-b border-[var(--line)] pb-2 flex items-center gap-1.5">
                         <CheckCircle2 className="h-4 w-4 text-[var(--accent)]" /> CRM Tasks &amp; Reminders
                     </h4>
@@ -223,10 +223,10 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                             type="date" 
                             value={newTask.dueDate} 
                             onChange={(e) => setNewTask(p => ({ ...p, dueDate: e.target.value }))}
-                            className="rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-xs text-[var(--ink)] focus:outline-none"
+                            className="rounded-none border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-xs text-[var(--ink)] focus:outline-none"
                             required
                         />
-                        <button type="submit" className="p-2 bg-[var(--accent)] text-white rounded-lg hover:brightness-110">
+                        <button type="submit" className="p-2 bg-[var(--accent)] text-white rounded-none hover:brightness-110">
                             <Plus className="h-4 w-4" />
                         </button>
                     </form>
@@ -236,7 +236,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                             <p className="text-xs text-[var(--ink-soft)] py-2 text-center">No pending tasks for this lead.</p>
                         ) : (
                             tasks.map(task => (
-                                <div key={task._id} className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--line)] bg-[var(--bg)] text-xs">
+                                <div key={task._id} className="flex items-center justify-between p-2.5 rounded-none border border-[var(--line)] bg-[var(--bg)] text-xs">
                                     <div className="flex items-center gap-2 min-w-0">
                                         <input 
                                             type="checkbox" 
@@ -263,7 +263,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                 </div>
 
                 {/* 3. Activity Log */}
-                <div className="glass-card p-4 rounded-xl space-y-4">
+                <div className=" p-4 rounded-none space-y-4">
                     <h4 className="font-bold text-sm text-[var(--ink)] border-b border-[var(--line)] pb-2 flex items-center gap-1.5">
                         <MessageSquare className="h-4 w-4 text-[var(--accent)]" /> Interaction Timeline
                     </h4>
@@ -273,7 +273,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                             <select 
                                 value={newLog.type} 
                                 onChange={(e) => setNewLog(p => ({ ...p, type: e.target.value }))}
-                                className="rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-xs text-[var(--ink)] focus:outline-none"
+                                className="rounded-none border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-xs text-[var(--ink)] focus:outline-none"
                             >
                                 <option value="NOTE">Note</option>
                                 <option value="CALL">Call Log</option>
@@ -288,7 +288,7 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                                 className={`${inputClass} flex-1`}
                                 required
                             />
-                            <button type="submit" className="p-2 bg-[var(--accent)] text-white rounded-lg hover:brightness-110">
+                            <button type="submit" className="p-2 bg-[var(--accent)] text-white rounded-none hover:brightness-110">
                                 Log Action
                             </button>
                         </div>
@@ -297,15 +297,15 @@ const LeadDetailsSidebar = ({ lead, onClose, onUpdateLead }) => {
                     <div className="space-y-3 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[var(--line)]">
                         {loadingLogs ? (
                             <div className="flex justify-center py-4">
-                                <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--accent)]/30 border-t-[var(--accent)]" />
+                                <div className="h-5 w-5 animate-spin rounded-none border-2 border-[var(--accent)]/30 border-t-[var(--accent)]" />
                             </div>
                         ) : activities.length === 0 ? (
                             <p className="text-xs text-[var(--ink-soft)] py-2 text-center">No logged interactions yet.</p>
                         ) : (
                             activities.map(act => (
                                 <div key={act._id} className="relative pl-10 text-xs">
-                                    <div className="absolute left-3.5 top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-[var(--accent)] bg-[var(--bg-alt)]" />
-                                    <div className="rounded-lg border border-[var(--line)] bg-[var(--bg)] p-3 space-y-1">
+                                    <div className="absolute left-3.5 top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-none border-2 border-[var(--accent)] bg-[var(--bg-alt)]" />
+                                    <div className="rounded-none border border-[var(--line)] bg-[var(--bg)] p-3 space-y-1">
                                         <div className="flex justify-between font-semibold">
                                             <span className="text-[var(--accent)]">{act.type} Logged</span>
                                             <span className="text-[10px] text-[var(--ink-soft)]">{new Date(act.createdAt).toLocaleString()}</span>

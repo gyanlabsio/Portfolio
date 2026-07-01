@@ -36,8 +36,8 @@ const Dashboard = () => {
 
     return (
         <div className='space-y-6'>
-            <header className='glass-card enter-fade rounded-3xl p-6 md:p-8'>
-                <div className='inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-soft)]'>
+            <header className=' enter-fade rounded-none p-6 md:p-8'>
+                <div className='inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-soft)]'>
                     <Sparkles className='h-3.5 w-3.5 text-[var(--accent)]' />
                     Admin Center
                 </div>
@@ -47,9 +47,9 @@ const Dashboard = () => {
 
             <div className='stagger-children grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                 {cards.map((card) => (
-                    <div key={card.label} className='glass-card surface-interactive rounded-2xl border border-[var(--line)] p-5'>
+                    <div key={card.label} className='  rounded-none border border-[var(--line)] p-5'>
                         <div className='flex items-center gap-4'>
-                            <div className={`grid h-12 w-12 place-items-center rounded-xl border border-[var(--line)] ${card.tint}`}>
+                            <div className={`grid h-12 w-12 place-items-center rounded-none border border-[var(--line)] ${card.tint}`}>
                                 <card.icon className={`h-5 w-5 ${card.color}`} />
                             </div>
                             <div>
@@ -61,20 +61,20 @@ const Dashboard = () => {
                 ))}
             </div>
 
-            <section className='glass-card surface-interactive rounded-3xl p-6 md:p-8'>
+            <section className='  rounded-none p-6 md:p-8'>
                 <h2 className='font-nevera text-2xl tracking-[0.06em] text-[var(--ink)]'>Quick Actions</h2>
                 <div className='mt-4 grid gap-3 sm:grid-cols-3'>
-                    <Link to='/admin/projects' className='group surface-interactive focus-ring rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]/35'>
+                    <Link to='/admin/projects' className='group   rounded-none border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent)]/35'>
                         <p className='text-sm font-semibold text-[var(--ink)]'>New Project</p>
                         <p className='mt-1 text-xs text-[var(--ink-soft)]'>Add and publish a project case study.</p>
                         <ArrowUpRight className='mt-3 h-4 w-4 text-[var(--accent)] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
                     </Link>
-                    <Link to='/admin/blog' className='group surface-interactive focus-ring rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-2)]/35'>
+                    <Link to='/admin/blog' className='group   rounded-none border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-2)]/35'>
                         <p className='text-sm font-semibold text-[var(--ink)]'>New Blog Post</p>
                         <p className='mt-1 text-xs text-[var(--ink-soft)]'>Draft, edit, and publish new writing.</p>
                         <ArrowUpRight className='mt-3 h-4 w-4 text-[var(--accent-2)] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
                     </Link>
-                    <Link to='/admin/config' className='group surface-interactive focus-ring rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-3)]/35'>
+                    <Link to='/admin/config' className='group   rounded-none border border-[var(--line)] bg-[var(--surface)] p-4 hover:border-[var(--accent-3)]/35'>
                         <p className='text-sm font-semibold text-[var(--ink)]'>Edit Site Config</p>
                         <p className='mt-1 text-xs text-[var(--ink-soft)]'>Update hero, bio, media, and social links.</p>
                         <ArrowUpRight className='mt-3 h-4 w-4 text-[var(--accent-3)] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />

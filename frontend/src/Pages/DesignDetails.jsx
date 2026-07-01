@@ -38,10 +38,10 @@ const DesignDetails = () => {
     if (error || !design) {
         return (
             <div className="flex min-h-screen items-center justify-center pt-20">
-                <div className="glass-card rounded-3xl p-10 text-center">
+                <div className=" rounded-none p-10 text-center">
                     <h2 className="display-title text-3xl text-[var(--ink)]">Not Found</h2>
                     <p className="mt-3 text-[var(--ink-soft)]">{error || 'Design project not found.'}</p>
-                    <Link to="/gallery" className="mt-6 inline-block rounded-full bg-[var(--accent)] px-6 py-2 text-white hover:brightness-110">
+                    <Link to="/gallery" className="mt-6 inline-block rounded-none bg-[var(--accent)] px-6 py-2 text-white hover:brightness-110">
                         Back to Gallery
                     </Link>
                 </div>
@@ -63,7 +63,7 @@ const DesignDetails = () => {
                     Back to Gallery
                 </Link>
 
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-2)]">
+                <div className="mb-6 inline-flex items-center gap-2 rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-2)]">
                     {design.category}
                 </div>
 
@@ -77,7 +77,7 @@ const DesignDetails = () => {
                     </p>
                 )}
 
-                <div className="mb-12 overflow-hidden rounded-[32px] border border-[var(--line)] bg-[var(--bg-alt)]">
+                <div className="mb-12 overflow-hidden rounded-none border border-[var(--line)] bg-[var(--bg-alt)]">
                     <img 
                         src={design.thumbnail} 
                         alt={design.title} 
@@ -97,7 +97,7 @@ const DesignDetails = () => {
                             <div className="mt-12 space-y-8">
                                 <h3 className="display-title text-2xl text-[var(--ink)]">Visuals</h3>
                                 {design.galleryImages.map((img, idx) => (
-                                    <div key={idx} className="overflow-hidden rounded-2xl border border-[var(--line)]">
+                                    <div key={idx} className="overflow-hidden rounded-none border border-[var(--line)]">
                                         <img src={img.url} alt={img.caption || `Gallery image ${idx + 1}`} className="w-full object-cover" />
                                         {img.caption && (
                                             <div className="bg-[var(--surface)] p-3 text-center text-sm font-medium text-[var(--ink-soft)] border-t border-[var(--line)]">
@@ -111,7 +111,7 @@ const DesignDetails = () => {
                     </div>
 
                     <aside className="space-y-6 shrink-0">
-                        <div className="glass-card space-y-5 rounded-3xl p-6">
+                        <div className=" space-y-5 rounded-none p-6">
                             {design.client && (
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]">Client</p>
@@ -129,7 +129,7 @@ const DesignDetails = () => {
                                     <p className="text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]">Tools</p>
                                     <div className="mt-2 flex flex-wrap gap-2">
                                         {design.tools.map(tool => (
-                                            <span key={tool} className="rounded-md border border-[var(--line)] bg-[var(--surface)] px-2 py-1 text-xs font-medium text-[var(--ink)]">
+                                            <span key={tool} className="rounded-none border border-[var(--line)] bg-[var(--surface)] px-2 py-1 text-xs font-medium text-[var(--ink)]">
                                                 {tool}
                                             </span>
                                         ))}
@@ -149,7 +149,7 @@ const DesignDetails = () => {
                                         href={design.externalUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] py-3 text-sm font-bold text-white transition hover:brightness-110"
+                                        className="flex w-full items-center justify-center gap-2 rounded-none bg-[var(--accent)] py-3 text-sm font-bold text-white transition hover:brightness-110"
                                     >
                                         Visit Live <ExternalLink className="h-4 w-4" />
                                     </a>
