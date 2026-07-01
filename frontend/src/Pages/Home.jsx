@@ -332,7 +332,7 @@ const Home = () => {
                   }}
                   animate={{ x, scale, zIndex, opacity }}
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                  className={`absolute cursor-pointer rounded-3xl overflow-hidden border border-[var(--line)] bg-[var(--surface)] transition-all duration-500 w-[280px] md:w-[400px] h-[350px] md:h-[420px] ${isCenter ? 'shadow-[0_20px_40px_rgba(0,0,0,0.25)] border-[var(--accent-2)]/50' : 'brightness-50'}`}
+                  className={`absolute cursor-pointer rounded-none overflow-hidden border border-[var(--line)] bg-[var(--surface)] transition-all duration-500 w-[280px] md:w-[400px] h-[350px] md:h-[420px] ${isCenter ? 'shadow-[0_20px_40px_rgba(0,0,0,0.25)] border-[var(--accent-2)]/50' : 'brightness-50'}`}
                   style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
                 >
                   <img src={design.thumbnail} alt={design.title} className={`w-full h-full object-cover transition-transform duration-700 ${isCenter ? 'hover:scale-105' : ''}`} />
