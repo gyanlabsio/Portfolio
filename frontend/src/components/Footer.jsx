@@ -49,20 +49,20 @@ const Footer = () => {
 
             <div className='space-y-5'>
               <nav className='grid grid-cols-2 gap-2 text-sm font-bold text-[var(--ink)] uppercase tracking-widest'>
-                <Link to='/' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-white transition-colors'>Home</Link>
-                <Link to='/about' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-white transition-colors'>About</Link>
-                <Link to='/Projects' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-white transition-colors'>Projects</Link>
-                <Link to='/Blog' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-white transition-colors'>Blog</Link>
+                <Link to='/' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>Home</Link>
+                <Link to='/about' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>About</Link>
+                <Link to='/Projects' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>Projects</Link>
+                <Link to='/Blog' onClick={handleScrollToTop} className='rounded-none border border-[var(--line)] bg-[var(--surface)] px-3 py-2 hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>Blog</Link>
               </nav>
 
               <div className='flex items-center gap-2'>
-                <a href='https://github.com/gyanaranjan-das' target='_blank' rel='noopener noreferrer' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white transition-colors'>
+                <a href='https://github.com/gyanaranjan-das' target='_blank' rel='noopener noreferrer' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>
                   <Github className='h-4 w-4' />
                 </a>
-                <a href='https://linkedin.com/in/gyanlabs' target='_blank' rel='noopener noreferrer' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white transition-colors'>
+                <a href='https://linkedin.com/in/gyanlabs' target='_blank' rel='noopener noreferrer' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>
                   <Linkedin className='h-4 w-4' />
                 </a>
-                <a href='mailto:gyanlabs.io@gmail.com' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white transition-colors'>
+                <a href='mailto:gyanlabs.io@gmail.com' className=' button-pop grid h-10 w-10 place-items-center rounded-none border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--surface)] transition-colors'>
                   <Mail className='h-4 w-4' />
                 </a>
               </div>

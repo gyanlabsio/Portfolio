@@ -86,8 +86,8 @@ const Gallery = () => {
                                 onClick={() => setSelectedCategory(cat)}
                                 className={`border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${
                                     selectedCategory === cat
-                                        ? 'border-[var(--ink)] bg-[var(--ink)] text-white'
-                                        : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink-soft)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white'
+                                        ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]'
+                                        : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink-soft)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--surface)]'
                                 }`}
                             >
                                 {cat}

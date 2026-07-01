@@ -61,7 +61,7 @@ const ProjectDetails = () => {
         <article className='pb-16 pt-8 md:pt-12'>
             <SEO title={project.title} description={project.description?.substring(0, 160)} image={project.coverImage} />
             <div className='max-w-4xl mx-auto px-6 md:px-10'>
-                <Link to='/Projects' className='inline-flex items-center gap-2 border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-white'>
+                <Link to='/Projects' className='inline-flex items-center gap-2 border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-[var(--surface)]'>
                     <ArrowLeft className='h-3.5 w-3.5' />
                     Back to Projects
                 </Link>
@@ -85,7 +85,7 @@ const ProjectDetails = () => {
                                     href={project.githubLink}
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    className='inline-flex items-center gap-2 border border-[var(--ink)] bg-[var(--bg)] px-4 py-3 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-white'
+                                    className='inline-flex items-center gap-2 border border-[var(--ink)] bg-[var(--bg)] px-4 py-3 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-[var(--surface)]'
                                 >
                                     <Github className='h-4 w-4' />
                                     Source
@@ -96,7 +96,7 @@ const ProjectDetails = () => {
                                     href={project.liveLink}
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    className='inline-flex items-center gap-2 border border-[var(--accent)] bg-[var(--accent)] px-4 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-[var(--ink)] hover:border-[var(--ink)]'
+                                    className='inline-flex items-center gap-2 border border-[var(--accent)] bg-[var(--accent)] px-4 py-3 text-xs font-bold uppercase tracking-widest text-[var(--surface)] transition-colors hover:bg-[var(--ink)] hover:border-[var(--ink)]'
                                 >
                                     <ExternalLink className='h-4 w-4' />
                                     Live Demo

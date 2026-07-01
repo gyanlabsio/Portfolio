@@ -209,7 +209,7 @@ const Home = () => {
                       </p>
                       <button 
                         onClick={() => setExpandedDomain(isExpanded ? null : domain)}
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center border border-[var(--ink)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-white border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--ink)] hover:text-white'}`}
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center border border-[var(--ink)] transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-[var(--accent)] text-[var(--surface)] border-[var(--accent)]' : 'text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--surface)]'}`}
                       >
                         <ChevronDown className='h-4 w-4' />
                       </button>

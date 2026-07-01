@@ -130,7 +130,7 @@ const Contact = () => {
                 <button
                   type='submit'
                   disabled={contactLoading}
-                  className='inline-flex items-center border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)] disabled:opacity-60'
+                  className='inline-flex items-center border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[var(--surface)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--ink)] disabled:opacity-60'
                 >
                   {contactLoading ? 'Sending...' : 'Send Message'}
                 </button>

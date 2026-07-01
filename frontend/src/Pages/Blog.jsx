@@ -76,8 +76,8 @@ const Blog = () => {
               onClick={() => handleFilterChange(f.key)}
               className={`inline-flex items-center gap-1.5 border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${
                 activeFilter === f.key
-                  ? 'border-[var(--ink)] bg-[var(--ink)] text-white'
-                  : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink-soft)] hover:bg-[var(--ink)] hover:text-white hover:border-[var(--ink)]'
+                  ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]'
+                  : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink-soft)] hover:bg-[var(--ink)] hover:text-[var(--surface)] hover:border-[var(--ink)]'
               }`}
             >
               {f.label}

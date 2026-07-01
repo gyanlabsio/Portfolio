@@ -65,7 +65,7 @@ const BlogPost = () => {
         <article className='pb-16 pt-8 md:pt-12'>
             <SEO title={post.seoTitle || post.title} description={post.seoDescription || post.excerpt} image={post.coverImage} url={post.canonicalUrl} />
             <div className='max-w-4xl mx-auto px-6 md:px-10'>
-                <Link to='/Blog' className='inline-flex items-center gap-2 border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-white'>
+                <Link to='/Blog' className='inline-flex items-center gap-2 border border-[var(--line)] bg-[var(--bg)] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-[var(--surface)]'>
                     <ArrowLeft className='h-3.5 w-3.5' />
                     Back to Blog
                 </Link>
@@ -93,7 +93,7 @@ const BlogPost = () => {
                             &bull; {post.author || 'Admin'}
                         </span>
                         {post.type === 'CASE_STUDY' && (
-                            <span className='border border-[var(--ink)] bg-[var(--ink)] px-2.5 py-1 text-[10px] font-bold text-white'>
+                            <span className='border border-[var(--ink)] bg-[var(--ink)] px-2.5 py-1 text-[10px] font-bold text-[var(--surface)]'>
                                 Case Study
                             </span>
                         )}

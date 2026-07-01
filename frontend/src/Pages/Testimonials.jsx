@@ -90,7 +90,7 @@ const Testimonials = () => {
                       {t.image ? (
                         <img src={t.image} alt={t.clientName} className='h-16 w-24 object-cover border border-[var(--line)]' />
                       ) : (
-                        <div className='flex h-12 w-12 items-center justify-center bg-[var(--ink)] text-sm font-bold uppercase tracking-widest text-white border border-[var(--ink)]'>
+                        <div className='flex h-12 w-12 items-center justify-center bg-[var(--ink)] text-sm font-bold uppercase tracking-widest text-[var(--surface)] border border-[var(--ink)]'>
                           {t.clientName.charAt(0)}
                         </div>
                       )}
@@ -171,7 +171,7 @@ const Testimonials = () => {
                 <button
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full border border-[var(--ink)] bg-[var(--ink)] px-6 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)] disabled:opacity-60'
+                  className='w-full border border-[var(--ink)] bg-[var(--ink)] px-6 py-4 text-xs font-bold uppercase tracking-widest text-[var(--surface)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--ink)] disabled:opacity-60'
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
                 </button>

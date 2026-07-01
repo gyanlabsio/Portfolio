@@ -97,7 +97,7 @@ const StartProject = () => {
           <p className='text-sm font-light uppercase tracking-widest text-[var(--ink-soft)] leading-relaxed mb-8'>
             Thank you for reaching out, {formData.name.split(' ')[0]}. I've received your project details and will review them shortly. Expect to hear back from me within 24-48 hours to discuss the next steps!
           </p>
-          <button onClick={() => window.location.href = '/'} className='border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)]'>
+          <button onClick={() => window.location.href = '/'} className='border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[var(--surface)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
             Return Home
           </button>
         </div>
@@ -176,7 +176,7 @@ const StartProject = () => {
                         key={pt.value} 
                         type="button"
                         onClick={() => handleSelect('projectType', pt.value)}
-                        className={`border px-4 py-4 text-center transition-colors ${formData.projectType === pt.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
+                        className={`border px-4 py-4 text-center transition-colors ${formData.projectType === pt.value ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
                         <span className='block text-xs font-bold uppercase tracking-widest'>{pt.label}</span>
                       </button>
@@ -192,7 +192,7 @@ const StartProject = () => {
                         key={b.value} 
                         type="button"
                         onClick={() => handleSelect('budget', b.value)}
-                        className={`border px-4 py-4 text-center transition-colors ${formData.budget === b.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
+                        className={`border px-4 py-4 text-center transition-colors ${formData.budget === b.value ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
                         <span className='block text-xs font-bold uppercase tracking-widest'>{b.label}</span>
                       </button>
@@ -227,7 +227,7 @@ const StartProject = () => {
                         key={s.value} 
                         type="button"
                         onClick={() => handleSelect('source', s.value)}
-                        className={`border px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors ${formData.source === s.value ? 'border-[var(--ink)] bg-[var(--ink)] text-white' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
+                        className={`border px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors ${formData.source === s.value ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]' : 'border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] hover:border-[var(--ink)]'}`}
                       >
                         {s.label}
                       </button>
@@ -252,7 +252,7 @@ const StartProject = () => {
               <button 
                 type='submit' 
                 disabled={isSubmitting || (step === 2 && (!formData.projectType || !formData.budget))}
-                className='inline-flex items-center gap-2 border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[var(--ink)] disabled:opacity-50'
+                className='inline-flex items-center gap-2 border border-[var(--ink)] bg-[var(--ink)] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[var(--surface)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--ink)] disabled:opacity-50'
               >
                 {step === 3 ? (isSubmitting ? 'Submitting...' : 'Send Request') : 'Continue'}
                 {step < 3 && <ArrowRight className='h-4 w-4' />}
