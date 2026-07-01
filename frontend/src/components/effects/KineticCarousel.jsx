@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -49,7 +50,7 @@ const KineticCarousel = ({ projects = [] }) => {
               onClick={handleNext}
               drag={isFront ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(e, { offset, velocity }) => {
+              onDragEnd={(e, { offset }) => {
                 const swipe = offset.x;
                 if (swipe < -50 || swipe > 50) {
                   handleNext();
