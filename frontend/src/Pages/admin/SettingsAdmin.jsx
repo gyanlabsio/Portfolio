@@ -8,7 +8,6 @@ const SettingsAdmin = () => {
     const [settings, setSettings] = useState(null)
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
-    const [editorTab, setEditorTab] = useState('bio')
 
     const fetchAll = async () => {
         try {

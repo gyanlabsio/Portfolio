@@ -24,7 +24,6 @@ const Home = () => {
   const [latestPosts, setLatestPosts] = useState([])
   const [featuredDesigns, setFeaturedDesigns] = useState([])
   const [loading, setLoading] = useState(true)
-  const [activeDomainIndex, setActiveDomainIndex] = useState(0)
   const [expandedDomain, setExpandedDomain] = useState(null)
 
   const [activeDesignIndex, setActiveDesignIndex] = useState(0)
