@@ -300,6 +300,12 @@ const Home = () => {
         </section>
       )}
 
+      {showTestimonials && testimonials.length > 0 && (
+        <section className='mb-16 border-t border-[var(--line)] pt-16'>
+          <TestimonialInfiniteCard testimonials={testimonials} />
+        </section>
+      )}
+
       {/* FAQ & Contact Section */}
       <section className='mb-16 border-t border-[var(--line)] pt-16'>
         <div className='grid md:grid-cols-2 gap-16'>
@@ -316,12 +322,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {showTestimonials && testimonials.length > 0 && (
-        <section className='mb-16 pt-16'>
-          <TestimonialInfiniteCard testimonials={testimonials} />
-        </section>
-      )}
 
     </main>
   )
