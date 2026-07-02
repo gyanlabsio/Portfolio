@@ -197,7 +197,7 @@ const Home = () => {
       {showServices && services.length > 0 && (
         <section className='mb-40 border-t border-[var(--line)] pt-16'>
           <div className='mb-12'>
-            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>My Domains</h2>
+            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Services I Provide</h2>
           </div>
           <div className='flex flex-col gap-6 max-w-4xl mx-auto'>
             {domains.map((domain) => {
