@@ -38,6 +38,13 @@ const updateSettings = async (req, res, next) => {
             delete settings._id;
         }
 
+        // Mongoose needs to be explicitly told when Mixed/Object types are updated
+        if (req.body.homepageSections) settings.markModified('homepageSections');
+        if (req.body.socialLinks) settings.markModified('socialLinks');
+        if (req.body.aboutStats) settings.markModified('aboutStats');
+        if (req.body.aboutMyWorkDropdowns) settings.markModified('aboutMyWorkDropdowns');
+        if (req.body.bioSkills) settings.markModified('bioSkills');
+
         const updatedSettings = await settings.save();
 
         res.json({ success: true, data: updatedSettings });
