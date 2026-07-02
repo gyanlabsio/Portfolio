@@ -137,7 +137,7 @@ const Gallery = () => {
                                                 src={design.thumbnail}
                                                 alt={design.title}
                                                 loading="lazy"
-                                                className="w-full object-cover grayscale transition-transform duration-700 ease-out group-hover:grayscale-0 group-hover:scale-105"
+                                                className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                             />
                                         ) : (
                                             <div className="aspect-[4/3] w-full bg-[var(--bg-alt)]" />

@@ -117,7 +117,7 @@ const ProjectDetails = () => {
 
                     {project.coverImage && (
                         <div className='mt-12 overflow-hidden border border-[var(--line)]'>
-                            <img src={project.coverImage} alt={project.title} className='w-full object-cover max-h-[600px] grayscale' />
+                            <img src={project.coverImage} alt={project.title} className='w-full object-cover max-h-[600px]' />
                         </div>
                     )}
 

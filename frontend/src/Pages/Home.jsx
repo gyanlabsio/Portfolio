@@ -217,7 +217,7 @@ const Home = () => {
                       {domainServices.map((service) => (
                         <div key={service._id} className='flex gap-4 items-start'>
                           {service.thumbnail && (
-                            <img src={service.thumbnail} alt={service.title} className='w-16 h-16 object-cover grayscale shrink-0' />
+                            <img src={service.thumbnail} alt={service.title} className='w-16 h-16 object-cover shrink-0' />
                           )}
                           <div>
                             <p className='font-bold text-[var(--ink)] text-base uppercase tracking-tight'>{service.title}</p>

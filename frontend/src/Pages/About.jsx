@@ -116,7 +116,7 @@ const About = () => {
                 <img 
                   src={statsImage} 
                   alt="Impact" 
-                  className='h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105'
+                  className='h-full w-full object-cover transition duration-700 group-hover:scale-105'
                 />
               </div>
             </div>

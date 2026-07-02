@@ -64,7 +64,7 @@ const LatestUpdates = () => {
             {/* Base Red Image */}
             <img src={updateImage}
               alt="Latest update preview"
-              className='absolute inset-0 w-full h-full object-cover grayscale brightness-75 mx-auto block z-10'
+              className='absolute inset-0 w-full h-full object-cover brightness-75 mx-auto block z-10'
             />
             <div className='absolute inset-0 bg-[var(--accent)] mix-blend-multiply opacity-90 pointer-events-none z-20'></div>
 

@@ -124,7 +124,7 @@ const Blog = () => {
                     <img
                       src={post.coverImage}
                       alt={post.title}
-                      className='h-[400px] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105'
+                      className='h-[400px] w-full object-cover transition duration-700 group-hover:scale-105'
                     />
                     {post.type === 'CASE_STUDY' && (
                       <span className='absolute left-4 top-4 border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-md'>

@@ -111,7 +111,7 @@ const BlogPost = () => {
 
                     {post.coverImage && (
                         <div className='mt-12 overflow-hidden border border-[var(--line)]'>
-                            <img src={post.coverImage} alt={post.title} className='max-h-[600px] w-full object-cover grayscale' />
+                            <img src={post.coverImage} alt={post.title} className='max-h-[600px] w-full object-cover' />
                         </div>
                     )}
 
