@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const KineticCarousel = ({ projects = [] }) => {
   const [cards, setCards] = useState(projects);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (projects.length <= 1 || isPaused) return;
+    const interval = setInterval(() => {
+      setCards((prevCards) => {
+        const newCards = [...prevCards];
+        const firstCard = newCards.shift();
+        newCards.push(firstCard);
+        return newCards;
+      });
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [projects.length, isPaused]);
 
   if (!projects || projects.length === 0) {
     return <p className='text-[var(--ink-soft)] font-light'>New case studies are in progress. Check back shortly.</p>;
@@ -23,7 +37,11 @@ const KineticCarousel = ({ projects = [] }) => {
   const SCALE_FACTOR = 0.05; // Scale decrease per card
 
   return (
-    <div className='relative w-full h-[360px] md:h-[420px]'>
+    <div 
+      className='relative w-full h-[360px] md:h-[420px]'
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <AnimatePresence>
         {cards.map((project, index) => {
           const isFront = index === 0;
@@ -98,7 +116,7 @@ const KineticCarousel = ({ projects = [] }) => {
                         className='text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] hover:text-[var(--ink)] transition-colors inline-flex items-center gap-2'
                         onClick={(e) => e.stopPropagation()} // Prevent card cycling when clicking the link
                       >
-                        View Case Study
+                        View Project
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                       </Link>
                     </div>

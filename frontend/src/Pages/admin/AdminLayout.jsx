@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
 import { LayoutDashboard, FolderKanban, FileText, Mail, Settings, LogOut, Home, PanelRightClose, Briefcase, Users, MessageSquare, MessageCircle, BarChart3, SearchCode, Receipt, Image, MailCheck, Trash2, Megaphone, PenTool } from 'lucide-react'
 import { useState } from 'react'
-import ThemeToggle from '../../components/ThemeToggle'
 
 const navItems = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
@@ -36,7 +35,7 @@ const AdminLayout = () => {
 
     return (
         <div className='min-h-screen bg-[var(--bg)] text-[var(--ink)]'>
-            <div className='pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(12,127,163,0.14),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(239,62,47,0.16),transparent_30%)]' />
+            <div className='pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(12,127,163,0.14),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(17,17,17,0.15),transparent_30%)]' />
 
             <button
                 type='button'
@@ -74,10 +73,7 @@ const AdminLayout = () => {
                     </nav>
 
                     <div className='space-y-1 border-t border-[var(--line)] p-2'>
-                        <div className='flex items-center justify-between px-3 py-2'>
-                            <span className='text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]'>Theme</span>
-                            <ThemeToggle />
-                        </div>
+
                         <Link to='/' onClick={() => setOpen(false)} className=' button-pop flex items-center gap-3 rounded-none px-3 py-3 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--surface)] hover:text-[var(--ink)]'>
                             <Home className='h-4 w-4' /> View Site
                         </Link>

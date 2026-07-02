@@ -28,7 +28,7 @@ const Login = () => {
 
     return (
         <div className='min-h-screen bg-[var(--bg)] px-6 py-10'>
-            <div className='pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(12,127,163,0.16),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(239,62,47,0.18),transparent_30%)]' />
+            <div className='pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(12,127,163,0.16),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(17,17,17,0.15),transparent_30%)]' />
 
             <div className='mx-auto flex min-h-[80vh] w-full max-w-md items-center'>
                 <div className=' enter-fade w-full rounded-none p-7 md:p-8'>

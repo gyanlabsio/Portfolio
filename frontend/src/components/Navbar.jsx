@@ -1,7 +1,7 @@
 import { Github, Linkedin, Mail, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import ThemeToggle from './ThemeToggle'
+
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
@@ -41,7 +41,7 @@ const Navbar = () => {
 
             <div className='flex items-center gap-2'>
               <div className='hidden lg:flex items-center gap-2'>
-                <ThemeToggle />
+
                 <div className="w-[1px] h-6 bg-[var(--line)] mx-1"></div>
                 {SOCIALS.map((social) => (
                   <a

@@ -178,7 +178,7 @@ const TestimonialsAdmin = () => {
                                                 handleDelete(t._id);
                                             }
                                         }} 
-                                        className='rounded-none p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[#EF3E2F] text-xs font-semibold'
+                                        className='rounded-none p-2 text-[var(--ink-soft)] transition hover:bg-[var(--surface)] hover:text-[var(--accent)] text-xs font-semibold'
                                     >
                                         <Trash2 className='h-4 w-4 pointer-events-none' />
                                     </button>

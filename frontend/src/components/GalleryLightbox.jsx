@@ -78,7 +78,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 1.05 }}
                                     transition={{ duration: 0.3 }}
-                                    className="max-h-full max-w-full object-contain"
+                                    className="h-full w-full object-cover"
                                 />
                             </AnimatePresence>
 
@@ -161,7 +161,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                     href={design.externalUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-none bg-[#ff5a43] py-3 text-sm font-semibold text-white transition hover:brightness-110"
+                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-none bg-[var(--accent)] py-3 text-sm font-semibold text-white transition hover:brightness-110"
                                 >
                                     View Live <ExternalLink className="h-4 w-4" />
                                 </a>
