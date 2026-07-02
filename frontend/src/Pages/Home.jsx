@@ -72,9 +72,10 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [featuredDesigns.length, isDesignsPaused]);
 
-  const heroTitle = config?.siteTitle || 'GYANARANJAN DAS'
-  const heroTagline = config?.tagline || 'Full-stack developer building digital products with strong visual identity.'
+  const heroTitle = config?.siteTitle || ''
+  const heroTagline = config?.tagline || ''
   const heroDescription = config?.description || ''
+  const heroBadge = config?.heroBadge || ''
 
   // Toggles
   const showProjects = config?.homepageSections?.projects !== false;
@@ -88,17 +89,23 @@ const Home = () => {
 
       {/* HERO: Pure Typography & Whitespace */}
       <section className='mb-40 flex flex-col items-start gap-8'>
-        <div className='inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
-          {config?.heroBadge || 'Design + Engineering'}
-        </div>
+        {heroBadge && (
+          <div className='inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]'>
+            {heroBadge}
+          </div>
+        )}
 
-        <h1 className='text-5xl font-black text-[var(--ink)] sm:text-6xl md:text-7xl tracking-tighter leading-tight'>
-          <SplitText text={heroTitle} delay={0.2} />
-        </h1>
+        {heroTitle && (
+          <h1 className='text-5xl font-black text-[var(--ink)] sm:text-6xl md:text-7xl tracking-tighter leading-tight min-h-[4rem]'>
+            <SplitText text={heroTitle} delay={0.2} />
+          </h1>
+        )}
 
-        <p className='max-w-2xl text-xl font-light leading-relaxed text-[var(--ink-soft)] md:text-2xl'>
-          <BlurText text={heroTagline} delay={0.6} />
-        </p>
+        {heroTagline && (
+          <p className='max-w-2xl text-xl font-light leading-relaxed text-[var(--ink-soft)] md:text-2xl min-h-[2rem]'>
+            <BlurText text={heroTagline} delay={0.6} />
+          </p>
+        )}
 
         {heroDescription && (
           <p className='max-w-xl text-base font-light leading-relaxed text-[var(--ink-soft)]'>

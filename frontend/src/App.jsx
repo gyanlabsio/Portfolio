@@ -50,7 +50,7 @@ const RecycleBinAdmin = lazy(() => import("./Pages/admin/RecycleBinAdmin"));
 // Loading fallback
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-[#FF0000] border-t-transparent rounded-none animate-spin"></div>
+    <div className="w-8 h-8 border-2 border-[var(--accent)]/30 border-t-[var(--accent)] rounded-full animate-spin"></div>
   </div>
 );
 
