@@ -29,13 +29,13 @@
 }
 
 .dark {
-  --bg: #0a0d14;
-  --bg-alt: #05060a;
+  --bg: #000000;
+  --bg-alt: #000000;
   --ink: #f8f9fa;
   --ink-soft: #8b949e;
   --line: rgba(255, 255, 255, 0.1);
-  --card: rgba(22, 27, 34, 0.6);
-  --surface: #0a0d14;
+  --card: rgba(0, 0, 0, 0.6);
+  --surface: #000000;
   --accent: #ff5a43;
   --ring: rgba(255, 90, 67, 0.4);
 }

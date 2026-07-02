@@ -279,7 +279,7 @@ const Home = () => {
                   style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
                 >
                   <img src={design.thumbnail} alt={design.title} className={`w-full h-full object-cover transition-transform duration-700 ${isCenter ? 'hover:scale-105' : ''}`} />
-                  <div className={`absolute inset-0 bg-gradient-to-t from-[#0a0d14]/90 via-[#0a0d14]/20 to-transparent transition-opacity duration-500 ${isCenter ? 'opacity-80' : 'opacity-40'}`} />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/20 to-transparent transition-opacity duration-500 ${isCenter ? 'opacity-80' : 'opacity-40'}`} />
                   
                   <div className={`absolute bottom-0 left-0 right-0 p-6 transition-all duration-500 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                     <p className='mb-2 text-xs font-bold uppercase tracking-wider text-[var(--accent-2)]'>{design.category}</p>
