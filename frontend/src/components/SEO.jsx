@@ -34,7 +34,7 @@ const SEO = ({ title, description, image, url, slug }) => {
                     if (settingsData?.data) {
                         setSiteSettings(settingsData.data);
                     }
-                } catch (e) {
+                } catch {
                     // Ignore settings error
                 }
             } catch (error) {
