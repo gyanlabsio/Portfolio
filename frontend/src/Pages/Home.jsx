@@ -247,51 +247,60 @@ const Home = () => {
             {loading ? (
               <Loader text="Loading latest posts..." />
             ) : latestPosts.length > 0 ? (
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                {latestPosts.map((post) => (
-                  <Link key={post._id} to={`/blog/${post.slug}`} className='group flex flex-col focus:outline-none h-full'>
-                    {post.coverImage ? (
-                      <div className='relative overflow-hidden aspect-[4/3] mb-4 bg-[var(--line)]'>
-                        <img
-                          src={post.coverImage}
-                          alt={post.title}
-                          className='h-full w-full object-cover transition-transform duration-700 group-hover:scale-105'
-                        />
+              <div className='w-full'>
+                {/* Featured Lead (Anchor) */}
+                {latestPosts[0] && (
+                  <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-xl p-8 md:p-16 mb-12 group'>
+                    <div className='flex flex-col md:flex-row gap-8 md:gap-16'>
+                      <div className='flex-1'>
+                        <div className='flex flex-wrap items-center gap-4 text-[#1a1a1a]/60 mb-6 tracking-[0.13em] uppercase text-[10px] font-bold' style={{ fontFamily: "'Manrope', sans-serif" }}>
+                          <span className='text-[#1a1a1a]'>{latestPosts[0].category || 'Writing'}</span>
+                          <span className='w-1 h-1 rounded-full bg-[#1a1a1a]/20'></span>
+                          <span>{new Date(latestPosts[0].createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                          <span className='w-1 h-1 rounded-full bg-[#1a1a1a]/20'></span>
+                          <span className='text-[#1a1a1a]'>{latestPosts[0].readTime || '6 MIN'} READ</span>
+                        </div>
+                        <h3 className='text-4xl md:text-[3.5rem] font-bold text-[#1a1a1a] leading-[1.1] tracking-tight'>
+                          {latestPosts[0].title}
+                        </h3>
                       </div>
-                    ) : (
-                      <div className='relative overflow-hidden aspect-[4/3] mb-4 bg-[var(--line)] flex items-center justify-center'>
-                        <span className='text-[var(--ink-soft)] text-xs uppercase tracking-widest'>No Image</span>
-                      </div>
-                    )}
-                    
-                    <div className='flex items-center gap-2 mb-3'>
-                      <div className='flex h-6 w-6 items-center justify-center rounded-full bg-[var(--ink)] text-[var(--surface)] text-[10px] font-bold'>
-                        {(post.author || 'A').charAt(0).toUpperCase()}
-                      </div>
-                      <span className='text-xs font-semibold text-[var(--accent)]'>
-                        {post.author || 'Admin'}
-                      </span>
-                    </div>
-
-                    <h3 className='text-lg font-bold text-[var(--ink)] transition-colors mb-2 line-clamp-2 leading-tight'>
-                      {post.title}
-                    </h3>
-                    
-                    <p className='text-sm font-light text-[var(--ink-soft)] leading-relaxed line-clamp-2 mb-6 flex-grow'>
-                      {post.excerpt}
-                    </p>
-
-                    <div className='mt-auto flex items-center justify-between pt-2'>
-                      <div className='flex items-center gap-1.5 text-xs font-medium text-[var(--ink-soft)]'>
-                        <Clock3 className='h-3.5 w-3.5' />
-                        {new Date(post.createdAt).toISOString().split('T')[0]}
-                      </div>
-                      <div className='flex items-center gap-1 border-b border-[var(--ink)] pb-0.5 text-xs font-bold text-[var(--ink)] transition-all group-hover:text-[var(--accent)] group-hover:border-[var(--accent)]'>
-                        Read More <ArrowUpRight className='h-3 w-3' />
+                      <div className='flex-1 flex flex-col justify-center'>
+                        <p className='text-base md:text-lg text-[#1a1a1a]/70 font-light leading-relaxed mb-8'>
+                          {latestPosts[0].excerpt}
+                        </p>
+                        <div>
+                          <span className='inline-block bg-[#1a1a1a] text-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-black'>
+                            Read Article
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </Link>
-                ))}
+                )}
+
+                {/* Compact Previews */}
+                {latestPosts.length > 1 && (
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0'>
+                    {latestPosts.slice(1, 5).map((post) => (
+                      <Link key={post._id} to={`/blog/${post.slug}`} className='group block border-t border-[var(--line)] py-10'>
+                        <div className='flex items-center justify-between text-[var(--ink-soft)] mb-6 tracking-[0.13em] uppercase text-[10px] font-bold' style={{ fontFamily: "'Manrope', sans-serif" }}>
+                          <div className='flex items-center gap-3'>
+                            <span className='text-[var(--ink)]'>{post.category || 'Writing'}</span>
+                            <span className='w-1 h-1 rounded-full bg-[var(--line)]'></span>
+                            <span>{new Date(post.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                          </div>
+                          <span className='text-[var(--ink)]'>{post.readTime || '4 MIN'} READ</span>
+                        </div>
+                        <h3 className='text-2xl font-bold text-[var(--ink)] leading-tight mb-4 group-hover:text-[var(--accent)] transition-colors'>
+                          {post.title}
+                        </h3>
+                        <p className='text-sm font-light text-[var(--ink-soft)] leading-relaxed line-clamp-2'>
+                          {post.excerpt}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : (
               <p className='text-[var(--ink-soft)] font-light'>Thought pieces are coming soon.</p>

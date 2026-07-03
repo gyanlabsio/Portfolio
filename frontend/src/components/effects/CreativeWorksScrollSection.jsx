@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -13,19 +13,10 @@ const CreativeWorksScrollSection = ({ featuredDesigns = [] }) => {
 
     const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
-    const [activeDesignIndex, setActiveDesignIndex] = useState(0);
-    const [isDesignsPaused, setIsDesignsPaused] = useState(false);
     const [selectedDesign, setSelectedDesign] = useState(null);
 
-    useEffect(() => {
-        if (featuredDesigns.length <= 1 || isDesignsPaused) return;
-        
-        const interval = setInterval(() => {
-            setActiveDesignIndex((prev) => (prev + 1) % featuredDesigns.length);
-        }, 3000); 
-        
-        return () => clearInterval(interval);
-    }, [featuredDesigns.length, isDesignsPaused]);
+    // Limit to 6 designs for the asymmetric grid (1 anchor + 5 supporting) to perfectly fill a 3x3 area
+    const displayDesigns = featuredDesigns.slice(0, 6);
 
     if (!featuredDesigns || featuredDesigns.length === 0) return null;
 
@@ -35,59 +26,51 @@ const CreativeWorksScrollSection = ({ featuredDesigns = [] }) => {
                 <motion.div style={{ x }} className="flex w-[200vw]">
                     
                     {/* SLIDE 1: CREATIVE WORKS CAROUSEL */}
-                    <div className="w-screen flex-shrink-0 flex items-center justify-center px-6 border-t border-[var(--line)]">
+                    <div className="w-screen flex-shrink-0 flex items-center justify-center px-6">
                         <div className="w-full mx-auto flex flex-col items-center">
                             
-                            <div className='w-full mb-12 flex items-center justify-between max-w-4xl pt-16'>
+                            <div className='w-full mb-8 flex items-center justify-between max-w-[1400px] pt-16 border-t border-[var(--line)]'>
                                 <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Creative Works</h2>
                                 <Link to='/gallery' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>
                                     View Gallery
                                 </Link>
                             </div>
                             
-                            <div 
-                                className='relative h-[400px] md:h-[450px] flex items-center justify-center w-full max-w-6xl'
-                                onMouseEnter={() => setIsDesignsPaused(true)}
-                                onMouseLeave={() => setIsDesignsPaused(false)}
-                            >
-                                {featuredDesigns.map((design, index) => {
-                                let offset = index - activeDesignIndex;
-                                if (offset < -Math.floor(featuredDesigns.length / 2)) offset += featuredDesigns.length;
-                                if (offset > Math.floor(featuredDesigns.length / 2)) offset -= featuredDesigns.length;
-                                
-                                const isCenter = offset === 0;
-                                const zIndex = 100 - Math.abs(offset);
-                                const scale = isCenter ? 1 : Math.max(0.75, 1 - Math.abs(offset) * 0.1);
-                                const transX = offset * (window.innerWidth < 768 ? 80 : 200); 
-                                const opacity = Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.2;
+                            <div className='w-full max-w-[1400px] grid grid-cols-1 md:grid-cols-3 grid-rows-[repeat(6,1fr)] md:grid-rows-3 gap-2 md:gap-4 h-[70vh] min-h-[500px]'>
+                                {displayDesigns.map((design, index) => {
+                                    const isAnchor = index === 0;
+                                    return (
+                                        <div 
+                                            key={design._id}
+                                            onClick={() => setSelectedDesign(design)}
+                                            className={`relative group cursor-pointer overflow-hidden bg-[var(--surface)] ${isAnchor ? 'md:col-span-2 md:row-span-2 row-span-2' : 'col-span-1 row-span-1'}`}
+                                        >
+                                            <img 
+                                                src={design.thumbnail} 
+                                                alt={design.title} 
+                                                className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105' 
+                                            />
+                                            
+                                            {/* Top Right Year Badge */}
+                                            <div className='absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 tracking-widest uppercase'>
+                                                {design.year || '2024'}
+                                            </div>
 
-                                return (
-                                    <motion.div 
-                                    key={design._id} 
-                                    onClick={() => {
-                                        if (isCenter) {
-                                            setSelectedDesign(design);
-                                        } else {
-                                            setActiveDesignIndex(index);
-                                        }
-                                    }}
-                                    animate={{ x: transX, scale, zIndex, opacity }}
-                                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                                    className={`absolute cursor-pointer rounded-none overflow-hidden border border-[var(--line)] bg-[var(--surface)] transition-all duration-500 w-[280px] md:w-[400px] h-[350px] md:h-[420px] ${isCenter ? 'shadow-[0_20px_40px_rgba(0,0,0,0.25)] border-[var(--accent)]/50' : 'brightness-50'}`}
-                                    style={{ pointerEvents: isCenter ? 'auto' : opacity > 0 ? 'auto' : 'none' }}
-                                    >
-                                    <img src={design.thumbnail} alt={design.title} className={`w-full h-full object-cover transition-transform duration-700 ${isCenter ? 'hover:scale-105' : ''}`} />
-                                    <div className={`absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/20 to-transparent transition-opacity duration-500 ${isCenter ? 'opacity-80' : 'opacity-40'}`} />
-                                    
-                                    <div className={`absolute bottom-0 left-0 right-0 p-6 transition-all duration-500 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-                                        <p className='mb-2 text-xs font-bold uppercase tracking-wider text-white/50'>{design.category}</p>
-                                        <h3 className='text-xl font-semibold text-white mb-2'>{design.title}</h3>
-                                        <div className='inline-flex items-center gap-1 text-xs font-medium text-white/70'>
-                                        View <ArrowUpRight className='h-3 w-3' />
+                                            <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6'>
+                                                <p className='mb-2 text-xs font-bold uppercase tracking-wider text-white/70 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500'>
+                                                    {String(index + 1).padStart(2, '0')} — {design.category}
+                                                </p>
+                                                <h3 className='text-3xl font-bold text-white mb-2 tracking-tight transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75'>
+                                                    {design.title}
+                                                </h3>
+                                                {design.description && (
+                                                    <p className='text-sm text-white/60 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100 line-clamp-1'>
+                                                        {design.description}
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                    </motion.div>
-                                )
+                                    )
                                 })}
                             </div>
 

@@ -78,7 +78,7 @@ const GalleryLightbox = ({ design, isOpen, onClose }) => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 1.05 }}
                                     transition={{ duration: 0.3 }}
-                                    className="h-full w-full object-cover"
+                                    className="h-full w-full object-contain"
                                 />
                             </AnimatePresence>
 
