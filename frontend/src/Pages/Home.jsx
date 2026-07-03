@@ -112,9 +112,9 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='mb-40 pt-16'>
+      <section className='mb-40 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         {showProjects && (
-          <article>
+          <article className='max-w-[1400px] mx-auto px-6'>
             <div className='mb-16 text-center flex flex-col items-center'>
               <span className='text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] mb-4 border border-[var(--line)] px-4 py-1.5 rounded-full'>
                 Selected Work
@@ -127,7 +127,11 @@ const Home = () => {
             {loading ? (
               <Loader text="Loading projects..." />
             ) : featuredProjects.length > 0 ? (
-              <div className='w-full'>
+              <div className='w-full bg-[#e2dfd5] p-6 md:p-12 lg:p-16 rounded-none border border-[var(--line)] shadow-2xl relative overflow-hidden'>
+                {/* Decorative theory text on the card background */}
+                <div className='absolute top-0 right-0 p-8 text-[160px] font-black text-[var(--ink)]/5 leading-none pointer-events-none hidden md:block'>
+                  01
+                </div>
                 <div className='grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[200px] md:auto-rows-[180px]'>
                   {featuredProjects.slice(0, 6).map((project, index) => {
                     // Variant 1: Full width (35/65 split)
@@ -388,7 +392,7 @@ const Home = () => {
               <div className='w-full'>
                 {/* Featured Lead (Anchor) */}
                 {latestPosts[0] && (
-                  <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-xl p-8 md:p-12 lg:p-16 mb-12 group transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]'>
+                  <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-none p-8 md:p-12 lg:p-16 mb-12 group transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]'>
                     <div className='flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-16 items-center'>
                       <div className='flex-1 w-full'>
                         <div className='flex flex-wrap items-center gap-4 text-[#1a1a1a]/60 mb-6 tracking-[0.13em] uppercase text-[10px] font-bold' style={{ fontFamily: "'Manrope', sans-serif" }}>
@@ -414,7 +418,7 @@ const Home = () => {
                       
                       {(latestPosts[0].coverImage || latestPosts[0].image) && (
                         <div className='flex-1 w-full'>
-                          <div className='w-full h-[300px] md:h-[400px] relative overflow-hidden rounded-lg bg-[var(--line)]/50'>
+                          <div className='w-full h-[300px] md:h-[400px] relative overflow-hidden rounded-none bg-[var(--line)]/50'>
                             <img 
                               src={latestPosts[0].coverImage || latestPosts[0].image} 
                               alt={latestPosts[0].title} 
