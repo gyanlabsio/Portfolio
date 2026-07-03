@@ -115,7 +115,7 @@ const Home = () => {
       <section className='mb-40 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         {showProjects && (
           <article className='max-w-[1400px] mx-auto px-6'>
-            <div className='mb-16 text-center flex flex-col items-center'>
+            <div className='mb-16 text-center flex flex-col items-center border-t border-[var(--line)] pt-16'>
               <span className='text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] mb-4 border border-[var(--line)] px-4 py-1.5 rounded-full'>
                 Selected Work
               </span>
@@ -276,8 +276,11 @@ const Home = () => {
       </section>
 
       {config?.homepageSections?.aboutMyWork !== false && config?.aboutMyWorkText && (
-        <section className='mb-40 border-t border-[var(--line)] pt-16'>
-          <div className='grid md:grid-cols-2 gap-16'>
+        <section className='mb-40 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+          <article className='max-w-[1400px] mx-auto px-6'>
+            <div className='border-t border-[var(--line)] pt-16'>
+              <div className='max-w-4xl mx-auto'>
+                <div className='grid md:grid-cols-2 gap-16'>
             <div>
               <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>
                 {config.aboutMyWorkHeading || 'ABOUT MY WORK'}
@@ -319,18 +322,24 @@ const Home = () => {
                   </div>
                 ))}
               </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </article>
         </section>
       )}
 
 
       {showServices && services.length > 0 && (
-        <section className='mb-40 border-t border-[var(--line)] pt-16'>
-          <div className='mb-12'>
-            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Services I Provide</h2>
-          </div>
-          <div className='flex flex-col gap-6 max-w-4xl mx-auto'>
+        <section className='mb-40 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+          <article className='max-w-[1400px] mx-auto px-6'>
+            <div className='border-t border-[var(--line)] pt-16'>
+              <div className='max-w-4xl mx-auto'>
+                <div className='mb-12'>
+                  <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Services I Provide</h2>
+                </div>
+                <div className='flex flex-col gap-6 max-w-4xl mx-auto'>
             {domains.map((domain) => {
               const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
               const isExpanded = expandedDomain === domain;
@@ -372,7 +381,10 @@ const Home = () => {
                 </div>
               );
             })}
-          </div>
+                  </div>
+                </div>
+              </div>
+          </article>
         </section>
       )}
 
@@ -470,26 +482,38 @@ const Home = () => {
       )}
 
       {showTestimonials && testimonials.length > 0 && (
-        <section className='mb-16 border-t border-[var(--line)] pt-16'>
-          <TestimonialInfiniteCard testimonials={testimonials} />
+        <section className='mb-16 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+          <article className='max-w-[1400px] mx-auto px-6'>
+            <div className='border-t border-[var(--line)] pt-16'>
+              <div className='max-w-4xl mx-auto'>
+                <TestimonialInfiniteCard testimonials={testimonials} />
+              </div>
+            </div>
+          </article>
         </section>
       )}
 
       {/* FAQ & Contact Section */}
-      <section className='mb-16 border-t border-[var(--line)] pt-16'>
-        <div className='grid md:grid-cols-2 gap-16'>
-          {/* Left Side: FAQ */}
-          <div>
-            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Frequently Asked Questions</h2>
-            <FAQ />
-          </div>
+      <section className='mb-16 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+        <article className='max-w-[1400px] mx-auto px-6'>
+          <div className='border-t border-[var(--line)] pt-16'>
+            <div className='max-w-4xl mx-auto'>
+              <div className='grid md:grid-cols-2 gap-16'>
+                {/* Left Side: FAQ */}
+                <div>
+                  <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Frequently Asked Questions</h2>
+                  <FAQ />
+                </div>
 
-          {/* Right Side: Contact Form */}
-          <div>
-            <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Get in Touch</h2>
-            <ContactForm />
+                {/* Right Side: Contact Form */}
+                <div>
+                  <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)] mb-12'>Get in Touch</h2>
+                  <ContactForm />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </article>
       </section>
 
     </main>
