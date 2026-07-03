@@ -17,15 +17,17 @@
 }
 
 :root {
-  --bg: #f6f5f1;
-  --bg-alt: #ebe8df;
-  --ink: #121720;
-  --ink-soft: #4f5a67;
-  --line: rgba(18, 23, 32, 0.15);
-  --card: rgba(255, 255, 255, 0.78);
-  --surface: #f6f5f1;
-  --accent: #111111;
-  --ring: rgba(17, 17, 17, 0.35);
+  --bg: #1A1A2E;
+  --bg-gradient: linear-gradient(135deg, #0047AB 0%, #1A1A2E 100%);
+  --bg-alt: #0047AB;
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.75);
+  --line: rgba(255, 255, 255, 0.15);
+  --card: rgba(26, 26, 46, 0.78);
+  --surface: #1A1A2E;
+  --accent: #FF1840;
+  --accent-gradient: linear-gradient(135deg, #FF6B35 0%, #FF1840 100%);
+  --ring: rgba(255, 107, 53, 0.35);
 }
 
 @layer base {
@@ -43,7 +45,8 @@
     margin: 0;
     color: var(--ink);
     font-family: var(--font-manrope);
-    background: var(--bg);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
   }
