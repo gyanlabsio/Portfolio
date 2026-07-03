@@ -21,7 +21,7 @@ const CreativeWorksScrollSection = ({ featuredDesigns = [] }) => {
     if (!featuredDesigns || featuredDesigns.length === 0) return null;
 
     return (
-        <section ref={targetRef} className="relative h-[200vh] bg-[var(--surface)] mb-16" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+        <section ref={targetRef} className="relative h-[300vh] bg-[var(--surface)] mb-16" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
             <div className="sticky top-0 flex h-screen items-center overflow-hidden">
                 <motion.div style={{ x }} className="flex w-[200vw]">
                     
