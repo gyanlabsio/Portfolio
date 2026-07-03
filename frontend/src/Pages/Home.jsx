@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Clock3, Sparkles, ArrowRight, Download, Github, Linkedin, Mail, Twitter, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react'
 import SEO from '../components/SEO'
@@ -128,35 +128,138 @@ const Home = () => {
               <Loader text="Loading projects..." />
             ) : featuredProjects.length > 0 ? (
               <div className='w-full'>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-                  {featuredProjects.map((project) => (
-                    <div key={project._id} className='group relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-xl transition-shadow duration-500'>
-                      <div className='aspect-[4/3] w-full bg-[var(--surface-alt)]'>
-                        <img 
-                          src={project.thumbnail} 
-                          alt={project.title} 
-                          className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
-                        />
-                      </div>
-                      
-                      {/* Hover Overlay */}
-                      <div className='absolute inset-0 bg-[var(--ink)]/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center backdrop-blur-sm'>
-                        <h3 className='text-[var(--surface)] text-xl md:text-2xl font-bold mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out'>
-                          {project.title}
-                        </h3>
-                        <p className='text-[var(--surface)]/80 text-sm mb-8 line-clamp-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75 ease-out leading-relaxed'>
-                          {project.description}
-                        </p>
-                        <Link to={`/project/${project.slug}`} className='inline-flex items-center gap-2 text-[var(--surface)] text-[10px] font-bold uppercase tracking-[0.2em] border border-[var(--surface)]/30 px-6 py-3 hover:bg-[var(--surface)] hover:text-[var(--ink)] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-150 ease-out'>
-                          View Project <ArrowUpRight className='w-4 h-4' />
+                <div className='grid grid-cols-1 md:grid-cols-12 gap-10 auto-rows-[200px] md:auto-rows-[180px]'>
+                  {featuredProjects.slice(0, 6).map((project, index) => {
+                    // Variant 1: Full width (35/65 split)
+                    if (index === 0) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-12 md:row-span-2 flex flex-col md:flex-row bg-[var(--surface)] group overflow-hidden border border-[var(--line)]">
+                          <div className="w-full md:w-[35%] p-8 md:p-12 relative flex flex-col justify-center">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] hidden md:block whitespace-nowrap">
+                              Featured Work
+                            </span>
+                            <div className="md:pl-8">
+                              <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[0.9] text-[var(--ink)] mb-6">
+                                {project.title}
+                              </h3>
+                              <p className="text-xs md:text-sm text-[var(--ink-soft)] line-clamp-3 leading-relaxed max-w-sm">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="w-full md:w-[65%] h-[200px] md:h-full overflow-hidden">
+                            <img src={project.thumbnail || project.coverImage} alt={project.title} className="w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          </div>
                         </Link>
-                      </div>
-                    </div>
-                  ))}
+                      )
+                    }
+                    
+                    // Variant 2: 7 cols (Image dominant, solid text block bottom left)
+                    if (index === 1) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-7 md:row-span-2 relative group overflow-hidden border border-[var(--line)] bg-[var(--surface)]">
+                          <img src={project.thumbnail || project.coverImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          <div className="absolute bottom-0 left-0 bg-[var(--ink)] text-[var(--surface)] p-8 md:p-10 w-[85%] md:w-[70%]">
+                            <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-[0.9] mb-4">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs text-[var(--surface)]/70 line-clamp-2 leading-relaxed">
+                              {project.description}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                    }
+
+                    // Variant 3: 5 cols (Image top, text bottom)
+                    if (index === 2) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-5 md:row-span-2 flex flex-col bg-[var(--surface)] group overflow-hidden border border-[var(--line)]">
+                          <div className="h-[60%] overflow-hidden relative">
+                            <img src={project.thumbnail || project.coverImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          </div>
+                          <div className="h-[40%] p-8 relative flex flex-col justify-center bg-[var(--surface)]">
+                            <span className="absolute right-4 top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] hidden md:block whitespace-nowrap">
+                              Case Study
+                            </span>
+                            <div className="md:pr-8">
+                              <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight leading-[0.9] text-[var(--ink)] mb-4">
+                                {project.title}
+                              </h3>
+                              <p className="text-xs text-[var(--ink-soft)] line-clamp-3 leading-relaxed">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      )
+                    }
+
+                    // Variant 4: 4 cols (Tall portrait)
+                    if (index === 3) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-4 md:row-span-2 relative group overflow-hidden border border-[var(--line)] bg-[var(--surface)]">
+                          <img src={project.thumbnail || project.coverImage} alt={project.title} className="absolute inset-0 w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)]/90 via-[var(--ink)]/20 to-transparent"></div>
+                          <div className="absolute bottom-0 left-0 right-0 p-8">
+                            <h3 className="text-2xl font-black uppercase tracking-tight leading-[0.9] text-[var(--surface)] mb-3">
+                              {project.title}
+                            </h3>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--surface)]/70">
+                              View Project →
+                            </span>
+                          </div>
+                        </Link>
+                      )
+                    }
+
+                    // Variant 5: 8 cols (Text left, wide image right)
+                    if (index === 4) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-8 md:row-span-2 flex flex-col md:flex-row bg-[var(--ink)] text-[var(--surface)] group overflow-hidden border border-[var(--ink)]">
+                          <div className="w-full md:w-[45%] p-8 md:p-12 relative flex flex-col justify-center">
+                            <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tight leading-[0.9] mb-6">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs text-[var(--surface)]/70 line-clamp-3 leading-relaxed">
+                              {project.description}
+                            </p>
+                          </div>
+                          <div className="w-full md:w-[55%] h-[200px] md:h-full overflow-hidden">
+                            <img src={project.thumbnail || project.coverImage} alt={project.title} className="w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          </div>
+                        </Link>
+                      )
+                    }
+
+                    // Variant 6: Full width (60/40 reverse split)
+                    if (index === 5) {
+                      return (
+                        <Link to={`/project/${project.slug}`} key={project._id} className="md:col-span-12 md:row-span-2 flex flex-col md:flex-row-reverse bg-[var(--surface)] group overflow-hidden border border-[var(--line)]">
+                          <div className="w-full md:w-[40%] p-8 md:p-16 relative flex flex-col justify-center bg-white">
+                            <span className="absolute right-8 top-8 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] hidden md:block">
+                              Archive
+                            </span>
+                            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[0.9] text-[var(--ink)] mb-6">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs md:text-sm text-[var(--ink-soft)] line-clamp-3 leading-relaxed">
+                              {project.description}
+                            </p>
+                          </div>
+                          <div className="w-full md:w-[60%] h-[200px] md:h-full overflow-hidden">
+                            <img src={project.thumbnail || project.coverImage} alt={project.title} className="w-full h-full object-cover grayscale-[30%] contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                          </div>
+                        </Link>
+                      )
+                    }
+
+                    return null;
+                  })}
                 </div>
 
-                <div className='mt-20 flex justify-center'>
-                  <Link to='/Projects' className='bg-[var(--accent)] text-[var(--surface)] px-10 py-4 text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl'>
+                <div className='mt-16 flex justify-center'>
+                  <Link to='/Projects' className='bg-[var(--ink)] text-[var(--surface)] px-10 py-4 text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg'>
                     See All Projects
                   </Link>
                 </div>
@@ -285,9 +388,9 @@ const Home = () => {
               <div className='w-full'>
                 {/* Featured Lead (Anchor) */}
                 {latestPosts[0] && (
-                  <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-xl p-8 md:p-16 mb-12 group'>
-                    <div className='flex flex-col md:flex-row gap-8 md:gap-16'>
-                      <div className='flex-1'>
+                  <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-xl p-8 md:p-12 lg:p-16 mb-12 group transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]'>
+                    <div className='flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-16 items-center'>
+                      <div className='flex-1 w-full'>
                         <div className='flex flex-wrap items-center gap-4 text-[#1a1a1a]/60 mb-6 tracking-[0.13em] uppercase text-[10px] font-bold' style={{ fontFamily: "'Manrope', sans-serif" }}>
                           <span className='text-[#1a1a1a]'>{latestPosts[0].category || 'Writing'}</span>
                           <span className='w-1 h-1 rounded-full bg-[#1a1a1a]/20'></span>
@@ -295,20 +398,31 @@ const Home = () => {
                           <span className='w-1 h-1 rounded-full bg-[#1a1a1a]/20'></span>
                           <span className='text-[#1a1a1a]'>{latestPosts[0].readTime || '6 MIN'} READ</span>
                         </div>
-                        <h3 className='text-4xl md:text-[3.5rem] font-bold text-[#1a1a1a] leading-[1.1] tracking-tight'>
+                        <h3 className='text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-[#1a1a1a] leading-[1.1] tracking-tight mb-6'>
                           {latestPosts[0].title}
                         </h3>
-                      </div>
-                      <div className='flex-1 flex flex-col justify-center'>
                         <p className='text-base md:text-lg text-[#1a1a1a]/70 font-light leading-relaxed mb-8'>
                           {latestPosts[0].excerpt}
                         </p>
                         <div>
-                          <span className='inline-block bg-[#1a1a1a] text-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-black'>
+                          <span className='inline-flex items-center gap-3 bg-[#1a1a1a] text-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition-colors'>
                             Read Article
+                            <ArrowRight className='h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1' />
                           </span>
                         </div>
                       </div>
+                      
+                      {(latestPosts[0].coverImage || latestPosts[0].image) && (
+                        <div className='flex-1 w-full'>
+                          <div className='w-full h-[300px] md:h-[400px] relative overflow-hidden rounded-lg bg-[var(--line)]/50'>
+                            <img 
+                              src={latestPosts[0].coverImage || latestPosts[0].image} 
+                              alt={latestPosts[0].title} 
+                              className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105' 
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </Link>
                 )}
