@@ -50,7 +50,7 @@ const Home = () => {
         if (servicesRes.status === 'fulfilled') setServices(servicesRes.value.data.data || [])
         if (testRes.status === 'fulfilled') setTestimonials(testRes.value.data.data || [])
         if (projectsRes.status === 'fulfilled') setFeaturedProjects(projectsRes.value.data.data || [])
-        if (postsRes.status === 'fulfilled') setLatestPosts((postsRes.value.data.data || []).slice(0, 3))
+        if (postsRes.status === 'fulfilled') setLatestPosts((postsRes.value.data.data || []).slice(0, 5))
         if (designsRes.status === 'fulfilled') setFeaturedDesigns(designsRes.value.data.data || [])
       } catch (err) {
         console.error('Failed to load home data', err)
@@ -112,22 +112,57 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='mb-40 grid gap-16 border-t border-[var(--line)] pt-16'>
+      <section className='mb-40 pt-16'>
         {showProjects && (
           <article>
-            <div className='mb-8 flex items-center justify-between'>
-              <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Featured Work</h2>
-              <Link to='/Projects' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>See all</Link>
+            <div className='mb-16 text-center flex flex-col items-center'>
+              <span className='text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] mb-4 border border-[var(--line)] px-4 py-1.5 rounded-full'>
+                Selected Work
+              </span>
+              <h2 className='text-4xl md:text-5xl font-black text-[var(--ink)] tracking-tight'>
+                Recent Projects
+              </h2>
             </div>
 
             {loading ? (
-              <Loader text="Loading highlighted projects..." />
+              <Loader text="Loading projects..." />
             ) : featuredProjects.length > 0 ? (
-              <div className='w-full mt-4'>
-                <KineticCarousel projects={featuredProjects.slice(0, 5)} />
+              <div className='w-full'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                  {featuredProjects.map((project) => (
+                    <div key={project._id} className='group relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-xl transition-shadow duration-500'>
+                      <div className='aspect-[4/3] w-full bg-[var(--surface-alt)]'>
+                        <img 
+                          src={project.thumbnail} 
+                          alt={project.title} 
+                          className='absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
+                        />
+                      </div>
+                      
+                      {/* Hover Overlay */}
+                      <div className='absolute inset-0 bg-[var(--ink)]/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center backdrop-blur-sm'>
+                        <h3 className='text-[var(--surface)] text-xl md:text-2xl font-bold mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out'>
+                          {project.title}
+                        </h3>
+                        <p className='text-[var(--surface)]/80 text-sm mb-8 line-clamp-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75 ease-out leading-relaxed'>
+                          {project.description}
+                        </p>
+                        <Link to={`/project/${project.slug}`} className='inline-flex items-center gap-2 text-[var(--surface)] text-[10px] font-bold uppercase tracking-[0.2em] border border-[var(--surface)]/30 px-6 py-3 hover:bg-[var(--surface)] hover:text-[var(--ink)] transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-150 ease-out'>
+                          View Project <ArrowUpRight className='w-4 h-4' />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className='mt-20 flex justify-center'>
+                  <Link to='/Projects' className='bg-[var(--accent)] text-[var(--surface)] px-10 py-4 text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl'>
+                    See All Projects
+                  </Link>
+                </div>
               </div>
             ) : (
-              <p className='text-[var(--ink-soft)] font-light'>New case studies are in progress. Check back shortly.</p>
+              <p className='text-[var(--ink-soft)] font-light text-center'>New case studies are in progress. Check back shortly.</p>
             )}
           </article>
         )}
@@ -237,9 +272,9 @@ const Home = () => {
       {featuredDesigns.length > 0 && <CreativeWorksScrollSection featuredDesigns={featuredDesigns} />}
 
       {showContent && (
-        <section className='mb-16 border-t border-[var(--line)] pt-16'>
-          <article>
-            <div className='mb-8 flex items-center justify-between'>
+        <section className='mb-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+          <article className='max-w-[1400px] mx-auto px-6'>
+            <div className='mb-8 flex items-center justify-between border-t border-[var(--line)] pt-16'>
               <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Latest Writing</h2>
               <Link to='/Blog' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>Read all</Link>
             </div>
@@ -280,9 +315,16 @@ const Home = () => {
 
                 {/* Compact Previews */}
                 {latestPosts.length > 1 && (
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0'>
-                    {latestPosts.slice(1, 5).map((post) => (
-                      <Link key={post._id} to={`/blog/${post.slug}`} className='group block border-t border-[var(--line)] py-10'>
+                  <div className='grid grid-cols-1 md:grid-cols-2'>
+                    {latestPosts.slice(1, 5).map((post, index) => (
+                      <Link 
+                        key={post._id} 
+                        to={`/blog/${post.slug}`} 
+                        className={`group block 
+                          ${index % 2 === 0 ? 'md:pr-12 md:border-r border-[var(--line)]' : 'md:pl-12'} 
+                          ${index < 2 ? 'pb-10 border-b border-[var(--line)] mb-10' : ''}
+                        `}
+                      >
                         <div className='flex items-center justify-between text-[var(--ink-soft)] mb-6 tracking-[0.13em] uppercase text-[10px] font-bold' style={{ fontFamily: "'Manrope', sans-serif" }}>
                           <div className='flex items-center gap-3'>
                             <span className='text-[var(--ink)]'>{post.category || 'Writing'}</span>
