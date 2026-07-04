@@ -115,19 +115,31 @@ const Home = () => {
       <section className='mb-40 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         {showProjects && (
           <article className='max-w-[1400px] mx-auto px-6'>
-            <div className='mb-16 text-center flex flex-col items-center border-t border-[var(--line)] pt-16'>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className='mb-16 text-center flex flex-col items-center border-t border-[var(--line)] pt-16'
+            >
               <span className='text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] mb-4 border border-[var(--line)] px-4 py-1.5 rounded-full'>
                 Selected Work
               </span>
               <h2 className='text-4xl md:text-5xl font-black text-[var(--ink)] tracking-tight'>
                 Recent Projects
               </h2>
-            </div>
+            </motion.div>
 
             {loading ? (
               <Loader text="Loading projects..." />
             ) : featuredProjects.length > 0 ? (
-              <div className='w-full bg-[#e2dfd5] p-6 md:p-12 lg:p-16 rounded-none border border-[var(--line)] shadow-2xl relative overflow-hidden'>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className='w-full bg-[#e2dfd5] p-6 md:p-12 lg:p-16 rounded-none border border-[var(--line)] shadow-2xl relative overflow-hidden'
+              >
                 {/* Decorative theory text on the card background */}
                 <div className='absolute top-0 right-0 p-8 text-[160px] font-black text-[var(--ink)]/5 leading-none pointer-events-none hidden md:block'>
                   01
@@ -262,12 +274,18 @@ const Home = () => {
                   })}
                 </div>
 
-                <div className='mt-16 flex justify-center'>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                  className='mt-16 flex justify-center'
+                >
                   <Link to='/Projects' className='bg-[var(--ink)] text-[var(--surface)] px-10 py-4 text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg'>
                     See All Projects
                   </Link>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ) : (
               <p className='text-[var(--ink-soft)] font-light text-center'>New case studies are in progress. Check back shortly.</p>
             )}
@@ -281,12 +299,23 @@ const Home = () => {
             <div className='border-t border-[var(--line)] pt-16'>
               <div className='max-w-4xl mx-auto'>
                 <div className='grid md:grid-cols-2 gap-16'>
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>
                 {config.aboutMyWorkHeading || 'ABOUT MY WORK'}
               </h2>
-            </div>
-            <div className='flex flex-col gap-12'>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              className='flex flex-col gap-12'
+            >
               <div className='text-xl font-light text-[var(--ink-soft)] leading-relaxed'>
                 {config.aboutMyWorkText}
               </div>
@@ -322,10 +351,10 @@ const Home = () => {
                   </div>
                 ))}
               </div>
+            </motion.div>
                   </div>
                 </div>
               </div>
-            </div>
           </article>
         </section>
       )}
@@ -336,10 +365,22 @@ const Home = () => {
           <article className='max-w-[1400px] mx-auto px-6'>
             <div className='border-t border-[var(--line)] pt-16'>
               <div className='max-w-4xl mx-auto'>
-                <div className='mb-12'>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className='mb-12'
+                >
                   <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Services I Provide</h2>
-                </div>
-                <div className='flex flex-col gap-6 max-w-4xl mx-auto'>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                  className='flex flex-col gap-6 max-w-4xl mx-auto'
+                >
             {domains.map((domain) => {
               const domainServices = services.filter(s => (s.domain || 'Web Development') === domain);
               const isExpanded = expandedDomain === domain;
@@ -381,7 +422,7 @@ const Home = () => {
                 </div>
               );
             })}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
           </article>
@@ -393,15 +434,27 @@ const Home = () => {
       {showContent && (
         <section className='mb-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
           <article className='max-w-[1400px] mx-auto px-6'>
-            <div className='mb-8 flex items-center justify-between border-t border-[var(--line)] pt-16'>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className='mb-8 flex items-center justify-between border-t border-[var(--line)] pt-16'
+            >
               <h2 className='text-sm font-bold uppercase tracking-widest text-[var(--ink)]'>Latest Writing</h2>
               <Link to='/Blog' className='text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors'>Read all</Link>
-            </div>
+            </motion.div>
 
             {loading ? (
               <Loader text="Loading latest posts..." />
             ) : latestPosts.length > 0 ? (
-              <div className='w-full'>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className='w-full'
+              >
                 {/* Featured Lead (Anchor) */}
                 {latestPosts[0] && (
                   <Link to={`/blog/${latestPosts[0].slug}`} className='block bg-[#f0ece1] rounded-none p-8 md:p-12 lg:p-16 mb-12 group transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]'>
@@ -473,7 +526,7 @@ const Home = () => {
                     ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             ) : (
               <p className='text-[var(--ink-soft)] font-light'>Thought pieces are coming soon.</p>
             )}
@@ -484,11 +537,17 @@ const Home = () => {
       {showTestimonials && testimonials.length > 0 && (
         <section className='mb-16 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
           <article className='max-w-[1400px] mx-auto px-6'>
-            <div className='border-t border-[var(--line)] pt-16'>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className='border-t border-[var(--line)] pt-16'
+            >
               <div className='max-w-4xl mx-auto'>
                 <TestimonialInfiniteCard testimonials={testimonials} />
               </div>
-            </div>
+            </motion.div>
           </article>
         </section>
       )}
@@ -496,7 +555,13 @@ const Home = () => {
       {/* FAQ & Contact Section */}
       <section className='mb-16 pt-16' style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         <article className='max-w-[1400px] mx-auto px-6'>
-          <div className='border-t border-[var(--line)] pt-16'>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className='border-t border-[var(--line)] pt-16'
+          >
             <div className='max-w-4xl mx-auto'>
               <div className='grid md:grid-cols-2 gap-16'>
                 {/* Left Side: FAQ */}
@@ -512,7 +577,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </article>
       </section>
 
